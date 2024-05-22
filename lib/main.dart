@@ -1,3 +1,4 @@
+import 'package:bimops/src/auth/view/login2_view.dart';
 import 'package:bimops/src/report/asset_performance/provider/asset_performance_provider.dart';
 import 'package:bimops/src/report/download_ba/provider/ba_provider.dart';
 import 'package:bimops/src/report/provider/report_provider.dart';

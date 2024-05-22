@@ -42,27 +42,25 @@ class _SplashViewState extends State<SplashView> {
         width: double.infinity,
         height: double.infinity,
         decoration: BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage('assets/images/img-splash.jpg'),
-              fit: BoxFit.cover),
+          color: Colors.white,
         ),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            Container(
-                margin: EdgeInsets.only(top: 80),
-                child: Center(
-                    child: Image.asset('assets/icons/ic-bimops-rectangle2.png',
-                        width: 200))),
+            CircleAvatar(
+              backgroundColor: Colors.grey.shade300,
+              radius: 60,
+            ),
+            SizedBox(
+              height: 180,
+            ),
             Column(
+              mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Text("Powered by", style: Constant.whiteRegular12),
-                Constant.xSizedBox16,
                 SizedBox(
-                    width: 130,
-                    child: Image.asset('assets/icons/ic-pelindo.png')),
-                Constant.xSizedBox32,
-                Constant.xSizedBox8,
+                    height: 70,
+                    child: Image.asset('assets/images/img_splashscreen.png')),
+                Constant.xSizedBox24,
               ],
             )
           ],

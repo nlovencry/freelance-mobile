@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "976630463046",
+    "project_id": "bimops-d54b5",
+    "storage_bucket": "bimops-d54b5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:976630463046:android:018151a58a335644872847",
+        "android_client_info": {
+          "package_name": "com.bimops"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAEIXxNaPEKulXxhnCbal1OLNwkPiPAVng"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

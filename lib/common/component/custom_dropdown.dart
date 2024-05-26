@@ -12,7 +12,9 @@ class CustomDropdown {
     bool readOnly = false,
     bool required = true,
     bool enabled = true,
+    bool isDense = false,
     Color? fillColor,
+    Color? borderColor,
     String? selectedItem,
     Function(String?)? onChanged,
     required List<DropdownMenuItem<String>> list,
@@ -20,10 +22,13 @@ class CustomDropdown {
     TextAlign? inputAlign,
     CrossAxisAlignment align = CrossAxisAlignment.start,
     EdgeInsetsGeometry? padding,
+    EdgeInsetsGeometry? contentPadding,
+    EdgeInsetsGeometry? iconPadding,
     double? labelFontSize,
+    FormFieldValidator? validator,
   }) {
     return Padding(
-      padding: padding ?? EdgeInsets.symmetric(horizontal: 20),
+      padding: padding ?? EdgeInsets.symmetric(horizontal: 0),
       child: Column(
         crossAxisAlignment: align,
         children: [
@@ -52,16 +57,67 @@ class CustomDropdown {
                 ],
               ),
             ),
-          CustomDropdownSearch().dropdown2(
-            label: labelText,
-            hint: hintText ?? "",
-            list: list,
-            enabled: enabled,
-            readOnly: readOnly,
-            fillColor: fillColor,
-            onChanged: onChanged,
-            required: required,
-            selectedItem: selectedItem,
+          DropdownButtonFormField(
+            isDense: isDense,
+            padding: EdgeInsets.zero,
+            items: readOnly ? null : list,
+            onChanged: readOnly ? null : onChanged,
+            onSaved: (val) => FocusManager.instance.primaryFocus?.unfocus(),
+            icon: Padding(
+              padding: iconPadding ?? const EdgeInsets.fromLTRB(16, 0, 12, 64),
+              child: Icon(Icons.keyboard_arrow_down,
+                  color: Constant.textHintColor2, size: 24),
+            ),
+            // style: Constant.primaryTextStyle,
+            isExpanded: true,
+            decoration: InputDecoration(
+              contentPadding: contentPadding ?? EdgeInsets.zero,
+              hintText: hintText ?? "",
+              isDense: isDense,
+              hintStyle: TextStyle(color: Constant.textHintColor2),
+              filled: true,
+              enabled: enabled,
+              fillColor: fillColor ??
+                  (enabled ? Colors.white : Constant.textHintColor),
+              suffixIconColor: Constant.primaryColor,
+              hoverColor: Constant.primaryColor,
+              focusColor: Constant.primaryColor,
+              prefix: SizedBox(width: 12),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: BorderSide(
+                  width: 0.5,
+                  color: borderColor ?? Constant.borderSearchColor,
+                  style: BorderStyle.solid,
+                ),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: BorderSide(
+                  width: 0.5,
+                  color: borderColor ?? Constant.borderSearchColor,
+                  style: BorderStyle.solid,
+                ),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: BorderSide(
+                  width: 1,
+                  color: borderColor ?? Constant.primaryColor,
+                  style: BorderStyle.solid,
+                ),
+              ),
+            ),
+            hint: Text(hintText ?? ""),
+            value: selectedItem,
+            validator: (value) {
+              if (validator != null) {
+                if (required && value?.isNotEmpty != true) {
+                  return 'Harap isi $labelText';
+                }
+              }
+              return null;
+            },
           ),
         ],
       ),

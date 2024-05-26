@@ -223,6 +223,8 @@ class CustomButton {
               ),
             ),
           ),
+          padding:
+              MaterialStateProperty.all<EdgeInsetsGeometry>(EdgeInsets.zero),
           elevation: MaterialStateProperty.all<double>(0),
         ),
         onPressed: onClick,

@@ -1,4 +1,5 @@
 import 'package:bimops/src/auth/view/login2_view.dart';
+import 'package:bimops/src/data/provider/data_add_provider.dart';
 import 'package:bimops/src/report/asset_performance/provider/asset_performance_provider.dart';
 import 'package:bimops/src/report/download_ba/provider/ba_provider.dart';
 import 'package:bimops/src/report/provider/report_provider.dart';
@@ -44,6 +45,7 @@ import 'common/library/firebase_manager.dart';
 import 'src/auth/view/confirmation_view.dart';
 import 'src/auth/view/token_view.dart';
 
+import 'src/user/provider/user_provider.dart';
 import 'utils/utils.dart';
 import 'firebase_options.dart';
 
@@ -227,6 +229,10 @@ class MyApp extends StatelessWidget {
       builder: (context, orientation, deviceType) {
         return MultiProvider(
           providers: [
+            ChangeNotifierProvider<UserProvider>(
+                create: (context) => UserProvider()),
+            ChangeNotifierProvider<DataAddProvider>(
+                create: (context) => DataAddProvider()),
             ChangeNotifierProvider<AuthProvider>(
                 create: (context) => AuthProvider()),
             ChangeNotifierProvider<HomeProvider>(

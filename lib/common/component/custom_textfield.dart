@@ -292,7 +292,7 @@ class CustomTextField {
     BorderRadius? borderRadius,
   }) {
     return Padding(
-      padding: padding ?? EdgeInsets.symmetric(horizontal: 20),
+      padding: padding ?? EdgeInsets.symmetric(horizontal: 0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [

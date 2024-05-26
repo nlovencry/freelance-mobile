@@ -1,5 +1,8 @@
 import 'package:bimops/common/component/custom_container.dart';
+import 'package:bimops/common/component/custom_navigator.dart';
 import 'package:bimops/common/helper/constant.dart';
+import 'package:bimops/src/data/view/data_add_view.dart';
+import 'package:bimops/src/user/view/user_manage_view.dart';
 import 'package:flutter/material.dart';
 
 class Home1View extends StatefulWidget {
@@ -57,10 +60,12 @@ class _Home1ViewState extends State<Home1View> {
                     ),
                   ],
                 ),
-                Image.asset(
-                  'assets/icons/ic-prof-home.png',
-                  scale: 1.8,
-                ),
+                InkWell(
+                    onTap: () {
+                      CusNav.nPush(context, UserManageView());
+                    },
+                    child: Image.asset('assets/icons/ic-prof-home.png',
+                        scale: 1.8)),
               ],
             ),
             SizedBox(
@@ -90,29 +95,32 @@ class _Home1ViewState extends State<Home1View> {
                         SizedBox(
                           width: 30,
                         ),
-                        Container(
-                            padding: EdgeInsets.all(5),
-                            height: 30,
-                            color: Colors.lightBlueAccent.shade100
-                                .withOpacity(0.3),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Image.asset(
-                                  'assets/icons/ic-inbox.png',
-                                  fit: BoxFit.contain,
-                                ),
-                                SizedBox(
-                                  width: 5,
-                                ),
-                                Text(
-                                  "Add Data",
-                                  style: TextStyle(
-                                    color: Constant.primaryColor,
+                        InkWell(
+                          onTap: () => CusNav.nPush(context, DataAddView()),
+                          child: Container(
+                              padding: EdgeInsets.all(5),
+                              height: 30,
+                              color: Colors.lightBlueAccent.shade100
+                                  .withOpacity(0.3),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Image.asset(
+                                    'assets/icons/ic-inbox.png',
+                                    fit: BoxFit.contain,
                                   ),
-                                )
-                              ],
-                            ))
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  Text(
+                                    "Add Data",
+                                    style: TextStyle(
+                                      color: Constant.primaryColor,
+                                    ),
+                                  )
+                                ],
+                              )),
+                        )
                       ],
                     ),
                     Text(
@@ -159,27 +167,30 @@ class _Home1ViewState extends State<Home1View> {
               ),
               GridView.count(
                 shrinkWrap: true,
-                  crossAxisCount: 4,
+                crossAxisCount: 4,
                 childAspectRatio: 0.8,
                 crossAxisSpacing: 5.0, // Spasi antar kolom
                 mainAxisSpacing: 15.0, // Spasi antar baris
                 padding: EdgeInsets.all(8.0),
-                children: List.generate(staticArray.length, (index) => Column(
-                  children: [
-                    Container(
-                      height: 70,
-                      width: 70,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
-                          color: Colors.lightBlueAccent.shade200
-                              .withOpacity(0.3),
-                          image: DecorationImage(
-                              image: AssetImage('assets/icons/ic-menu1.png'),
-                              scale: 2)),
-                    ),
-                    Text(staticArray[index])
-                  ],
-                ),),
+                children: List.generate(
+                  staticArray.length,
+                  (index) => Column(
+                    children: [
+                      Container(
+                        height: 70,
+                        width: 70,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                            color: Colors.lightBlueAccent.shade200
+                                .withOpacity(0.3),
+                            image: DecorationImage(
+                                image: AssetImage('assets/icons/ic-menu1.png'),
+                                scale: 2)),
+                      ),
+                      Text(staticArray[index])
+                    ],
+                  ),
+                ),
               ),
               // Row(
               //   children: [

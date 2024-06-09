@@ -17,7 +17,7 @@ class Constant {
   static const String DOMAIN2 = "bimops-api.erdata.id";
   static const String BASE_API_FULL = "https://${DOMAIN}/api";
   static const String BASE_API_FULL2 = "https://${DOMAIN2}/api";
-  static const String APP_NAME = "Bimops";
+  static const String APP_NAME = "MATA";
 
   /// COlORS
   ///

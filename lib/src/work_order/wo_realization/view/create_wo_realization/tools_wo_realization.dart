@@ -1,7 +1,7 @@
-import 'package:bimops/common/base/base_state.dart';
-import 'package:bimops/common/component/custom_navigator.dart';
-import 'package:bimops/src/work_order/wo_realization/provider/wo_realization_provider.dart';
-import 'package:bimops/src/work_order/wo_realization/view/search/wo_tools_search_view.dart';
+import 'package:mata/common/base/base_state.dart';
+import 'package:mata/common/component/custom_navigator.dart';
+import 'package:mata/src/work_order/wo_realization/provider/wo_realization_provider.dart';
+import 'package:mata/src/work_order/wo_realization/view/search/wo_tools_search_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../../../common/component/custom_appbar.dart';
@@ -49,7 +49,8 @@ class _ToolsWORealizationState extends BaseState<ToolsWORealization> {
                   ),
                 ),
                 onTap: () async {
-                  WOToolsSearchModelData? result = await CusNav .nPush(context, WOToolsSearchView());
+                  WOToolsSearchModelData? result =
+                      await CusNav.nPush(context, WOToolsSearchView());
                   if (result != null) {
                     toolsP.toolsSelected = result;
                     toolsP.toolsC.text = result.name ?? "0";
@@ -82,24 +83,24 @@ class _ToolsWORealizationState extends BaseState<ToolsWORealization> {
               ),
               Constant.xSizedBox16,
               if (toolsP.isEdit)
-              Row(
-                children: [
-                  Expanded(
+                Row(
+                  children: [
+                    Expanded(
+                        flex: 5,
+                        child: CustomButton.secondaryButton("Cancel", () {
+                          Navigator.pop(context);
+                        })),
+                    Constant.xSizedBox8,
+                    Expanded(
                       flex: 5,
-                      child: CustomButton.secondaryButton("Cancel", () {
-                        Navigator.pop(context);
-                      })),
-                  Constant.xSizedBox8,
-                  Expanded(
-                    flex: 5,
-                    child: CustomButton.mainButton(
-                        index != null ? "Edit" : "Add", () {
-                      toolsP.onEditOrAddButtonWoTools(
-                          context: context, index: index);
-                    }),
-                  )
-                ],
-              ),
+                      child: CustomButton.mainButton(
+                          index != null ? "Edit" : "Add", () {
+                        toolsP.onEditOrAddButtonWoTools(
+                            context: context, index: index);
+                      }),
+                    )
+                  ],
+                ),
             ],
           ),
         );
@@ -204,27 +205,29 @@ class _ToolsWORealizationState extends BaseState<ToolsWORealization> {
                                 ),
                               ),
                               if (toolsP.isEdit)
-                              Expanded(
-                                flex: 1,
-                                child: IconButton(
-                                  onPressed: () async {
-                                    await Utils.showYesNoDialog(
-                                      context: context,
-                                      title: "Konfirmasi",
-                                      desc:
-                                          "Apakah Anda Yakin Ingin Hapus Data Ini?",
-                                      yesCallback: () => handleTap(() async {
-                                        Navigator.pop(context);
-                                        toolsP.listWoToolsParam.removeAt(index);
-                                        setState(() {});
-                                      }),
-                                      noCallback: () => Navigator.pop(context),
-                                    );
-                                  },
-                                  icon: Icon(Icons.cancel),
-                                  color: Colors.red,
+                                Expanded(
+                                  flex: 1,
+                                  child: IconButton(
+                                    onPressed: () async {
+                                      await Utils.showYesNoDialog(
+                                        context: context,
+                                        title: "Konfirmasi",
+                                        desc:
+                                            "Apakah Anda Yakin Ingin Hapus Data Ini?",
+                                        yesCallback: () => handleTap(() async {
+                                          Navigator.pop(context);
+                                          toolsP.listWoToolsParam
+                                              .removeAt(index);
+                                          setState(() {});
+                                        }),
+                                        noCallback: () =>
+                                            Navigator.pop(context),
+                                      );
+                                    },
+                                    icon: Icon(Icons.cancel),
+                                    color: Colors.red,
+                                  ),
                                 ),
-                              ),
                             ],
                           ),
                         ),
@@ -247,16 +250,16 @@ class _ToolsWORealizationState extends BaseState<ToolsWORealization> {
                 style: Constant.grayMedium15.copyWith(color: Colors.grey),
               ),
               if (toolsP.isEdit)
-              CustomButton.smallMainButton(
-                "+ Add New",
-                () async {
-                  await toolsP.createWoTools(
-                      context: context, logPopUp: logPopUp());
-                },
-                contentPadding:
-                    EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-                textStyle: Constant.whiteBold,
-              ),
+                CustomButton.smallMainButton(
+                  "+ Add New",
+                  () async {
+                    await toolsP.createWoTools(
+                        context: context, logPopUp: logPopUp());
+                  },
+                  contentPadding:
+                      EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                  textStyle: Constant.whiteBold,
+                ),
             ],
           ),
           Constant.xSizedBox16,
@@ -267,13 +270,16 @@ class _ToolsWORealizationState extends BaseState<ToolsWORealization> {
 
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: CustomAppBar.appBar(context, "${toolsP.isEdit ? "Edit" : "View"} WO Realization",
+      appBar: CustomAppBar.appBar(
+        context,
+        "${toolsP.isEdit ? "Edit" : "View"} WO Realization",
         onBack: () {
           if (toolsP.isEdit)
             toolsP.isEdit = false;
           else
             CusNav.nPop(context);
-        },),
+        },
+      ),
       body: WillPopScope(
         onWillPop: () async {
           if (toolsP.isEdit) {
@@ -287,8 +293,7 @@ class _ToolsWORealizationState extends BaseState<ToolsWORealization> {
             padding: EdgeInsets.all(20),
             child: Column(
               children: [
-                if (!toolsP.isEdit)
-                headerWo(context),
+                if (!toolsP.isEdit) headerWo(context),
                 subHeaderWo(2, context, isEdit: widget.isEdit),
                 Constant.xSizedBox32,
                 toolsList(),

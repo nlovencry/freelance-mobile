@@ -1,7 +1,7 @@
-import 'package:bimops/common/component/custom_appbar.dart';
-import 'package:bimops/common/component/custom_button.dart';
-import 'package:bimops/common/component/custom_navigator.dart';
-import 'package:bimops/common/component/custom_textfield.dart';
+import 'package:mata/common/component/custom_appbar.dart';
+import 'package:mata/common/component/custom_button.dart';
+import 'package:mata/common/component/custom_navigator.dart';
+import 'package:mata/common/component/custom_textfield.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

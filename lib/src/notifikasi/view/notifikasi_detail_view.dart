@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'dart:developer';
 
-import 'package:bimops/common/base/base_state.dart';
-import 'package:bimops/common/component/custom_appbar.dart';
-import 'package:bimops/common/component/custom_button.dart';
-import 'package:bimops/src/notifikasi/provider/notifikasi_provider.dart';
+import 'package:mata/common/base/base_state.dart';
+import 'package:mata/common/component/custom_appbar.dart';
+import 'package:mata/common/component/custom_button.dart';
+import 'package:mata/src/notifikasi/provider/notifikasi_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cached_pdfview/flutter_cached_pdfview.dart';
 import 'package:flutter_pdfview/flutter_pdfview.dart';
@@ -19,13 +19,13 @@ class DetailNotifikasiView extends StatefulWidget {
   final String type;
   final String woId;
   final bool action;
-  const DetailNotifikasiView(
-      {super.key,
-      required this.docCode,
-      required this.type,
-      required this.woId,
-      required this.action,
-      });
+  const DetailNotifikasiView({
+    super.key,
+    required this.docCode,
+    required this.type,
+    required this.woId,
+    required this.action,
+  });
 
   @override
   State<DetailNotifikasiView> createState() => _DetailNotifikasiViewState();
@@ -63,116 +63,116 @@ class _DetailNotifikasiViewState extends BaseState<DetailNotifikasiView> {
           Column(
             children: [
               if (widget.action)
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 32),
-                child: Row(
-                  children: [
-                    Expanded(
-                      flex: 5,
-                      child: CustomButton.secondaryButtonWithicon(
-                        Image.asset('assets/icons/ic-reject.png', scale: 3),
-                        "Reject",
-                        () async {
-                          await Utils.showYesNoWithNoteDialog(
-                            context: context,
-                            title: "Konfirmasi",
-                            desc: "Apakah Anda Yakin Ingin Reject WO Ini?",
-                            yesText: "Reject",
-                            yesCallback: () async {
-                              CusNav.nPop(context);
-                              try {
-                                await context
-                                    .read<NotifikasiProvider>()
-                                    .approveRejectWO(
-                                        type: "reject", id: widget.woId)
-                                    .then((value) async {
-                                  await Utils.showSuccess(
-                                      msg: "Reject Success");
-                                  context
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 32),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        flex: 5,
+                        child: CustomButton.secondaryButtonWithicon(
+                          Image.asset('assets/icons/ic-reject.png', scale: 3),
+                          "Reject",
+                          () async {
+                            await Utils.showYesNoWithNoteDialog(
+                              context: context,
+                              title: "Konfirmasi",
+                              desc: "Apakah Anda Yakin Ingin Reject WO Ini?",
+                              yesText: "Reject",
+                              yesCallback: () async {
+                                CusNav.nPop(context);
+                                try {
+                                  await context
                                       .read<NotifikasiProvider>()
-                                      .noteN
-                                      .unfocus();
-                                  context
-                                      .read<NotifikasiProvider>()
-                                      .noteC
-                                      .clear();
-                                  Future.delayed(Duration(seconds: 2),
-                                      () => Navigator.pop(context));
-                                });
-                              } catch (e) {
-                                Utils.showFailed(
-                                    msg: e
-                                            .toString()
-                                            .toLowerCase()
-                                            .contains("doctype")
-                                        ? "Maaf, Terjadi Galat!"
-                                        : "$e");
-                              }
-                            },
-                            noCallback: () => CusNav.nPop(context),
-                          );
-                        },
-                        contentPadding:
-                            EdgeInsets.symmetric(horizontal: 8, vertical: 12),
-                        borderColor: Constant.redColor,
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                      .approveRejectWO(
+                                          type: "reject", id: widget.woId)
+                                      .then((value) async {
+                                    await Utils.showSuccess(
+                                        msg: "Reject Success");
+                                    context
+                                        .read<NotifikasiProvider>()
+                                        .noteN
+                                        .unfocus();
+                                    context
+                                        .read<NotifikasiProvider>()
+                                        .noteC
+                                        .clear();
+                                    Future.delayed(Duration(seconds: 2),
+                                        () => Navigator.pop(context));
+                                  });
+                                } catch (e) {
+                                  Utils.showFailed(
+                                      msg: e
+                                              .toString()
+                                              .toLowerCase()
+                                              .contains("doctype")
+                                          ? "Maaf, Terjadi Galat!"
+                                          : "$e");
+                                }
+                              },
+                              noCallback: () => CusNav.nPop(context),
+                            );
+                          },
+                          contentPadding:
+                              EdgeInsets.symmetric(horizontal: 8, vertical: 12),
+                          borderColor: Constant.redColor,
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        ),
                       ),
-                    ),
-                    Constant.xSizedBox8,
-                    Expanded(
-                      flex: 5,
-                      child: CustomButton.secondaryButtonWithicon(
-                        Image.asset('assets/icons/ic-approve.png', scale: 3),
-                        "Approve",
-                        () async {
-                          await Utils.showYesNoWithNoteDialog(
-                            context: context,
-                            title: "Konfirmasi",
-                            desc: "Apakah Anda Yakin Ingin Approve WO Ini?",
-                            yesText: "Approve",
-                            yesCallback: () async {
-                              CusNav.nPop(context);
-                              try {
-                                await context
-                                    .read<NotifikasiProvider>()
-                                    .approveRejectWO(
-                                        type: "approve", id: widget.woId)
-                                    .then((value) async {
-                                  await Utils.showSuccess(
-                                      msg: "Approve Success");
-                                  context
+                      Constant.xSizedBox8,
+                      Expanded(
+                        flex: 5,
+                        child: CustomButton.secondaryButtonWithicon(
+                          Image.asset('assets/icons/ic-approve.png', scale: 3),
+                          "Approve",
+                          () async {
+                            await Utils.showYesNoWithNoteDialog(
+                              context: context,
+                              title: "Konfirmasi",
+                              desc: "Apakah Anda Yakin Ingin Approve WO Ini?",
+                              yesText: "Approve",
+                              yesCallback: () async {
+                                CusNav.nPop(context);
+                                try {
+                                  await context
                                       .read<NotifikasiProvider>()
-                                      .noteN
-                                      .unfocus();
-                                  context
-                                      .read<NotifikasiProvider>()
-                                      .noteC
-                                      .clear();
-                                  Future.delayed(Duration(seconds: 2),
-                                      () => Navigator.pop(context));
-                                });
-                              } catch (e) {
-                                Utils.showFailed(
-                                    msg: e
-                                            .toString()
-                                            .toLowerCase()
-                                            .contains("doctype")
-                                        ? "Maaf, Terjadi Galat!"
-                                        : "$e");
-                              }
-                            },
-                            noCallback: () => CusNav.nPop(context),
-                          );
-                        },
-                        contentPadding:
-                            EdgeInsets.symmetric(horizontal: 8, vertical: 12),
-                        borderColor: Constant.greenColor,
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                      .approveRejectWO(
+                                          type: "approve", id: widget.woId)
+                                      .then((value) async {
+                                    await Utils.showSuccess(
+                                        msg: "Approve Success");
+                                    context
+                                        .read<NotifikasiProvider>()
+                                        .noteN
+                                        .unfocus();
+                                    context
+                                        .read<NotifikasiProvider>()
+                                        .noteC
+                                        .clear();
+                                    Future.delayed(Duration(seconds: 2),
+                                        () => Navigator.pop(context));
+                                  });
+                                } catch (e) {
+                                  Utils.showFailed(
+                                      msg: e
+                                              .toString()
+                                              .toLowerCase()
+                                              .contains("doctype")
+                                          ? "Maaf, Terjadi Galat!"
+                                          : "$e");
+                                }
+                              },
+                              noCallback: () => CusNav.nPop(context),
+                            );
+                          },
+                          contentPadding:
+                              EdgeInsets.symmetric(horizontal: 8, vertical: 12),
+                          borderColor: Constant.greenColor,
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
               Constant.xSizedBox16,
               Expanded(
                 child: PDF(

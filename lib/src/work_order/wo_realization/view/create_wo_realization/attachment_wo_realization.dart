@@ -1,16 +1,16 @@
-import 'package:bimops/common/base/base_state.dart';
-import 'package:bimops/common/component/custom_appbar.dart';
-import 'package:bimops/common/component/custom_button.dart';
-import 'package:bimops/common/component/custom_image_picker.dart';
-import 'package:bimops/common/component/custom_navigator.dart';
-import 'package:bimops/utils/utils.dart';
+import 'package:mata/common/base/base_state.dart';
+import 'package:mata/common/component/custom_appbar.dart';
+import 'package:mata/common/component/custom_button.dart';
+import 'package:mata/common/component/custom_image_picker.dart';
+import 'package:mata/common/component/custom_navigator.dart';
+import 'package:mata/utils/utils.dart';
 import 'package:path/path.dart' as path;
-import 'package:bimops/common/component/custom_textField.dart';
-import 'package:bimops/common/helper/constant.dart';
-import 'package:bimops/common/helper/safe_network_image.dart';
+import 'package:mata/common/component/custom_textField.dart';
+import 'package:mata/common/helper/constant.dart';
+import 'package:mata/common/helper/safe_network_image.dart';
 
-import 'package:bimops/src/work_order/wo_realization/provider/wo_realization_provider.dart';
-import 'package:bimops/src/work_order/wo_realization/view/create_wo_realization/labours_wo_realization.dart';
+import 'package:mata/src/work_order/wo_realization/provider/wo_realization_provider.dart';
+import 'package:mata/src/work_order/wo_realization/view/create_wo_realization/labours_wo_realization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -36,128 +36,126 @@ class _AttachmentWORealizationState extends BaseState<AttachmentWORealization> {
           height: 350,
           child: Column(
             children: attachmentP.isEdit
-            ? [
-              CustomTextField.borderTextField(
-                controller: attachmentP.attachC,
-                labelText: "Attachment",
-                hintText: attachmentP.attachC.text != ""
-                    ? attachmentP.attachC.text
-                    : "Browse",
-                hintColor: Constant.textHintColor,
-                suffixIcon: Padding(
-                  padding: const EdgeInsets.all(12),
-                  child: Image.asset('assets/icons/ic-browse.png',
-                      width: 5, height: 5),
-                ),
-                readOnly: false,
-                onTap: () async {
-                  String fileName;
-                  final file =
-                  await CustomImagePicker.cameraOrGallery(context);
+                ? [
+                    CustomTextField.borderTextField(
+                      controller: attachmentP.attachC,
+                      labelText: "Attachment",
+                      hintText: attachmentP.attachC.text != ""
+                          ? attachmentP.attachC.text
+                          : "Browse",
+                      hintColor: Constant.textHintColor,
+                      suffixIcon: Padding(
+                        padding: const EdgeInsets.all(12),
+                        child: Image.asset('assets/icons/ic-browse.png',
+                            width: 5, height: 5),
+                      ),
+                      readOnly: false,
+                      onTap: () async {
+                        String fileName;
+                        final file =
+                            await CustomImagePicker.cameraOrGallery(context);
 
-                  FocusManager.instance.primaryFocus?.unfocus();
-                  if (file != null) {
-                    fileName = path.basename(file.path);
-                    attachmentP.attachC.text = fileName;
-                  }
-                },
-              ),
-              Constant.xSizedBox8,
-              CustomTextField.borderTextArea(
-                controller: attachmentP.desc7C,
-                labelText: "Description",
-                hintText: "Free text",
-                textInputType: TextInputType.text,
-                textCapitalization: TextCapitalization.words,
-                focusNode: attachmentP.desc7Node,
-              ),
-              Constant.xSizedBox16,
-              Row(
-                children: [
-                  Expanded(
-                      flex: 5,
-                      child:
-                      CustomButton.secondaryButton("Cancel", () {
-                        CusNav.nPop(context);
-                      })),
-                  Constant.xSizedBox8,
-                  Expanded(
-                    flex: 5,
-                    child: CustomButton.mainButton(
-                        index != null ? "Edit" : "Add", () {
-                      attachmentP.onEditOrAddButtonWoAttachment(
-                          context: context, index: index);
-                    }),
-                  )
-                ],
-              ),
-            ]
-
+                        FocusManager.instance.primaryFocus?.unfocus();
+                        if (file != null) {
+                          fileName = path.basename(file.path);
+                          attachmentP.attachC.text = fileName;
+                        }
+                      },
+                    ),
+                    Constant.xSizedBox8,
+                    CustomTextField.borderTextArea(
+                      controller: attachmentP.desc7C,
+                      labelText: "Description",
+                      hintText: "Free text",
+                      textInputType: TextInputType.text,
+                      textCapitalization: TextCapitalization.words,
+                      focusNode: attachmentP.desc7Node,
+                    ),
+                    Constant.xSizedBox16,
+                    Row(
+                      children: [
+                        Expanded(
+                            flex: 5,
+                            child: CustomButton.secondaryButton("Cancel", () {
+                              CusNav.nPop(context);
+                            })),
+                        Constant.xSizedBox8,
+                        Expanded(
+                          flex: 5,
+                          child: CustomButton.mainButton(
+                              index != null ? "Edit" : "Add", () {
+                            attachmentP.onEditOrAddButtonWoAttachment(
+                                context: context, index: index);
+                          }),
+                        )
+                      ],
+                    ),
+                  ]
                 : [
-              Container(
-                height: 200,
-                child: SafeNetworkImage(
-                  url: attachmentP.fileAttach7Url ?? "",
-                  height: 200,
-                  width: double.infinity,
-                ),
-              ),
-              Constant.xSizedBox16,
-              Text(attachmentP.desc7C.text != ""
-                  ? attachmentP.desc7C.text
-                  : "-"),
-              // CustomTextField.borderTextField(
-              //   controller: attachmentP.attachC,
-              //   labelText: "Attachment",
-              //   hintText: attachmentP.attachC.text != ""
-              //       ? attachmentP.attachC.text
-              //       : "browse",
-              //   hintColor: Constant.textHintColor,
-              //   suffixIcon: Padding(
-              //     padding: const EdgeInsets.all(12),
-              //     child: Image.asset(
-              //       'assets/icons/ic-browse.png',
-              //       width: 5,
-              //       height: 5,
-              //     ),
-              //   ),
-              //   readOnly: true,
-              //   onTap: () async {
-              //     String fileName;
-              //     final file = await CustomImagePicker.cameraOrGallery(context);
-              //     if (file != null) {
-              //       fileName = path.basename(file.path);
-              //       attachmentP.attachC.text = fileName;
-              //     }
-              //   },
-              // ),
-              // Constant.xSizedBox8,
-              // CustomTextField.borderTextArea(
-              //   controller: attachmentP.desc7C,
-              //   labelText: "Description",
-              //   hintText: "Free text",
-              //   textInputType: TextInputType.text,
-              //   textCapitalization: TextCapitalization.words,
-              //   focusNode: attachmentP.desc7Node,
-              // ),
-              // Constant.xSizedBox16,
-              // Row(
-              //   children: [
-              //     Expanded(
-              //         flex: 5,
-              //         child: CustomButton.secondaryButton("Cancel", () {})),
-              //     Constant.xSizedBox8,
-              //     Expanded(
-              //       flex: 5,
-              //       child: CustomButton.mainButton(
-              //           index != null ? "Edit" : "Add", () {
-              //         attachmentP.onEditOrAddButtonWoTools(
-              //             context: context, index: index);
-              //       }),
-              //     )
-              //   ],
-              // ),
-            ],
+                    Container(
+                      height: 200,
+                      child: SafeNetworkImage(
+                        url: attachmentP.fileAttach7Url ?? "",
+                        height: 200,
+                        width: double.infinity,
+                      ),
+                    ),
+                    Constant.xSizedBox16,
+                    Text(attachmentP.desc7C.text != ""
+                        ? attachmentP.desc7C.text
+                        : "-"),
+                    // CustomTextField.borderTextField(
+                    //   controller: attachmentP.attachC,
+                    //   labelText: "Attachment",
+                    //   hintText: attachmentP.attachC.text != ""
+                    //       ? attachmentP.attachC.text
+                    //       : "browse",
+                    //   hintColor: Constant.textHintColor,
+                    //   suffixIcon: Padding(
+                    //     padding: const EdgeInsets.all(12),
+                    //     child: Image.asset(
+                    //       'assets/icons/ic-browse.png',
+                    //       width: 5,
+                    //       height: 5,
+                    //     ),
+                    //   ),
+                    //   readOnly: true,
+                    //   onTap: () async {
+                    //     String fileName;
+                    //     final file = await CustomImagePicker.cameraOrGallery(context);
+                    //     if (file != null) {
+                    //       fileName = path.basename(file.path);
+                    //       attachmentP.attachC.text = fileName;
+                    //     }
+                    //   },
+                    // ),
+                    // Constant.xSizedBox8,
+                    // CustomTextField.borderTextArea(
+                    //   controller: attachmentP.desc7C,
+                    //   labelText: "Description",
+                    //   hintText: "Free text",
+                    //   textInputType: TextInputType.text,
+                    //   textCapitalization: TextCapitalization.words,
+                    //   focusNode: attachmentP.desc7Node,
+                    // ),
+                    // Constant.xSizedBox16,
+                    // Row(
+                    //   children: [
+                    //     Expanded(
+                    //         flex: 5,
+                    //         child: CustomButton.secondaryButton("Cancel", () {})),
+                    //     Constant.xSizedBox8,
+                    //     Expanded(
+                    //       flex: 5,
+                    //       child: CustomButton.mainButton(
+                    //           index != null ? "Edit" : "Add", () {
+                    //         attachmentP.onEditOrAddButtonWoTools(
+                    //             context: context, index: index);
+                    //       }),
+                    //     )
+                    //   ],
+                    // ),
+                  ],
           ),
         );
       });
@@ -248,7 +246,7 @@ class _AttachmentWORealizationState extends BaseState<AttachmentWORealization> {
                                       context: context,
                                       title: "Konfirmasi",
                                       desc:
-                                      "Apakah Anda Yakin Ingin Hapus Data Ini?",
+                                          "Apakah Anda Yakin Ingin Hapus Data Ini?",
                                       yesCallback: () => handleTap(() async {
                                         Navigator.pop(context);
                                         attachmentP.listWoAttachmentParam
@@ -291,13 +289,15 @@ class _AttachmentWORealizationState extends BaseState<AttachmentWORealization> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: CustomAppBar.appBar(
-          context, "${attachmentP.isEdit ? "Edit" : "View"} WO Realization",
+        context,
+        "${attachmentP.isEdit ? "Edit" : "View"} WO Realization",
         onBack: () {
           if (attachmentP.isEdit)
             attachmentP.isEdit = false;
           else
             CusNav.nPop(context);
-        },),
+        },
+      ),
       body: WillPopScope(
         onWillPop: () async {
           if (attachmentP.isEdit) {
@@ -311,9 +311,8 @@ class _AttachmentWORealizationState extends BaseState<AttachmentWORealization> {
             padding: EdgeInsets.all(20),
             child: Column(
               children: [
-                if (!attachmentP.isEdit)
-                headerWo(context),
-                subHeaderWo(6,context, isEdit: widget.isEdit),
+                if (!attachmentP.isEdit) headerWo(context),
+                subHeaderWo(6, context, isEdit: widget.isEdit),
                 Constant.xSizedBox32,
                 attachmentList(),
                 Constant.xSizedBox32,
@@ -324,9 +323,8 @@ class _AttachmentWORealizationState extends BaseState<AttachmentWORealization> {
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: attachmentP.isEdit
-          ? attachmentP.cancelSaveButton(context)
-          : null,
+      floatingActionButton:
+          attachmentP.isEdit ? attachmentP.cancelSaveButton(context) : null,
     );
   }
 }

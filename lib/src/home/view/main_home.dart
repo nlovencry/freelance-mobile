@@ -1,11 +1,11 @@
 import 'dart:io';
 
-import 'package:bimops/src/home/model/home_model.dart';
-import 'package:bimops/src/home/view/home_view.dart';
-import 'package:bimops/src/report/view/report_view.dart';
+import 'package:mata/src/home/model/home_model.dart';
+import 'package:mata/src/home/view/home_view.dart';
+import 'package:mata/src/report/view/report_view.dart';
 
-import 'package:bimops/src/transaction/view/transaction_view.dart';
-import 'package:bimops/src/work_order/view/work_order_view.dart';
+import 'package:mata/src/transaction/view/transaction_view.dart';
+import 'package:mata/src/work_order/view/work_order_view.dart';
 import 'package:flutter/material.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';

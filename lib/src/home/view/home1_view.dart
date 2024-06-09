@@ -70,7 +70,7 @@ class _Home1ViewState extends State<Home1View> {
                 ),
                 InkWell(
                     onTap: () {
-                      CusNav.nPush(context, UserManageView());
+                      // CusNav.nPush(context, UserManageView());
                     },
                     child: Image.asset('assets/icons/ic-prof-home.png',
                         scale: 1.2)),

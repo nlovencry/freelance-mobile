@@ -1,10 +1,10 @@
 import 'dart:async';
 
-import 'package:bimops/common/component/custom_button.dart';
-import 'package:bimops/common/component/custom_container.dart';
-import 'package:bimops/common/component/custom_navigator.dart';
-import 'package:bimops/src/user/provider/user_provider.dart';
-import 'package:bimops/src/user/view/user_add_view.dart';
+import 'package:mata/common/component/custom_button.dart';
+import 'package:mata/common/component/custom_container.dart';
+import 'package:mata/common/component/custom_navigator.dart';
+import 'package:mata/src/user/provider/user_provider.dart';
+import 'package:mata/src/user/view/user_add_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_toggle_tab/flutter_toggle_tab.dart';
 import 'package:provider/provider.dart';

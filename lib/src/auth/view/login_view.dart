@@ -1,7 +1,7 @@
-import 'package:bimops/common/base/base_state.dart';
-import 'package:bimops/common/component/custom_button.dart';
-import 'package:bimops/common/component/custom_textfield.dart';
-// import 'package:bimops/src/auth/view/sign_up_view.dart';
+import 'package:mata/common/base/base_state.dart';
+import 'package:mata/common/component/custom_button.dart';
+import 'package:mata/common/component/custom_textfield.dart';
+// import 'package:mata/src/auth/view/sign_up_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

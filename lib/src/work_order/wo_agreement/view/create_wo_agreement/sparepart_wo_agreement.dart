@@ -1,8 +1,8 @@
 import 'dart:developer';
 
-import 'package:bimops/common/component/custom_date_picker.dart';
-import 'package:bimops/src/work_order/wo_agreement/provider/wo_agreement_provider.dart';
-import 'package:bimops/src/work_order/wo_agreement/view/create_wo_agreement/labours_wo_agreement.dart';
+import 'package:mata/common/component/custom_date_picker.dart';
+import 'package:mata/src/work_order/wo_agreement/provider/wo_agreement_provider.dart';
+import 'package:mata/src/work_order/wo_agreement/view/create_wo_agreement/labours_wo_agreement.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -454,8 +454,9 @@ class _SparepartWOAgreementState extends BaseState<SparepartWOAgreement> {
                                         ),
                                         SizedBox(height: 10),
                                         Text(
-                                            Utils.thousandSeparator(
-                                                int.parse(item.price.replaceAll(".00", ""))),
+                                            Utils.thousandSeparator(int.parse(
+                                                item.price
+                                                    .replaceAll(".00", ""))),
                                             style: Constant.grayRegular13),
                                       ],
                                     ),

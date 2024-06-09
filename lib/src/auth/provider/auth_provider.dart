@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
-import 'package:bimops/src/auth/model/firebase_token_model.dart';
+import 'package:mata/src/auth/model/firebase_token_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../common/base/base_controller.dart';

@@ -1,8 +1,8 @@
-import 'package:bimops/common/component/custom_container.dart';
-import 'package:bimops/common/component/custom_navigator.dart';
-import 'package:bimops/common/helper/constant.dart';
-import 'package:bimops/src/data/view/data_add_view.dart';
-import 'package:bimops/src/user/view/user_manage_view.dart';
+import 'package:mata/common/component/custom_container.dart';
+import 'package:mata/common/component/custom_navigator.dart';
+import 'package:mata/common/helper/constant.dart';
+import 'package:mata/src/data/view/data_add_view.dart';
+import 'package:mata/src/user/view/user_manage_view.dart';
 import 'package:flutter/material.dart';
 
 class Home1View extends StatefulWidget {
@@ -62,7 +62,7 @@ class _Home1ViewState extends State<Home1View> {
                 ),
                 InkWell(
                     onTap: () {
-                      CusNav.nPush(context, UserManageView());
+                      // CusNav.nPush(context, UserManageView());
                     },
                     child: Image.asset('assets/icons/ic-prof-home.png',
                         scale: 1.8)),
@@ -96,6 +96,7 @@ class _Home1ViewState extends State<Home1View> {
                           width: 30,
                         ),
                         InkWell(
+                          // onTap: null,
                           onTap: () => CusNav.nPush(context, DataAddView()),
                           child: Container(
                               padding: EdgeInsets.all(5),

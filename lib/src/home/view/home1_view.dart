@@ -3,6 +3,7 @@ import 'package:bimops/common/component/custom_navigator.dart';
 import 'package:bimops/common/helper/constant.dart';
 import 'package:bimops/src/data/view/data_add_view.dart';
 import 'package:bimops/src/user/view/user_manage_view.dart';
+import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 
 class Home1View extends StatefulWidget {
@@ -14,28 +15,34 @@ class Home1View extends StatefulWidget {
 
 class _Home1ViewState extends State<Home1View> {
   static const List<String> staticArray = [
-    'User',
-    'Upper',
-    'Clutch',
-    'Turbine',
     'Shaft',
     'Upper',
     'Clutch',
-    'Turbine'
+    'Turbine',
+    // 'Shaft',
+    // 'Upper',
+    // 'Clutch',
+    // 'Turbine'
+  ];
+  static const List<String> staticImage = [
+    'assets/icons/ic-shaft.png',
+    'assets/icons/ic-shaft.png',
+    'assets/icons/ic-shaft.png',
+    'assets/icons/ic-shaft.png',
+    // 'Shaft',
+    // 'Upper',
+    // 'Clutch',
+    // 'Turbine'
   ];
 
   @override
   Widget build(BuildContext context) {
     Widget headKonten() {
       return Container(
-        height: 200,
+        color: Constant.primaryColor,
+        height: 300,
         width: double.infinity,
-        margin: EdgeInsets.only(right: 10, top: 25),
-        padding: EdgeInsets.fromLTRB(20, 30, 10, 15),
-        decoration: BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage('assets/images/img_home.png'),
-                fit: BoxFit.contain)),
+        padding: EdgeInsets.fromLTRB(20, 60, 20, 15),
         child: Column(
           children: [
             Row(
@@ -51,6 +58,7 @@ class _Home1ViewState extends State<Home1View> {
                           fontSize: 24,
                           fontWeight: FontWeight.w500),
                     ),
+                    Constant.xSizedBox8,
                     Text(
                       "Turbine Engineer",
                       style: TextStyle(
@@ -65,77 +73,125 @@ class _Home1ViewState extends State<Home1View> {
                       CusNav.nPush(context, UserManageView());
                     },
                     child: Image.asset('assets/icons/ic-prof-home.png',
-                        scale: 1.8)),
+                        scale: 1.2)),
               ],
             ),
+            SizedBox(
+              height: 20,
+            ),
+            DottedLine(
+                dashColor: Colors.white.withOpacity(0.7),
+                lineThickness: 1,
+                dashLength: 2),
             SizedBox(
               height: 20,
             ),
             Expanded(
               child: Container(
                 margin: EdgeInsets.only(bottom: 10),
-                padding: EdgeInsets.all(10),
+                padding: EdgeInsets.fromLTRB(15, 15, 15, 10),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
-                    color: Colors.white),
+                    color: Constant.secondaryColor),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          "Overall Turbine Status",
-                          style: TextStyle(
-                              color: Colors.grey,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 16),
+                        Expanded(
+                          flex: 6,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Overall Turbine Status",
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              Text(
+                                "8/10",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 18),
+                              ),
+
+                            ],
+                          ),
                         ),
                         SizedBox(
                           width: 30,
                         ),
-                        InkWell(
-                          onTap: () => CusNav.nPush(context, DataAddView()),
-                          child: Container(
-                              padding: EdgeInsets.all(5),
-                              height: 30,
-                              color: Colors.lightBlueAccent.shade100
-                                  .withOpacity(0.3),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Image.asset(
-                                    'assets/icons/ic-inbox.png',
-                                    fit: BoxFit.contain,
-                                  ),
-                                  SizedBox(
-                                    width: 5,
-                                  ),
-                                  Text(
-                                    "Add Data",
-                                    style: TextStyle(
-                                      color: Constant.primaryColor,
+                        Expanded(
+                          flex: 4,
+                          child: InkWell(
+                            onTap: () => CusNav.nPush(context, DataAddView()),
+                            child: Container(
+                                padding: EdgeInsets.all(7),
+                                height: 35,
+                                decoration: BoxDecoration(
+                                  color: Constant.thirdColor,
+                                  borderRadius: BorderRadius.circular(6),
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      "Add Data",
+                                      style: TextStyle(
+                                        color: Constant.primaryColor,
+                                        fontWeight: FontWeight.w500
+                                      ),
                                     ),
-                                  )
-                                ],
-                              )),
+                                    SizedBox(
+                                      width: 5,
+                                    ),
+                                    Image.asset(
+                                      'assets/icons/ic-inbox.png',
+                                      fit: BoxFit.contain,
+                                    ),
+                                  ],
+                                )),
+                          ),
                         )
                       ],
                     ),
-                    Text(
-                      "8/10",
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 16),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Pencapaian",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 12),
+                        ),
+                        Text(
+                          "80%",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 12),
+                        ),
+                      ],
                     ),
                     SizedBox(
-                      height: 4,
+                      height: 10,
                     ),
                     LinearProgressIndicator(
                       value: 0.8,
-                      color: Constant.primaryColor,
+                      color: Colors.lightBlueAccent,
                       backgroundColor: Colors.grey.shade400,
                     ),
                   ],
@@ -151,47 +207,69 @@ class _Home1ViewState extends State<Home1View> {
       return Container(
           padding: EdgeInsets.symmetric(horizontal: 20),
           width: double.infinity,
-          height: 500,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              SizedBox(height: 20,),
               Text(
                 "Menu",
                 style: TextStyle(
-                    color: Colors.black,
+                    color: Colors.grey,
                     fontSize: 16,
                     fontWeight: FontWeight.w500),
               ),
-              SizedBox(
-                height: 20,
-              ),
-              GridView.count(
-                shrinkWrap: true,
-                crossAxisCount: 4,
-                childAspectRatio: 0.8,
-                crossAxisSpacing: 5.0, // Spasi antar kolom
-                mainAxisSpacing: 15.0, // Spasi antar baris
-                padding: EdgeInsets.all(8.0),
-                children: List.generate(
+              ListView.separated(
+                  shrinkWrap: true,
+                  physics: ScrollPhysics(),
+                  itemBuilder: (context, index) {
+                return Column(
+                  children: List.generate(
                   staticArray.length,
-                  (index) => Column(
+                      (indexx) => Column(
                     children: [
-                      Container(
-                        height: 70,
-                        width: 70,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15),
-                            color: Colors.lightBlueAccent.shade200
-                                .withOpacity(0.3),
-                            image: DecorationImage(
-                                image: AssetImage('assets/icons/ic-menu1.png'),
-                                scale: 2)),
+                      CustomContainer.mainCard(
+                        isShadow: false,
+                        child: Row(
+                          children: [
+                            Expanded(
+                              flex: 2,
+                              child: Container(
+                                height: 50,
+                                width: 50,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(40),
+                                    color: Colors.lightBlueAccent.shade200
+                                        .withOpacity(0.3),
+                                    image: DecorationImage(
+                                        image: AssetImage(staticImage[indexx]),
+                                        scale: 3)),
+                              ),
+                            ),
+                            SizedBox(width: 10,),
+                            Expanded(
+                              flex: 8,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(staticArray[indexx], style: Constant.iPrimaryMedium8.copyWith(fontSize: 16),),
+                                  Text("Cek laporan mengenai " + staticArray[indexx]),
+                                ],
+                              ),
+                            ),
+                            Expanded(
+                                flex: 1,
+                                child: Icon(Icons.arrow_forward_ios, color: Colors.grey, size: 20,))
+                          ],
+                        ),
                       ),
-                      Text(staticArray[index])
+                      SizedBox(height: 20,),
                     ],
                   ),
                 ),
-              ),
+                );
+              }, separatorBuilder: (context, index) {
+                return SizedBox();
+              }, itemCount: 1),
               // Row(
               //   children: [
               //     Column(

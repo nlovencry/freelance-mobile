@@ -1,8 +1,8 @@
-import 'package:bimops/common/component/custom_container.dart';
-import 'package:bimops/common/component/custom_navigator.dart';
-import 'package:bimops/common/helper/constant.dart';
-import 'package:bimops/src/data/view/data_add_view.dart';
-import 'package:bimops/src/user/view/user_manage_view.dart';
+import 'package:mata/common/component/custom_container.dart';
+import 'package:mata/common/component/custom_navigator.dart';
+import 'package:mata/common/helper/constant.dart';
+import 'package:mata/src/data/view/data_add_view.dart';
+import 'package:mata/src/user/view/user_manage_view.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 

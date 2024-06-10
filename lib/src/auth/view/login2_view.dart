@@ -135,7 +135,7 @@ class _Login2ViewState extends State<Login2View> {
             ),
             SizedBox(height: 60),
             CustomButton.mainButton("Masuk", () {
-              Navigator.push(context, MaterialPageRoute(builder: (context)=> Home1View()));
+              Navigator.push(context, MaterialPageRoute(builder: (context)=> MainHome()));
             },
                 borderRadius: BorderRadius.circular(10))
           ],

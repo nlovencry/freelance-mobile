@@ -4,6 +4,7 @@ import 'package:bimops/common/component/custom_textField.dart';
 import 'package:bimops/common/helper/constant.dart';
 import 'package:bimops/src/auth/provider/auth_provider.dart';
 import 'package:bimops/src/home/view/home1_view.dart';
+import 'package:bimops/src/home/view/main_home.dart';
 import 'package:bimops/src/splash_view.dart';
 import 'package:bimops/utils/utils.dart';
 import 'package:flutter/material.dart';
@@ -134,9 +135,9 @@ class _Login2ViewState extends State<Login2View> {
             ),
             SizedBox(height: 60),
             CustomButton.mainButton("Masuk", () {
-              Navigator.push(context, MaterialPageRoute(builder: (context)=> Home1View()));
-            },
-                borderRadius: BorderRadius.circular(10))
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => MainHome()));
+            }, borderRadius: BorderRadius.circular(10))
           ],
         ),
       ),

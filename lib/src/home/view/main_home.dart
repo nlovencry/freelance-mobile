@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:bimops/src/home/model/home_model.dart';
+import 'package:bimops/src/home/view/home1_view.dart';
 import 'package:bimops/src/home/view/home_view.dart';
 import 'package:bimops/src/report/view/report_view.dart';
 
@@ -69,7 +70,7 @@ class _MainHomeState extends State<MainHome> {
     });
   }
 
-  void jumpToSubAgen() {
+  void jumpToRiwayat() {
     setState(() {
       currentIndex = 2;
     });
@@ -77,31 +78,19 @@ class _MainHomeState extends State<MainHome> {
 
   void jumpToProfile() {
     setState(() {
-      if (roles == "agen") {
-        currentIndex = 4;
-      } else {
-        currentIndex = 3;
-      }
+      currentIndex = 3;
     });
   }
 
   @override
   Widget build(BuildContext context) {
     Widget customBottomNav() {
-      return Container(
-        height: Platform.isAndroid ? 70 : 105,
-        decoration: BoxDecoration(
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.5),
-              spreadRadius: 4,
-              blurRadius: 7,
-              offset: Offset(0, 1), // changes position of shadow
-            ),
-          ],
-        ),
+      return BottomAppBar(
+        shape: CircularNotchedRectangle(),
+        notchMargin: 5,
+        padding: EdgeInsets.only(top: 5),
         child: BottomNavigationBar(
-          backgroundColor: Colors.white,
+          backgroundColor: const Color.fromRGBO(255, 255, 255, 1),
           selectedFontSize: 13,
           unselectedFontSize: 13,
           unselectedItemColor: Constant.textHintColor2,
@@ -126,7 +115,7 @@ class _MainHomeState extends State<MainHome> {
                       child: Image.asset(currentIndex == 0
                           ? 'assets/icons/ic-home-blue.png'
                           : 'assets/icons/ic-home-gray.png'))),
-              label: 'Home',
+              label: 'Beranda',
             ),
             BottomNavigationBarItem(
                 icon: Container(
@@ -137,7 +126,7 @@ class _MainHomeState extends State<MainHome> {
                         child: Image.asset(currentIndex == 1
                             ? 'assets/icons/ic-transaction-blue.png'
                             : 'assets/icons/ic-transaction-gray.png'))),
-                label: 'Transaction'),
+                label: 'Form'),
             BottomNavigationBarItem(
               icon: Container(
                   padding: EdgeInsets.only(bottom: 4),
@@ -147,7 +136,7 @@ class _MainHomeState extends State<MainHome> {
                       child: Image.asset(currentIndex == 2
                           ? 'assets/icons/ic-wo-blue.png'
                           : 'assets/icons/ic-wo-gray.png'))),
-              label: 'Work Order',
+              label: 'Riwayat',
             ),
             BottomNavigationBarItem(
               icon: Container(
@@ -158,7 +147,7 @@ class _MainHomeState extends State<MainHome> {
                       child: Image.asset(currentIndex == 3
                           ? 'assets/icons/ic-report-blue.png'
                           : 'assets/icons/ic-report-gray.png'))),
-              label: 'Report',
+              label: 'Profile',
             ),
           ],
         ),
@@ -166,8 +155,14 @@ class _MainHomeState extends State<MainHome> {
     }
 
     return Scaffold(
+      //extendBody: true,
       primary: true,
       bottomNavigationBar: customBottomNav(),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        child: Icon(Icons.add),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       body: WillPopScope(
         onWillPop: () async {
           if (currentIndex != 0) {
@@ -178,7 +173,7 @@ class _MainHomeState extends State<MainHome> {
           return true;
         },
         child: [
-          HomeView(jumpToJamaah, jumpToSubAgen, jumpToProfile),
+          Home1View(),
           TransactionView(),
           WorkOrderView(),
           ReportView()

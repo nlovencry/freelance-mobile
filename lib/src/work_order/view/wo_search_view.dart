@@ -1,4 +1,4 @@
-import 'package:bimops/common/component/custom_appbar.dart';
+import 'package:mata/common/component/custom_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

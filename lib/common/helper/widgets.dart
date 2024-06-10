@@ -1,6 +1,6 @@
-// import 'package:bimops/helper/currencies.dart';
+// import 'package:mata/helper/currencies.dart';
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:bimops/common/helper/constant.dart';
+import 'package:mata/common/helper/constant.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
-// import 'package:bimops/helper/constant.dart';
+// import 'package:mata/helper/constant.dart';
 import 'package:pattern_formatter/pattern_formatter.dart';
 
 import 'currencies.dart';

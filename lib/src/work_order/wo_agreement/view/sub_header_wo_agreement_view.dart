@@ -1,11 +1,11 @@
-import 'package:bimops/src/work_order/wo_agreement/view/create_wo_agreement/activity_wo_agreement_view.dart';
-import 'package:bimops/src/work_order/wo_agreement/view/create_wo_agreement/attachment_wo_agreement.dart';
-import 'package:bimops/src/work_order/wo_agreement/view/create_wo_agreement/labours_wo_agreement.dart';
-import 'package:bimops/src/work_order/wo_agreement/view/create_wo_agreement/service_wo_agreement.dart';
-import 'package:bimops/src/work_order/wo_agreement/view/create_wo_agreement/sparepart_wo_agreement.dart';
-import 'package:bimops/src/work_order/wo_agreement/view/create_wo_agreement/tools_wo_agreement.dart';
-import 'package:bimops/src/work_order/wo_agreement/view/create_wo_agreement/view_wo_agreement_view.dart';
-import 'package:bimops/src/work_order/wo_agreement/view/header_wo_agreement_view.dart';
+import 'package:mata/src/work_order/wo_agreement/view/create_wo_agreement/activity_wo_agreement_view.dart';
+import 'package:mata/src/work_order/wo_agreement/view/create_wo_agreement/attachment_wo_agreement.dart';
+import 'package:mata/src/work_order/wo_agreement/view/create_wo_agreement/labours_wo_agreement.dart';
+import 'package:mata/src/work_order/wo_agreement/view/create_wo_agreement/service_wo_agreement.dart';
+import 'package:mata/src/work_order/wo_agreement/view/create_wo_agreement/sparepart_wo_agreement.dart';
+import 'package:mata/src/work_order/wo_agreement/view/create_wo_agreement/tools_wo_agreement.dart';
+import 'package:mata/src/work_order/wo_agreement/view/create_wo_agreement/view_wo_agreement_view.dart';
+import 'package:mata/src/work_order/wo_agreement/view/header_wo_agreement_view.dart';
 import 'package:flutter/material.dart';
 import '../../../../common/component/custom_navigator.dart';
 import '../../../../common/helper/constant.dart';
@@ -61,12 +61,10 @@ ScrollController _scrollController = ScrollController();
 
 _scrollToLastPosition(int index) {
   double scrollPosition = index * 100;
-  _scrollController.jumpTo(
-      scrollPosition
-  );
+  _scrollController.jumpTo(scrollPosition);
 }
 
-Widget subHeaderWo(int pcc ,BuildContext context) {
+Widget subHeaderWo(int pcc, BuildContext context) {
   WidgetsBinding.instance!.addPostFrameCallback((_) {
     _scrollToLastPosition(pcc);
   });
@@ -74,7 +72,9 @@ Widget subHeaderWo(int pcc ,BuildContext context) {
     height: 80,
     child: ListView.separated(
         separatorBuilder: (context, index) {
-          return SizedBox(width: 8,);
+          return SizedBox(
+            width: 8,
+          );
         },
         controller: _scrollController,
         itemCount: name.length,
@@ -96,33 +96,31 @@ Widget subHeaderWo(int pcc ,BuildContext context) {
                       height: 35,
                       decoration: BoxDecoration(
                         color: index == pcc
-                        ? Constant.primaryColor
-                        : Constant.grayColor
-                        ,
+                            ? Constant.primaryColor
+                            : Constant.grayColor,
                         borderRadius: BorderRadius.circular(30),
                       ),
                       child: Center(
                           child: Text(
-                            "${index + 1}",
-                            style: Constant.whiteRegular12.copyWith(
-                                fontSize: 16, fontWeight: FontWeight.w500),
-                          )),
+                        "${index + 1}",
+                        style: Constant.whiteRegular12.copyWith(
+                            fontSize: 16, fontWeight: FontWeight.w500),
+                      )),
                     ),
                     Text(
                       name[index],
-                      style: Constant.iPrimaryMedium8.copyWith(fontSize: 13, color: index == pcc
-                      ? Constant.primaryColor
-                      : Constant.grayColor
-                      ),
+                      style: Constant.iPrimaryMedium8.copyWith(
+                          fontSize: 13,
+                          color: index == pcc
+                              ? Constant.primaryColor
+                              : Constant.grayColor),
                     )
                   ],
                 ),
               ),
-              if (index != name.length - 1) ...divider(
-                index==pcc
-                    ? Constant.primaryColor
-                    : Constant.grayColor
-              ),
+              if (index != name.length - 1)
+                ...divider(
+                    index == pcc ? Constant.primaryColor : Constant.grayColor),
             ],
           );
         }),

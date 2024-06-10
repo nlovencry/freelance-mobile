@@ -7,7 +7,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:bimops/common/helper/widgets.dart';
+import 'package:mata/common/helper/widgets.dart';
 
 import 'firebase_and_notif.dart';
 

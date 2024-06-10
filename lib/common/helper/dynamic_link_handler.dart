@@ -2,9 +2,9 @@
 
 // import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 // import 'package:firebase_messaging/firebase_messaging.dart';
-// import 'package:bimops/main.dart';
-// import 'package:bimops/view/auth/auth_view.dart';
-// import 'package:bimops/view/profile/profile_sport_center_view.dart';
+// import 'package:mata/main.dart';
+// import 'package:mata/view/auth/auth_view.dart';
+// import 'package:mata/view/profile/profile_sport_center_view.dart';
 
 // class DynamicLinkHandler {
 //   _handleDeepLinks() async {

@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:bimops/src/work_order/wo_realization/model/wo_search.dart';
+import 'package:mata/src/work_order/wo_realization/model/wo_search.dart';
 
 class WOActivitiesParam {
   final String taskName;

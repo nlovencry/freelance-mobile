@@ -1,4 +1,4 @@
-package com.bimops
+package com.mata.app
 
 import io.flutter.embedding.android.FlutterActivity
 

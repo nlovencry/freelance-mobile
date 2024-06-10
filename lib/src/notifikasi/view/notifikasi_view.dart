@@ -1,5 +1,5 @@
-import 'package:bimops/src/notifikasi/provider/notifikasi_provider.dart';
-import 'package:bimops/src/notifikasi/view/notifikasi_detail_view.dart';
+import 'package:mata/src/notifikasi/provider/notifikasi_provider.dart';
+import 'package:mata/src/notifikasi/view/notifikasi_detail_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_toggle_tab/flutter_toggle_tab.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
@@ -102,7 +102,7 @@ class _NotificationViewState extends State<NotificationView>
                       context,
                       MaterialPageRoute(
                           builder: (context) => DetailNotifikasiView(
-                            action: true,
+                              action: true,
                               docCode: item.assetCode ?? "",
                               woId: item.id ?? "0",
                               type: item.moduleId ?? ""))),
@@ -191,7 +191,7 @@ class _NotificationViewState extends State<NotificationView>
                       context,
                       MaterialPageRoute(
                           builder: (context) => DetailNotifikasiView(
-                            action: false,
+                              action: false,
                               docCode: item.assetCode ?? "",
                               woId: item.id ?? "0",
                               type: item.moduleId ?? ""))),

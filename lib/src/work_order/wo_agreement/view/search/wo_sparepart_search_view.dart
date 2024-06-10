@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:bimops/common/component/custom_appbar.dart';
-import 'package:bimops/src/work_order/wo_agreement/provider/wo_agreement_provider.dart';
+import 'package:mata/common/component/custom_appbar.dart';
+import 'package:mata/src/work_order/wo_agreement/provider/wo_agreement_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:provider/provider.dart';

@@ -2,7 +2,7 @@
 // import 'dart:io';
 // import 'dart:typed_data';
 
-// import 'package:bimops/helper/currencies.dart';
+// import 'package:mata/helper/currencies.dart';
 // import 'package:flutter/material.dart';
 // import 'package:image_picker/image_picker.dart';
 

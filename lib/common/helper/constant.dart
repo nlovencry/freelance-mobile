@@ -17,7 +17,7 @@ class Constant {
   static const String DOMAIN2 = "bimops-api.erdata.id";
   static const String BASE_API_FULL = "https://${DOMAIN}/api";
   static const String BASE_API_FULL2 = "https://${DOMAIN2}/api";
-  static const String APP_NAME = "Bimops";
+  static const String APP_NAME = "MATA";
 
   /// COlORS
   ///
@@ -26,8 +26,9 @@ class Constant {
   ///
   /// Constant.firstColor;
   ///
-  static Color primaryColor = Color(0xFF0290F5);
-  static Color secondaryColor = Color(0xFF1871B2);
+  static Color primaryColor = Color(0xFF012D5A);
+  static Color secondaryColor = Color(0xFF2F5273);
+  static Color thirdColor = Color(0xFFFBBB00);
   static Color tertiaryColor = Color(0xFF8CC6FF);
   static Color quarteryColor = Color(0xFFC5E2FF);
   static Color tableBlueColor = Color(0xFFE9F0FF);

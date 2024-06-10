@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:bimops/src/notifikasi/provider/notifikasi_provider.dart';
+import 'package:mata/src/notifikasi/provider/notifikasi_provider.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart' as Material;
 import 'package:flutter/material.dart';

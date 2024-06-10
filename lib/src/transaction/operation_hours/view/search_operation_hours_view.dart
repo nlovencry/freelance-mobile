@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:bimops/common/component/custom_appbar.dart';
-import 'package:bimops/src/transaction/asset_meter/provider/asset_meter_provider.dart';
+import 'package:mata/common/component/custom_appbar.dart';
+import 'package:mata/src/transaction/asset_meter/provider/asset_meter_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:provider/provider.dart';

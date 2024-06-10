@@ -1,4 +1,4 @@
-import 'package:bimops/src/work_order/wo_realization/view/create_wo_realization/view_wo_realization_view.dart';
+import 'package:mata/src/work_order/wo_realization/view/create_wo_realization/view_wo_realization_view.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../common/component/custom_navigator.dart';
@@ -41,7 +41,7 @@ List<Widget> divider(Color color) {
   ];
 }
 
-Widget choicePage(int index, bool ) {
+Widget choicePage(int index, bool) {
   if (index == 0) {
     return ViewWORealizationView();
   }
@@ -76,84 +76,77 @@ ScrollController _scrollController1 = ScrollController();
 
 _scrollToLastPosition1(int index) {
   double scrollPosition = index * 100;
-  _scrollController.jumpTo(
-      scrollPosition
-  );
+  _scrollController.jumpTo(scrollPosition);
 }
+
 ScrollController _scrollController = ScrollController();
 
 _scrollToLastPosition(int index) {
   double scrollPosition = index * 100;
-  _scrollController.jumpTo(
-      scrollPosition
-  );
+  _scrollController.jumpTo(scrollPosition);
 }
 
-
-Widget subHeaderWo(int pcc ,BuildContext context, {bool isEdit = false}) {
+Widget subHeaderWo(int pcc, BuildContext context, {bool isEdit = false}) {
   WidgetsBinding.instance!.addPostFrameCallback((_) {
     _scrollToLastPosition(pcc);
   });
   return SizedBox(
     height: 80,
     child: ListView.separated(
-      separatorBuilder: (context, index) {
-        return SizedBox(width: 8,);
-      },
+        separatorBuilder: (context, index) {
+          return SizedBox(
+            width: 8,
+          );
+        },
         controller: _scrollController,
-      itemCount: name.length,
+        itemCount: name.length,
         scrollDirection: Axis.horizontal,
         shrinkWrap: true,
         itemBuilder: (context, index) {
-      return Row(
-        children: [
-          InkWell(
-            onTap: () {
-              CusNav.nPop(context);
-              CusNav.nPush(context, choicePage(index, isEdit));
-            },
-            child: Column(
-              children: [
-                Constant.xSizedBox16,
-                Container(
-                  width: 35,
-                  height: 35,
-                  decoration: BoxDecoration(
-                    color:
-                    index == pcc
-                    ? Constant.primaryColor
-                    : Constant.grayColor
-                    ,
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  child: Center(
-                      child: Text(
+          return Row(
+            children: [
+              InkWell(
+                onTap: () {
+                  CusNav.nPop(context);
+                  CusNav.nPush(context, choicePage(index, isEdit));
+                },
+                child: Column(
+                  children: [
+                    Constant.xSizedBox16,
+                    Container(
+                      width: 35,
+                      height: 35,
+                      decoration: BoxDecoration(
+                        color: index == pcc
+                            ? Constant.primaryColor
+                            : Constant.grayColor,
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      child: Center(
+                          child: Text(
                         "${index + 1}",
                         style: Constant.whiteRegular12.copyWith(
                             fontSize: 16, fontWeight: FontWeight.w500),
                       )),
+                    ),
+                    Text(
+                      name[index],
+                      style: Constant.iPrimaryMedium8.copyWith(
+                          fontSize: 13,
+                          color: index == pcc
+                              ? Constant.primaryColor
+                              : Constant.grayColor),
+                    )
+                  ],
                 ),
-                Text(
-                  name[index],
-                  style: Constant.iPrimaryMedium8.copyWith(fontSize: 13, color: index == pcc
-                  ? Constant.primaryColor
-                      : Constant.grayColor
-                  ),
-                )
-              ],
-            ),
-          ),
-          if (index != name.length - 1) ...divider(index == pcc
-          ? Constant.primaryColor
-              : Constant.grayColor
-          ),
-        ],
-      );
-    }),
+              ),
+              if (index != name.length - 1)
+                ...divider(
+                    index == pcc ? Constant.primaryColor : Constant.grayColor),
+            ],
+          );
+        }),
   );
-
-
-
 }
 
 //

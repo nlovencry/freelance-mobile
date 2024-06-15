@@ -1254,7 +1254,9 @@ class ReportModelData {
     assetCategoryCode = json['asset_category_code']?.toString();
     baNoPersetujuan = json['ba_no_persetujuan']?.toString();
     baNoRealisasi = json['ba_no_realisasi']?.toString();
-    typeWork = (json['type_work'] != null) ? ReportModelDataTypeWork.fromJson(json['type_work']) : null;
+    typeWork = (json['type_work'] != null)
+        ? ReportModelDataTypeWork.fromJson(json['type_work'])
+        : null;
     assetMeterCode = json['asset_meter_code']?.toString();
     typeTrans = json['type_trans']?.toString();
     dateDoc = json['date_doc']?.toString();
@@ -1283,10 +1285,18 @@ class ReportModelData {
     submitRls = json['submit_rls']?.toString();
     startDowntime = json['start_downtime']?.toString();
     upDate = json['up_date']?.toString();
-    asset = (json['asset'] != null) ? ReportModelDataAsset.fromJson(json['asset']) : null;
-    cabang = (json['cabang'] != null) ? ReportModelDataCabang.fromJson(json['cabang']) : null;
-    userCreate = (json['user_create'] != null) ? ReportModelDataUserCreate.fromJson(json['user_create']) : null;
-    regional = (json['regional'] != null) ? ReportModelDataRegional.fromJson(json['regional']) : null;
+    asset = (json['asset'] != null)
+        ? ReportModelDataAsset.fromJson(json['asset'])
+        : null;
+    cabang = (json['cabang'] != null)
+        ? ReportModelDataCabang.fromJson(json['cabang'])
+        : null;
+    userCreate = (json['user_create'] != null)
+        ? ReportModelDataUserCreate.fromJson(json['user_create'])
+        : null;
+    regional = (json['regional'] != null)
+        ? ReportModelDataRegional.fromJson(json['regional'])
+        : null;
     if (json['wo_spareparts'] != null) {
       final v = json['wo_spareparts'];
       final arr0 = <ReportModelDataWoSpareparts>[];
@@ -1708,7 +1718,7 @@ class ReportModel {
     }
     page = json['page']?.toString();
     length = json['length']?.toString();
-    message = json['message']?.toString();
+    message = json['Message']?.toString();
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
@@ -1723,7 +1733,7 @@ class ReportModel {
     }
     data['page'] = page;
     data['length'] = length;
-    data['message'] = message;
+    data['Message'] = message;
     return data;
   }
 }

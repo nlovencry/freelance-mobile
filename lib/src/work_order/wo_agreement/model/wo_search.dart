@@ -141,7 +141,7 @@ class WOToolsSearchModel {
     }
     page = json['page']?.toString();
     length = json['length']?.toString();
-    message = json['message']?.toString();
+    message = json['Message']?.toString();
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
@@ -156,7 +156,7 @@ class WOToolsSearchModel {
     }
     data['page'] = page;
     data['length'] = length;
-    data['message'] = message;
+    data['Message'] = message;
     return data;
   }
 }
@@ -316,7 +316,7 @@ class WOServiceSearchModel {
     }
     page = json['page']?.toString();
     length = json['length']?.toString();
-    message = json['message']?.toString();
+    message = json['Message']?.toString();
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
@@ -331,7 +331,7 @@ class WOServiceSearchModel {
     }
     data['page'] = page;
     data['length'] = length;
-    data['message'] = message;
+    data['Message'] = message;
     return data;
   }
 }
@@ -455,7 +455,7 @@ class WOSparepartSearchModel {
     }
     page = json['page']?.toString();
     length = json['length']?.toString();
-    message = json['message']?.toString();
+    message = json['Message']?.toString();
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
@@ -470,7 +470,7 @@ class WOSparepartSearchModel {
     }
     data['page'] = page;
     data['length'] = length;
-    data['message'] = message;
+    data['Message'] = message;
     return data;
   }
 }
@@ -642,7 +642,7 @@ class WOWarehouseSearchModel {
     }
     page = json['page']?.toString();
     length = json['length']?.toString();
-    message = json['message']?.toString();
+    message = json['Message']?.toString();
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
@@ -657,7 +657,7 @@ class WOWarehouseSearchModel {
     }
     data['page'] = page;
     data['length'] = length;
-    data['message'] = message;
+    data['Message'] = message;
     return data;
   }
 }
@@ -787,7 +787,7 @@ class WOSystemSearchModel {
     }
     page = json['page']?.toString();
     length = json['length']?.toString();
-    message = json['message']?.toString();
+    message = json['Message']?.toString();
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
@@ -802,7 +802,7 @@ class WOSystemSearchModel {
     }
     data['page'] = page;
     data['length'] = length;
-    data['message'] = message;
+    data['Message'] = message;
     return data;
   }
 }
@@ -878,7 +878,7 @@ class WOProgressSearchModel {
     }
     page = json['page']?.toString();
     length = json['length']?.toString();
-    message = json['message']?.toString();
+    message = json['Message']?.toString();
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
@@ -893,7 +893,7 @@ class WOProgressSearchModel {
     }
     data['page'] = page;
     data['length'] = length;
-    data['message'] = message;
+    data['Message'] = message;
     return data;
   }
 }
@@ -1023,7 +1023,7 @@ class WOSubSystemSearchModel {
     }
     page = json['page']?.toString();
     length = json['length']?.toString();
-    message = json['message']?.toString();
+    message = json['Message']?.toString();
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
@@ -1038,7 +1038,7 @@ class WOSubSystemSearchModel {
     }
     data['page'] = page;
     data['length'] = length;
-    data['message'] = message;
+    data['Message'] = message;
     return data;
   }
 }
@@ -1126,7 +1126,7 @@ class WOCompleteModel {
     }
     page = json['page']?.toString();
     length = json['length']?.toString();
-    message = json['message']?.toString();
+    message = json['Message']?.toString();
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
@@ -1141,7 +1141,7 @@ class WOCompleteModel {
     }
     data['page'] = page;
     data['length'] = length;
-    data['message'] = message;
+    data['Message'] = message;
     return data;
   }
 }
@@ -2254,7 +2254,7 @@ class WOWorkOrderSearchModel {
     }
     page = json['page']?.toString();
     length = json['length']?.toString();
-    message = json['message']?.toString();
+    message = json['Message']?.toString();
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
@@ -2269,7 +2269,7 @@ class WOWorkOrderSearchModel {
     }
     data['page'] = page;
     data['length'] = length;
-    data['message'] = message;
+    data['Message'] = message;
     return data;
   }
 }
@@ -2870,7 +2870,7 @@ class WOAssetSearchModel {
     }
     page = json['page']?.toString();
     length = json['length']?.toString();
-    message = json['message']?.toString();
+    message = json['Message']?.toString();
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
@@ -2885,7 +2885,7 @@ class WOAssetSearchModel {
     }
     data['page'] = page;
     data['length'] = length;
-    data['message'] = message;
+    data['Message'] = message;
     return data;
   }
 }

@@ -67,10 +67,10 @@ class ConfirmationViewState extends BaseState<ConfirmationView> {
   @override
   Widget build(BuildContext context) {
     final auth = context.watch<AuthProvider>();
-    final ForgotArguments forgotArgs =
-        ModalRoute.of(context)?.settings.arguments as ForgotArguments;
-    auth.tokenC.text = forgotArgs.token;
-    auth.emailForgotC.text = forgotArgs.email;
+    // final ForgotArguments forgotArgs =
+    //     ModalRoute.of(context)?.settings.arguments as ForgotArguments;
+    // auth.tokenC.text = forgotArgs.token;
+    // auth.emailForgotC.text = forgotArgs.email;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: InkWell(

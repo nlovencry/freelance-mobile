@@ -255,8 +255,10 @@ class RejectWORealizationModel {
   });
   RejectWORealizationModel.fromJson(Map<String, dynamic> json) {
     success = json['success'];
-    data = (json['data'] != null) ? RejectWORealizationModelData.fromJson(json['data']) : null;
-    message = json['message']?.toString();
+    data = (json['data'] != null)
+        ? RejectWORealizationModelData.fromJson(json['data'])
+        : null;
+    message = json['Message']?.toString();
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
@@ -264,7 +266,7 @@ class RejectWORealizationModel {
     if (data != null) {
       data['data'] = this.data!.toJson();
     }
-    data['message'] = message;
+    data['Message'] = message;
     return data;
   }
 }

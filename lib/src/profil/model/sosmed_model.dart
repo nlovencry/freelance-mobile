@@ -65,7 +65,7 @@ class SosmedModel {
     success = json['success'];
     data =
         (json['data'] != null) ? SosmedModelData.fromJson(json['data']) : null;
-    message = json['message']?.toString();
+    message = json['Message']?.toString();
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
@@ -73,7 +73,7 @@ class SosmedModel {
     if (data != null) {
       data['data'] = this.data!.toJson();
     }
-    data['message'] = message;
+    data['Message'] = message;
     return data;
   }
 }

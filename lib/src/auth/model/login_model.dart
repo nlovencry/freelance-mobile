@@ -4,66 +4,36 @@
 class LoginModelData {
 /*
 {
-  "token": "111|0xH9t1y1csW61ZmjQyZNddrBMEqUdubit6ymXV8K",
-  "id": "OA==",
-  "username": "19950601831",
-  "name": "Sahala Tua Parulian Hutagalung",
-  "jabatan": "Planner",
-  "company_id": 1,
-  "company_name": "PT. Berkah Industri Mesin Angkat",
-  "cabang_id": 34,
-  "cabang_code": "CAB06",
-  "cabang_name": "PELABUHAN TANJUNG PERAK (JAMRUD)"
+  "Name": "aditya fullname",
+  "Division": "Engineer",
+  "Token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJFeHAiOjE3MTg0OTUxOTIsIklkIjoiMDFKMDZEU0c4WlRWWlRCVzVOWjg3WFJWTVgifQ.vook50_afNFiP55zB8nDgL-H9ityc9tWYAh55uGmK20SuTF4sMHNjKoF1uhnioyMSC6u49EVpgr4GJh3Hknouhalr_--xPY1KcSypnRtaSq-iiVccWm8GqPnNm4Na2YNhDZxZvXi4C_JSS2GJq6zBFOwWjAf9kMnYU6BTVCuTho",
+  "RefreshToken": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJFeHAiOjE3MTg1MzExOTIsIklkIjoiMDFKMDZEU0c4WlRWWlRCVzVOWjg3WFJWTVgifQ.SEoXJHVvUGQPVs2p-tL8m3wpGbNmyyS4qHN7pgTSHcdR8qZOCigdhUolBX9rJIqMh5_rNBKRf79w0WL9uxJnYL19gII6Yjdkshnm2NH5iu4tGAcZeKk9ge1qJ4oBBfTFBrgH7n0UqNmqeZ004I3kWUFVwhH_LMT70wEJjv2Zs6U"
 } 
 */
 
-  String? token;
-  String? id;
-  String? username;
-  String? name;
-  String? jabatan;
-  int? companyId;
-  String? companyName;
-  int? cabangId;
-  String? cabangCode;
-  String? cabangName;
+  String? Name;
+  String? Division;
+  String? Token;
+  String? RefreshToken;
 
   LoginModelData({
-    this.token,
-    this.id,
-    this.username,
-    this.name,
-    this.jabatan,
-    this.companyId,
-    this.companyName,
-    this.cabangId,
-    this.cabangCode,
-    this.cabangName,
+    this.Name,
+    this.Division,
+    this.Token,
+    this.RefreshToken,
   });
   LoginModelData.fromJson(Map<String, dynamic> json) {
-    token = json['token']?.toString();
-    id = json['id']?.toString();
-    username = json['username']?.toString();
-    name = json['name']?.toString();
-    jabatan = json['jabatan']?.toString();
-    companyId = json['company_id']?.toInt();
-    companyName = json['company_name']?.toString();
-    cabangId = json['cabang_id']?.toInt();
-    cabangCode = json['cabang_code']?.toString();
-    cabangName = json['cabang_name']?.toString();
+    Name = json['Name']?.toString();
+    Division = json['Division']?.toString();
+    Token = json['Token']?.toString();
+    RefreshToken = json['RefreshToken']?.toString();
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
-    data['token'] = token;
-    data['id'] = id;
-    data['username'] = username;
-    data['name'] = name;
-    data['jabatan'] = jabatan;
-    data['company_id'] = companyId;
-    data['company_name'] = companyName;
-    data['cabang_id'] = cabangId;
-    data['cabang_code'] = cabangCode;
-    data['cabang_name'] = cabangName;
+    data['Name'] = Name;
+    data['Division'] = Division;
+    data['Token'] = Token;
+    data['RefreshToken'] = RefreshToken;
     return data;
   }
 }
@@ -71,52 +41,44 @@ class LoginModelData {
 class LoginModel {
 /*
 {
-  "success": true,
-  "data": {
-    "token": "111|0xH9t1y1csW61ZmjQyZNddrBMEqUdubit6ymXV8K",
-    "id": "OA==",
-    "username": "19950601831",
-    "name": "Sahala Tua Parulian Hutagalung",
-    "jabatan": "Planner",
-    "company_id": 1,
-    "company_name": "PT. Berkah Industri Mesin Angkat",
-    "cabang_id": 34,
-    "cabang_code": "CAB06",
-    "cabang_name": "PELABUHAN TANJUNG PERAK (JAMRUD)"
-  },
-  "message": "Login Sukses"
+  "Success": true,
+  "StatusCode": 200,
+  "Message": "berhasil login",
+  "Data": {
+    "Name": "aditya fullname",
+    "Division": "Engineer",
+    "Token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJFeHAiOjE3MTg0OTUxOTIsIklkIjoiMDFKMDZEU0c4WlRWWlRCVzVOWjg3WFJWTVgifQ.vook50_afNFiP55zB8nDgL-H9ityc9tWYAh55uGmK20SuTF4sMHNjKoF1uhnioyMSC6u49EVpgr4GJh3Hknouhalr_--xPY1KcSypnRtaSq-iiVccWm8GqPnNm4Na2YNhDZxZvXi4C_JSS2GJq6zBFOwWjAf9kMnYU6BTVCuTho",
+    "RefreshToken": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJFeHAiOjE3MTg1MzExOTIsIklkIjoiMDFKMDZEU0c4WlRWWlRCVzVOWjg3WFJWTVgifQ.SEoXJHVvUGQPVs2p-tL8m3wpGbNmyyS4qHN7pgTSHcdR8qZOCigdhUolBX9rJIqMh5_rNBKRf79w0WL9uxJnYL19gII6Yjdkshnm2NH5iu4tGAcZeKk9ge1qJ4oBBfTFBrgH7n0UqNmqeZ004I3kWUFVwhH_LMT70wEJjv2Zs6U"
+  }
 } 
 */
 
-  bool? success;
-  LoginModelData? data;
-  String? message;
+  bool? Success;
+  int? StatusCode;
+  String? Message;
+  LoginModelData? Data;
 
   LoginModel({
-    this.success,
-    this.data,
-    this.message,
+    this.Success,
+    this.StatusCode,
+    this.Message,
+    this.Data,
   });
   LoginModel.fromJson(Map<String, dynamic> json) {
-    success = json['success'];
-    data =
-        (json['data'] != null) ? LoginModelData.fromJson(json['data']) : null;
-    message = json['message']?.toString();
+    Success = json['Success'];
+    StatusCode = json['StatusCode']?.toInt();
+    Message = json['Message']?.toString();
+    Data =
+        (json['Data'] != null) ? LoginModelData.fromJson(json['Data']) : null;
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
-    data['success'] = success;
-    if (data != null) {
-      data['data'] = this.data!.toJson();
+    data['Success'] = Success;
+    data['StatusCode'] = StatusCode;
+    data['Message'] = Message;
+    if (Data != null) {
+      data['Data'] = Data!.toJson();
     }
-    data['message'] = message;
     return data;
   }
-}
-
-class ForgotArguments {
-  final String token;
-  final String email;
-
-  ForgotArguments(this.token, this.email);
 }

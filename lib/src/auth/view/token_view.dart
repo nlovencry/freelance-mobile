@@ -104,8 +104,8 @@ class TokenViewState extends BaseState<TokenView> {
                               false,
                             );
                             Future.delayed(Duration(seconds: 2), () {
-                              ForgotArguments args = ForgotArguments(
-                                  auth.tokenC.text, auth.emailForgotC.text);
+                              // ForgotArguments args = ForgotArguments(
+                              //     auth.tokenC.text, auth.emailForgotC.text);
                               Navigator.pushNamed(context, '/confirm',
                                   arguments: args);
                             });

@@ -122,7 +122,7 @@ class NotifikasiProvider extends BaseController with ChangeNotifier {
         if (withLoading) loading(false);
         isFetching = false;
       } else {
-        final message = jsonDecode(response.body)["message"];
+        final message = jsonDecode(response.body)["Message"];
         loading(false);
         isFetching = false;
         throw Exception(message);
@@ -165,7 +165,7 @@ class NotifikasiProvider extends BaseController with ChangeNotifier {
         if (withLoading) loading(false);
         isFetching2 = false;
       } else {
-        final message = jsonDecode(response.body)["message"];
+        final message = jsonDecode(response.body)["Message"];
         loading(false);
         isFetching2 = false;
         throw Exception(message);
@@ -267,7 +267,7 @@ class NotifikasiProvider extends BaseController with ChangeNotifier {
       notifyListeners();
       isFetching = false;
     } else {
-      final message = jsonDecode(response.body)["message"];
+      final message = jsonDecode(response.body)["Message"];
       loading(false);
       throw Exception(message);
     }
@@ -315,7 +315,7 @@ class NotifikasiProvider extends BaseController with ChangeNotifier {
 
       if (withLoading) loading(false);
     } else {
-      final message = jsonDecode(response.body)["message"];
+      final message = jsonDecode(response.body)["Message"];
       loading(false);
       throw Exception(message);
     }

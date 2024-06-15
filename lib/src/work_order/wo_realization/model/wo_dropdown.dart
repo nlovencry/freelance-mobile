@@ -69,7 +69,7 @@ class WOLaboursCraftModel {
     }
     page = json['page']?.toString();
     length = json['length']?.toString();
-    message = json['message']?.toString();
+    message = json['Message']?.toString();
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
@@ -84,7 +84,7 @@ class WOLaboursCraftModel {
     }
     data['page'] = page;
     data['length'] = length;
-    data['message'] = message;
+    data['Message'] = message;
     return data;
   }
 }
@@ -160,7 +160,7 @@ class WOLaboursSkillModel {
     }
     page = json['page']?.toString();
     length = json['length']?.toString();
-    message = json['message']?.toString();
+    message = json['Message']?.toString();
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
@@ -175,7 +175,7 @@ class WOLaboursSkillModel {
     }
     data['page'] = page;
     data['length'] = length;
-    data['message'] = message;
+    data['Message'] = message;
     return data;
   }
 }
@@ -254,7 +254,7 @@ class WOCheckOAModel {
     data = (json['data'] != null)
         ? WOCheckOAModelData.fromJson(json['data'])
         : null;
-    message = json['message']?.toString();
+    message = json['Message']?.toString();
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
@@ -262,7 +262,7 @@ class WOCheckOAModel {
     if (data != null) {
       data['data'] = this.data!.toJson();
     }
-    data['message'] = message;
+    data['Message'] = message;
     return data;
   }
 }

@@ -109,7 +109,7 @@ class WOAgreementLogModel {
       });
       this.data = arr0;
     }
-    message = json['message']?.toString();
+    message = json['Message']?.toString();
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
@@ -122,7 +122,7 @@ class WOAgreementLogModel {
       });
       data['data'] = arr0;
     }
-    data['message'] = message;
+    data['Message'] = message;
     return data;
   }
 }

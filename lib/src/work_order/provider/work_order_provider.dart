@@ -34,7 +34,7 @@ class WorkOrderProvider extends BaseController with ChangeNotifier {
       if (withLoading) loading(false);
       // return model;
     } else {
-      final message = jsonDecode(response.body)["message"];
+      final message = jsonDecode(response.body)["Message"];
       loading(false);
       throw Exception(message);
     }
@@ -56,7 +56,7 @@ class WorkOrderProvider extends BaseController with ChangeNotifier {
 
     final response = await get(
       'http://dev-api.sibima.id//product-bar-search',
-      query: {'search': searchC.text},
+      body: {'search': searchC.text},
     );
 
     if (response.statusCode == 201 || response.statusCode == 200) {

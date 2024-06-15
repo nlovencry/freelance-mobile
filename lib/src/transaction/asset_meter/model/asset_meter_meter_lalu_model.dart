@@ -22,13 +22,13 @@ class AssetMeterMeterLaluModel {
   AssetMeterMeterLaluModel.fromJson(Map<String, dynamic> json) {
     success = json['success'];
     data = json['data']?.toString();
-    message = json['message']?.toString();
+    message = json['Message']?.toString();
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data['success'] = success;
     data['data'] = this.data;
-    data['message'] = message;
+    data['Message'] = message;
     return data;
   }
 }

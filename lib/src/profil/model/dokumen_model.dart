@@ -47,7 +47,7 @@ class DokumenModel {
     success = json['success'];
     data =
         (json['data'] != null) ? DokumenModelData.fromJson(json['data']) : null;
-    message = json['message']?.toString();
+    message = json['Message']?.toString();
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
@@ -55,7 +55,7 @@ class DokumenModel {
     if (data != null) {
       data['data'] = this.data!.toJson();
     }
-    data['message'] = message;
+    data['Message'] = message;
     return data;
   }
 }

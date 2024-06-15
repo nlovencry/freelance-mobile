@@ -148,7 +148,7 @@ class AssetDowntimeProvider extends BaseController with ChangeNotifier {
         if (withLoading) loading(false);
         isFetching = false;
       } else {
-        final message = jsonDecode(response.body)["message"];
+        final message = jsonDecode(response.body)["Message"];
         loading(false);
         isFetching = false;
         throw Exception(message);
@@ -235,7 +235,7 @@ class AssetDowntimeProvider extends BaseController with ChangeNotifier {
         if (withLoading) loading(false);
         isFetching = false;
       } else {
-        final message = jsonDecode(response.body)["message"];
+        final message = jsonDecode(response.body)["Message"];
         loading(false);
         isFetching = false;
         throw Exception(message);
@@ -313,7 +313,7 @@ class AssetDowntimeProvider extends BaseController with ChangeNotifier {
         if (withLoading) loading(false);
         isFetching = false;
       } else {
-        final message = jsonDecode(response.body)["message"];
+        final message = jsonDecode(response.body)["Message"];
         loading(false);
         isFetching = false;
         throw Exception(message);

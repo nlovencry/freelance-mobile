@@ -230,7 +230,7 @@ class ProfileModel {
     success = json['success'];
     data =
         (json['data'] != null) ? ProfileModelData.fromJson(json['data']) : null;
-    message = json['message']?.toString();
+    message = json['Message']?.toString();
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
@@ -238,7 +238,7 @@ class ProfileModel {
     if (data != null) {
       data['data'] = this.data!.toJson();
     }
-    data['message'] = message;
+    data['Message'] = message;
     return data;
   }
 }

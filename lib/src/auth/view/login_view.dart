@@ -118,14 +118,14 @@ class _LoginViewState extends BaseState<LoginView> {
                         try {
                           final result =
                               await context.read<AuthProvider>().login();
-                          if (result.success == true) {
+                          if (result.Success == true) {
                             await context
                                 .read<AuthProvider>()
                                 .updateFirebaseToken();
                             Navigator.pushReplacementNamed(context, '/home',
                                 arguments: "");
                           } else {
-                            Utils.showFailed(msg: result.message ?? "Error");
+                            Utils.showFailed(msg: result.Message ?? "Error");
                           }
                         } catch (e) {
                           Utils.showFailed(
@@ -171,11 +171,11 @@ class _LoginViewState extends BaseState<LoginView> {
                         try {
                           final result =
                               await context.read<AuthProvider>().login();
-                          if (result.success == true) {
+                          if (result.Success == true) {
                             Navigator.pushReplacementNamed(context, '/home',
                                 arguments: "");
                           } else {
-                            Utils.showFailed(msg: result.message ?? "Error");
+                            Utils.showFailed(msg: result.Message ?? "Error");
                           }
                         } catch (e) {
                           Utils.showFailed(

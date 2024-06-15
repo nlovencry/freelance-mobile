@@ -420,7 +420,7 @@ class WOAgreementProvider extends BaseController with ChangeNotifier {
         if (withLoading) loading(false);
         isFetching = false;
       } else {
-        final message = jsonDecode(response.body)["message"];
+        final message = jsonDecode(response.body)["Message"];
         loading(false);
         isFetching = false;
         throw Exception(message);
@@ -520,7 +520,7 @@ class WOAgreementProvider extends BaseController with ChangeNotifier {
       // notifyListeners();
       if (withLoading) loading(false);
     } else {
-      final message = jsonDecode(response.body)["message"];
+      final message = jsonDecode(response.body)["Message"];
       loading(false);
       throw Exception(message);
     }
@@ -795,7 +795,7 @@ class WOAgreementProvider extends BaseController with ChangeNotifier {
         if (withLoading) loading(false);
         isFetching = false;
       } else {
-        final message = jsonDecode(response.body)["message"];
+        final message = jsonDecode(response.body)["Message"];
         loading(false);
         isFetchingWoTools = false;
         throw Exception(message);
@@ -822,7 +822,7 @@ class WOAgreementProvider extends BaseController with ChangeNotifier {
       // notifyListeners();
       if (withLoading) loading(false);
     } else {
-      final message = jsonDecode(response.body)["message"];
+      final message = jsonDecode(response.body)["Message"];
       loading(false);
       throw Exception(message);
     }
@@ -847,7 +847,7 @@ class WOAgreementProvider extends BaseController with ChangeNotifier {
       // notifyListeners();
       if (withLoading) loading(false);
     } else {
-      final message = jsonDecode(response.body)["message"];
+      final message = jsonDecode(response.body)["Message"];
       loading(false);
       throw Exception(message);
     }
@@ -1136,7 +1136,7 @@ class WOAgreementProvider extends BaseController with ChangeNotifier {
         if (withLoading) loading(false);
         isFetching = false;
       } else {
-        final message = jsonDecode(response.body)["message"];
+        final message = jsonDecode(response.body)["Message"];
         loading(false);
         isFetchingWoService = false;
         throw Exception(message);
@@ -1164,7 +1164,7 @@ class WOAgreementProvider extends BaseController with ChangeNotifier {
       // notifyListeners();
       if (withLoading) loading(false);
     } else {
-      final message = jsonDecode(response.body)["message"];
+      final message = jsonDecode(response.body)["Message"];
       loading(false);
       throw Exception(message);
     }
@@ -1418,7 +1418,7 @@ class WOAgreementProvider extends BaseController with ChangeNotifier {
         if (withLoading) loading(false);
         isFetching = false;
       } else {
-        final message = jsonDecode(response.body)["message"];
+        final message = jsonDecode(response.body)["Message"];
         loading(false);
         isFetchingWoSparepart = false;
         throw Exception(message);
@@ -1499,7 +1499,7 @@ class WOAgreementProvider extends BaseController with ChangeNotifier {
         if (withLoading) loading(false);
         isFetching = false;
       } else {
-        final message = jsonDecode(response.body)["message"];
+        final message = jsonDecode(response.body)["Message"];
         loading(false);
         isFetchingWoWarehouse = false;
         throw Exception(message);
@@ -1599,7 +1599,7 @@ class WOAgreementProvider extends BaseController with ChangeNotifier {
         if (withLoading) loading(false);
         isFetching = false;
       } else {
-        final message = jsonDecode(response.body)["message"];
+        final message = jsonDecode(response.body)["Message"];
         loading(false);
         isFetchingWoComplete = false;
         throw Exception(message);
@@ -1675,7 +1675,7 @@ class WOAgreementProvider extends BaseController with ChangeNotifier {
         if (withLoading) loading(false);
         isFetching = false;
       } else {
-        final message = jsonDecode(response.body)["message"];
+        final message = jsonDecode(response.body)["Message"];
         loading(false);
         isFetchingWoAsset = false;
         throw Exception(message);
@@ -1838,7 +1838,7 @@ class WOAgreementProvider extends BaseController with ChangeNotifier {
       // notifyListeners();
       if (withLoading) loading(false);
     } else {
-      final message = jsonDecode(response.body)["message"];
+      final message = jsonDecode(response.body)["Message"];
       loading(false);
       throw Exception(message);
     }
@@ -1859,7 +1859,7 @@ class WOAgreementProvider extends BaseController with ChangeNotifier {
 
       if (withLoading) loading(false);
     } else {
-      final message = jsonDecode(response.body)["message"];
+      final message = jsonDecode(response.body)["Message"];
       loading(false);
       throw Exception(message);
     }
@@ -1891,7 +1891,7 @@ class WOAgreementProvider extends BaseController with ChangeNotifier {
 
       if (withLoading) loading(false);
     } else {
-      final message = jsonDecode(response.body)["message"];
+      final message = jsonDecode(response.body)["Message"];
       loading(false);
       throw Exception(message);
     }

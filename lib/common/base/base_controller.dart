@@ -50,7 +50,7 @@ class BaseController<S extends BaseState> {
     return (await preferences())!.getString('token');
   }
 
-  Future get(String url, {Map? headers, Map<String, String?>? query}) async {
+  Future get(String url, {Map? headers, Map<String, String?>? body}) async {
     Map<String, String> h = Map<String, String>();
     h.putIfAbsent('Connection', () => 'Keep-Alive');
     h.putIfAbsent('accept', () => 'application/json');
@@ -59,13 +59,13 @@ class BaseController<S extends BaseState> {
     if (headers != null) h.addAll(headers as Map<String, String>);
 
     final uri = Uri.parse(url);
-    final queryUri = Uri.https(uri.authority, uri.path, query);
+    final bodyUri = Uri.https(uri.authority, uri.path, body);
 
     log("==== PARAMETERS ====");
     log("URL : $url");
-    log("QUERY : $queryUri");
+    log("BODY : $bodyUri");
     Response response =
-        await http.get(queryUri, headers: h).timeout(Duration(minutes: 1));
+        await http.get(bodyUri, headers: h).timeout(Duration(minutes: 1));
     log("RESPONSE GET $url : ${response.body}");
     log("====================");
 
@@ -74,20 +74,31 @@ class BaseController<S extends BaseState> {
             '\r\n' +
         "URL : $url"
             '\r\n' +
-        "QUERY : $queryUri"
+        "BODY : $bodyUri"
             '\r\n' +
         "RESPONSE GET $url : ${response.body}"
             '\r\n' +
         "===================="
             '\r\n';
     // if (kDebugMode) {
-    XenoLog("GET").save(log2, alwaysLog: true);
+    // XenoLog("GET").save(log2, alwaysLog: true);
     // }
+
+    if (response.body.contains("Unauthorized")) {
+      // _preferences!.clear();
+    }
+    if (response.body.contains("Gateway time") ||
+        response.body
+            .toString()
+            .toLowerCase()
+            .contains("Internal Server Error")) {
+      return response.body;
+    }
 
     return response;
   }
 
-  Future<http.Response> post(String url,
+  Future post(String url,
       {Map<String, String>? headers,
       Map<String, dynamic>? body,
       List<http.MultipartFile>? files}) async {
@@ -123,8 +134,19 @@ class BaseController<S extends BaseState> {
           "===================="
               '\r\n';
       // if (kDebugMode) {
-      XenoLog("POST").save(log2, alwaysLog: true);
+      // XenoLog("POST").save(log2, alwaysLog: true);
       // }
+
+      if (response.body.contains("Unauthorized")) {
+        // _preferences!.clear();
+      }
+      if (response.body.contains("Gateway time") ||
+          response.body
+              .toString()
+              .toLowerCase()
+              .contains("Internal Server Error")) {
+        return response.body;
+      }
       return response;
     } else {
       var req = http.MultipartRequest("POST", Uri.parse(url));
@@ -156,10 +178,166 @@ class BaseController<S extends BaseState> {
           "===================="
               '\r\n';
       // if (kDebugMode) {
-      XenoLog("POST").save(log2, alwaysLog: true);
+      // XenoLog("POST").save(log2, alwaysLog: true);
       // }
+
+      if (response.body.contains("Unauthorized")) {
+        // _preferences!.clear();
+      }
+      if (response.body.contains("Gateway time") ||
+          response.body
+              .toString()
+              .toLowerCase()
+              .contains("Internal Server Error")) {
+        return response.body;
+      }
       return response;
     }
+  }
+
+  Future put(String url,
+      {Map<String, String>? headers,
+      Map<String, dynamic>? body,
+      List<http.MultipartFile>? files}) async {
+    // print(body);
+    Map<String, String> h = Map<String, String>();
+    h.putIfAbsent('Connection', () => 'Keep-Alive');
+    h.putIfAbsent('accept', () => 'application/json');
+    var token = await getToken();
+    if (token != null) h.putIfAbsent('Authorization', () => 'Bearer ' + token);
+    if (headers != null) h.addAll(headers);
+
+    if (files == null) {
+      log("==== PARAMETERS ====");
+      log("URL : $url");
+      log("BODY : $body");
+      Response response = await http
+          .post(Uri.parse(url),
+              headers: h, body: body, encoding: Encoding.getByName("utf-8"))
+          .timeout(Duration(minutes: 1));
+      log("RESPONSE PUT $url : ${response.body}");
+      log("====================");
+      String log2 = "Log : " +
+          "==== PARAMETERS ===="
+              '\r\n' +
+          "URL : $url"
+              '\r\n' +
+          "BODY : $body"
+              '\r\n' +
+          "FILES : $files"
+              '\r\n' +
+          "RESPONSE PUT $url : ${response.body}"
+              '\r\n' +
+          "===================="
+              '\r\n';
+      // if (kDebugMode) {
+      // XenoLog("POST").save(log2, alwaysLog: true);
+      // }
+
+      if (response.body.contains("Unauthorized")) {
+        // _preferences!.clear();
+      }
+      if (response.body.contains("Gateway time") ||
+          response.body
+              .toString()
+              .toLowerCase()
+              .contains("Internal Server Error")) {
+        return response.body;
+      }
+      return response;
+    } else {
+      var req = http.MultipartRequest("POST", Uri.parse(url));
+      h.putIfAbsent("Content-Type", () => 'multipart/form-data');
+      req.headers.addAll(h);
+      if (body != null)
+        req.fields
+            .addAll(body.map((key, value) => MapEntry(key, value.toString())));
+      req.files.addAll(files);
+      log("==== PARAMETERS ====");
+      log("URL : $url");
+      log("BODY : $body");
+      log("FILES : $files");
+      Response response = await http.Response.fromStream(await req.send())
+          .timeout(Duration(minutes: 1));
+      log("RESPONSE PUT FILE $url : ${response.body}");
+      log("====================");
+      String log2 = "Log : " +
+          "==== PARAMETERS ===="
+              '\r\n' +
+          "URL : $url"
+              '\r\n' +
+          "BODY : $body"
+              '\r\n' +
+          "FILES : $files"
+              '\r\n' +
+          "RESPONSE PUT $url : ${response.body}"
+              '\r\n' +
+          "===================="
+              '\r\n';
+      // if (kDebugMode) {
+      // XenoLog("POST").save(log2, alwaysLog: true);
+      // }
+
+      if (response.body.contains("Unauthorized")) {
+        // _preferences!.clear();
+      }
+      if (response.body.contains("Gateway time") ||
+          response.body
+              .toString()
+              .toLowerCase()
+              .contains("Internal Server Error")) {
+        return response.body;
+      }
+      return response;
+    }
+  }
+
+  Future delete(String url, {Map? headers, Map<String, String?>? query}) async {
+    Map<String, String> h = Map<String, String>();
+    h.putIfAbsent('Connection', () => 'Keep-Alive');
+    h.putIfAbsent('accept', () => 'application/json');
+    var token = await getToken();
+    if (token != null) h.putIfAbsent('Authorization', () => 'Bearer ' + token);
+    if (headers != null) h.addAll(headers as Map<String, String>);
+
+    final uri = Uri.parse(url);
+    final bodyUri = Uri.https(uri.authority, uri.path, query);
+
+    log("==== PARAMETERS ====");
+    log("URL : $url");
+    log("BODY : $bodyUri");
+    Response response = await http.delete(bodyUri, headers: h).timeout(
+        Duration(minutes: 1),
+        onTimeout: () => http.Response("Timeout", 504));
+    log("RESPONSE DELETE $url : ${response.body}");
+    log("====================");
+
+    String log2 = "Log : " +
+        "==== PARAMETERS ===="
+            '\r\n' +
+        "URL : $url"
+            '\r\n' +
+        "BODY : $query"
+            '\r\n' +
+        "RESPONSE DELETE $url : ${response.body}"
+            '\r\n' +
+        "===================="
+            '\r\n';
+    // if (kDebugMode) {
+    // XenoLog("DELETE").save(log2, alwaysLog: true);
+    // }
+
+    if (response.body.contains("Unauthorized")) {
+      // _preferences!.clear();
+    }
+    if (response.body.contains("Gateway time") ||
+        response.body
+            .toString()
+            .toLowerCase()
+            .contains("Internal Server Error")) {
+      return response.body;
+    }
+    return response;
   }
 
   loading(bool show) async {

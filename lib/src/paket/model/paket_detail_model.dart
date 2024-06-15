@@ -486,7 +486,7 @@ class PaketDetailModel {
     data = (json['data'] != null)
         ? PaketDetailModelData.fromJson(json['data'])
         : null;
-    message = json['message']?.toString();
+    message = json['Message']?.toString();
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
@@ -494,7 +494,7 @@ class PaketDetailModel {
     if (data != null) {
       data['data'] = this.data!.toJson();
     }
-    data['message'] = message;
+    data['Message'] = message;
     return data;
   }
 }

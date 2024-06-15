@@ -87,7 +87,7 @@ class AssetMeterCategoryModel {
     }
     page = json['page']?.toString();
     length = json['length']?.toString();
-    message = json['message']?.toString();
+    message = json['Message']?.toString();
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
@@ -102,7 +102,7 @@ class AssetMeterCategoryModel {
     }
     data['page'] = page;
     data['length'] = length;
-    data['message'] = message;
+    data['Message'] = message;
     return data;
   }
 }

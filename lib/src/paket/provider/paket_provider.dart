@@ -119,7 +119,7 @@
 //       notifyListeners();
 //       if (withLoading) loading(false);
 //     } else {
-//       final message = jsonDecode(response.body)['message'];
+//       final message = jsonDecode(response.body)['Message'];
 //       loading(false);
 //       throw Exception(message);
 //     }
@@ -145,7 +145,7 @@
 //       notifyListeners();
 //       if (withLoading) loading(false);
 //     } else {
-//       final message = jsonDecode(response.body)['message'];
+//       final message = jsonDecode(response.body)['Message'];
 //       loading(false);
 //       throw Exception(message);
 //     }
@@ -174,7 +174,7 @@
 //       notifyListeners();
 //       if (withLoading) loading(false);
 //     } else {
-//       final message = jsonDecode(response.body)['message'];
+//       final message = jsonDecode(response.body)['Message'];
 //       loading(false);
 //       throw Exception(message);
 //     }
@@ -191,7 +191,7 @@
 //       notifyListeners();
 //       if (withLoading) loading(false);
 //     } else {
-//       final message = jsonDecode(response.body)['message'];
+//       final message = jsonDecode(response.body)['Message'];
 //       loading(false);
 //       throw Exception(message);
 //     }
@@ -240,7 +240,7 @@
 //       notifyListeners();
 //       if (withLoading) loading(false);
 //     } else {
-//       final message = jsonDecode(response.body)['message'];
+//       final message = jsonDecode(response.body)['Message'];
 //       loading(false);
 //       throw Exception(message);
 //     }

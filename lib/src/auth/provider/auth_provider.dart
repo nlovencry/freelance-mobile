@@ -6,13 +6,16 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../../common/base/base_controller.dart';
 import '../../../common/base/base_response.dart';
 import '../../../common/helper/constant.dart';
+import '../../division/model/divison_model.dart';
 import '../model/login_model.dart';
 import 'package:flutter/material.dart';
 
 class AuthProvider extends BaseController with ChangeNotifier {
+  TextEditingController nameC = TextEditingController();
   TextEditingController usernameC = TextEditingController();
   TextEditingController Email = TextEditingController();
   TextEditingController passC = TextEditingController();
+  TextEditingController passConfirmationC = TextEditingController();
   TextEditingController NIKC = TextEditingController();
   TextEditingController namaLengkap = TextEditingController();
   TextEditingController namaIbuKAndung = TextEditingController();
@@ -29,6 +32,13 @@ class AuthProvider extends BaseController with ChangeNotifier {
   TextEditingController atasNamaRekening = TextEditingController();
   TextEditingController tanggalUmroh = TextEditingController();
   GlobalKey<FormState> loginKey = GlobalKey<FormState>();
+
+  DivisionModelData? _selectedDivision;
+  DivisionModelData? get selectedDivision => this._selectedDivision;
+
+  set selectedDivision(DivisionModelData? value) =>
+      this._selectedDivision = value;
+
   //forgot
   TextEditingController emailForgotC = TextEditingController();
   TextEditingController tokenC = TextEditingController();
@@ -60,7 +70,7 @@ class AuthProvider extends BaseController with ChangeNotifier {
   }
 
   Future<LoginModel> login() async {
-    log("EMAIL : ${usernameC.text}");
+    log("USERNAME : ${usernameC.text}");
     log("PASS : ${passC.text}");
     loading(true);
     // if (loginKey.currentState!.validate()) {
@@ -72,29 +82,32 @@ class AuthProvider extends BaseController with ChangeNotifier {
       // 'username': "19950601831",
       // 'username': "adminatria",
       // 'password': "123456",
-      'username': usernameC.text,
-      'password': passC.text,
+      'Username': usernameC.text,
+      'Password': passC.text,
       // 'device_id': fcmId ?? '-1',
     };
-    final response = await post(Constant.BASE_API_FULL + '/login', body: param);
+    final response =
+        await post(Constant.BASE_API_FULL + '/auth/login', body: param);
 
     if (response.statusCode == 201 || response.statusCode == 200) {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       final model = LoginModel.fromJson(jsonDecode(response.body));
 
       // set to shared preferences
-      await prefs.setString(Constant.kSetPrefId, "${model.data?.id ?? 0}");
-      await prefs.setString(Constant.kSetPrefToken, model.data!.token!);
-      await prefs.setString(Constant.kSetPrefName, model.data!.name!);
-      await prefs.setString(Constant.kSetPrefRoles, model.data!.jabatan!);
-      await prefs.setString(Constant.kSetPrefCompany, model.data!.companyName!);
+      // await prefs.setString(Constant.kSetPrefId, "${model.Data?.Id ?? 0}");
+      await prefs.setString(Constant.kSetPrefToken, model.Data?.Token ?? '');
+      await prefs.setString(
+          Constant.kSetPrefRefreshToken, model.Data?.RefreshToken ?? '');
+      await prefs.setString(Constant.kSetPrefName, model.Data?.Name ?? '');
+      await prefs.setString(Constant.kSetPrefRoles, model.Data!.Division!);
+      // await prefs.setString(Constant.kSetPrefCompany, model.Data!.companyName!);
       usernameC.clear();
       passC.clear();
 
       loading(false);
       return model;
     } else {
-      final message = jsonDecode(response.body)["message"];
+      final message = jsonDecode(response.body)["Message"];
       loading(false);
       throw Exception(message);
     }
@@ -102,6 +115,66 @@ class AuthProvider extends BaseController with ChangeNotifier {
     //   loading(false);
     //   throw 'Harap Lengkapi Form';
     // }
+  }
+
+  Future<BaseResponse> register() async {
+    loading(true);
+    // if (loginKey.currentState!.validate()) {
+    if (selectedDivision == null) throw 'Pilih Divisi Terlebih Dahulu';
+    FocusManager.instance.primaryFocus?.unfocus();
+    String? fcmId;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    fcmId = prefs.getString(Constant.kSetPrefFcmToken);
+    Map<String, String> param = {
+      // 'username': "19950601831",
+      // 'username': "adminatria",
+      // 'password': "123456",
+      'Name': nameC.text,
+      'Username': usernameC.text,
+      'DivisionId': selectedDivision?.Id ?? '', //Engineer
+      'Password': passC.text,
+      'PasswordConfirmation': passConfirmationC.text,
+      // 'device_id': fcmId ?? '-1',
+    };
+    final response =
+        await post(Constant.BASE_API_FULL + '/auth/login', body: param);
+
+    if (response.statusCode == 201 || response.statusCode == 200) {
+      final model = BaseResponse.from(jsonDecode(response.body));
+      usernameC.clear();
+      passC.clear();
+
+      loading(false);
+      return model;
+    } else {
+      final message = jsonDecode(response.body)["Message"];
+      loading(false);
+      throw Exception(message);
+    }
+    // } else {
+    //   loading(false);
+    //   throw 'Harap Lengkapi Form';
+    // }
+  }
+
+  Future<BaseResponse> refreshToken() async {
+    loading(true);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? refreshToken = prefs.getString(Constant.kSetPrefRefreshToken);
+    Map<String, String> param = {'RefreshToken': refreshToken ?? ''};
+    final response = await post(
+        Constant.BASE_API_FULL + '/firebase/update-token',
+        body: param);
+
+    if (response.statusCode == 201 || response.statusCode == 200) {
+      final model = BaseResponse.from(jsonDecode(response.body));
+      loading(false);
+      return model;
+    } else {
+      final message = jsonDecode(response.body)["Message"];
+      loading(false);
+      throw Exception(message);
+    }
   }
 
   Future<void> updateFirebaseToken() async {
@@ -114,7 +187,7 @@ class AuthProvider extends BaseController with ChangeNotifier {
           FirebaseTokenModel.fromJson(jsonDecode(response.body));
       loading(false);
     } else {
-      final message = jsonDecode(response.body)["message"];
+      final message = jsonDecode(response.body)["Message"];
       loading(false);
       throw Exception(message);
     }

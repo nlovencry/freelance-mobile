@@ -107,17 +107,17 @@ class NotifikasiModel {
   });
   NotifikasiModel.fromJson(Map<String, dynamic> json) {
     success = json['success'];
-  if (json['data'] != null) {
-  final v = json['data'];
-  final arr0 = <NotifikasiModelData>[];
-  v.forEach((v) {
-  arr0.add(NotifikasiModelData.fromJson(v));
-  });
-    this.data = arr0;
+    if (json['data'] != null) {
+      final v = json['data'];
+      final arr0 = <NotifikasiModelData>[];
+      v.forEach((v) {
+        arr0.add(NotifikasiModelData.fromJson(v));
+      });
+      this.data = arr0;
     }
     page = json['page']?.toString();
     length = json['length']?.toString();
-    message = json['message']?.toString();
+    message = json['Message']?.toString();
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
@@ -125,14 +125,14 @@ class NotifikasiModel {
     if (this.data != null) {
       final v = this.data;
       final arr0 = [];
-  v!.forEach((v) {
-  arr0.add(v!.toJson());
-  });
+      v!.forEach((v) {
+        arr0.add(v!.toJson());
+      });
       data['data'] = arr0;
     }
     data['page'] = page;
     data['length'] = length;
-    data['message'] = message;
+    data['Message'] = message;
     return data;
   }
 }

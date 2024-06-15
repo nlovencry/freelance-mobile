@@ -440,6 +440,7 @@ class Constant {
   /// shareprefrence key
 
   static const String kSetPrefToken = "token";
+  static const String kSetPrefRefreshToken = "refresh_token";
   static const String kSetPrefId = "id";
   static const String kSetPrefFcmToken = "fcmToken";
   static const String kSetPrefName = "name";

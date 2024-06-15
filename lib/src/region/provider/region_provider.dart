@@ -51,7 +51,7 @@ class RegionProvider extends BaseController with ChangeNotifier {
       notifyListeners();
       if (withLoading) loading(false);
     } else {
-      final message = jsonDecode(response.body)["message"];
+      final message = jsonDecode(response.body)["Message"];
       loading(false);
       throw Exception(message);
     }
@@ -59,7 +59,7 @@ class RegionProvider extends BaseController with ChangeNotifier {
 
   Future<void> fetchCity(String provinceId, {bool withLoading = false}) async {
     if (withLoading) loading(true);
-    final response = await get(Constant.BASE_API_FULL + '/list-city', query: {
+    final response = await get(Constant.BASE_API_FULL + '/list-city', body: {
       "province_id": provinceId,
     });
 
@@ -69,7 +69,7 @@ class RegionProvider extends BaseController with ChangeNotifier {
       notifyListeners();
       if (withLoading) loading(false);
     } else {
-      final message = jsonDecode(response.body)["message"];
+      final message = jsonDecode(response.body)["Message"];
       loading(false);
       throw Exception(message);
     }
@@ -78,7 +78,7 @@ class RegionProvider extends BaseController with ChangeNotifier {
   Future<void> fetchDistrict(String cityId, {bool withLoading = false}) async {
     if (withLoading) loading(true);
     final response = await get(Constant.BASE_API_FULL + '/list-district',
-        query: {"city_id": cityId});
+        body: {"city_id": cityId});
 
     if (response.statusCode == 200) {
       final model = DistrictModel.fromJson(jsonDecode(response.body));
@@ -86,7 +86,7 @@ class RegionProvider extends BaseController with ChangeNotifier {
       notifyListeners();
       if (withLoading) loading(false);
     } else {
-      final message = jsonDecode(response.body)["message"];
+      final message = jsonDecode(response.body)["Message"];
       loading(false);
       throw Exception(message);
     }
@@ -96,7 +96,7 @@ class RegionProvider extends BaseController with ChangeNotifier {
       {bool withLoading = false}) async {
     if (withLoading) loading(true);
     final response = await get(Constant.BASE_API_FULL + '/list-subdistrict',
-        query: {"district_id": districtId, "city_id": cityId});
+        body: {"district_id": districtId, "city_id": cityId});
 
     if (response.statusCode == 200) {
       final model = SubDistrictModel.fromJson(jsonDecode(response.body));
@@ -104,7 +104,7 @@ class RegionProvider extends BaseController with ChangeNotifier {
       notifyListeners();
       if (withLoading) loading(false);
     } else {
-      final message = jsonDecode(response.body)["message"];
+      final message = jsonDecode(response.body)["Message"];
       loading(false);
       throw Exception(message);
     }

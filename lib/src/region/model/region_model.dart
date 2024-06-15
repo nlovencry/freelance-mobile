@@ -61,7 +61,7 @@ class ProvinceModel {
       });
       this.data = arr0;
     }
-    message = json['message']?.toString();
+    message = json['Message']?.toString();
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
@@ -74,7 +74,7 @@ class ProvinceModel {
       });
       data['data'] = arr0;
     }
-    data['message'] = message;
+    data['Message'] = message;
     return data;
   }
 }
@@ -154,7 +154,7 @@ class CityModel {
       });
       this.data = arr0;
     }
-    message = json['message']?.toString();
+    message = json['Message']?.toString();
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
@@ -167,7 +167,7 @@ class CityModel {
       });
       data['data'] = arr0;
     }
-    data['message'] = message;
+    data['Message'] = message;
     return data;
   }
 }
@@ -241,7 +241,7 @@ class DistrictModel {
       });
       this.data = arr0;
     }
-    message = json['message']?.toString();
+    message = json['Message']?.toString();
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
@@ -254,7 +254,7 @@ class DistrictModel {
       });
       data['data'] = arr0;
     }
-    data['message'] = message;
+    data['Message'] = message;
     return data;
   }
 }
@@ -328,7 +328,7 @@ class SubDistrictModel {
       });
       this.data = arr0;
     }
-    message = json['message']?.toString();
+    message = json['Message']?.toString();
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
@@ -341,7 +341,7 @@ class SubDistrictModel {
       });
       data['data'] = arr0;
     }
-    data['message'] = message;
+    data['Message'] = message;
     return data;
   }
 }

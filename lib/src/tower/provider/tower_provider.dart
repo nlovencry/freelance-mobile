@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
+import 'package:mata/common/base/base_response.dart';
 import '../../../common/base/base_controller.dart';
 import '../../../common/helper/constant.dart';
 import '../model/tower_model.dart';
@@ -41,12 +42,27 @@ class TowerProvider extends BaseController with ChangeNotifier {
     }
   }
 
-  Future<TowerCreateModel> createTower(int id) async {
+  Future<TowerCreateModel> createTower() async {
     loading(true);
     final response = await post(Constant.BASE_API_FULL + '/towers');
 
     if (response.statusCode == 201 || response.statusCode == 200) {
       final model = TowerCreateModel.fromJson(jsonDecode(response.body));
+      loading(false);
+      return model;
+    } else {
+      final message = jsonDecode(response.body)["Message"];
+      loading(false);
+      throw Exception(message);
+    }
+  }
+
+  Future<BaseResponse> deleteTower(int id) async {
+    loading(true);
+    final response = await delete(Constant.BASE_API_FULL + '/towers/$id');
+
+    if (response.statusCode == 201 || response.statusCode == 200) {
+      final model = BaseResponse.from(jsonDecode(response.body));
       loading(false);
       return model;
     } else {

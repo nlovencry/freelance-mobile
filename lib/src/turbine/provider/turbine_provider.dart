@@ -41,7 +41,7 @@ class TurbineProvider extends BaseController with ChangeNotifier {
     }
   }
 
-  Future<TurbineCreateModel> createTurbine(int id) async {
+  Future<TurbineCreateModel> createTurbine() async {
     loading(true);
     final response = await post(Constant.BASE_API_FULL + '/turbines');
 

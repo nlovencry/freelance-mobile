@@ -109,7 +109,8 @@ class AuthProvider extends BaseController with ChangeNotifier {
     } else {
       final message = jsonDecode(response.body)["Message"];
       loading(false);
-      throw Exception(message);
+      return LoginModel();
+      // throw Exception(message);
     }
     // } else {
     //   loading(false);

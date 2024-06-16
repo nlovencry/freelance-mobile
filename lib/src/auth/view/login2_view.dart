@@ -78,29 +78,9 @@ class _Login2ViewState extends State<Login2View> {
               borderColor: Constant.primaryColor,
               obscureText: authP.obscurePass,
               onEditingComplete: () async {
-                // FocusScope.of(context).requestFocus(new FocusNode());
-                // // Validate returns true if the form is valid, or false otherwise.
-                // if (auth.loginKey.currentState!.validate()) {
-                //   // If the form is valid, display a snackbar. In the real world,
-                //   // you'd often call a server or save the information in a database.
-                //   WrapLoading(auth.login()).then((value) {
-                //     // Navigator.pushReplacementNamed(context, '/home');
-                //     Navigator.restorablePushReplacementNamed(
-                //         context, '/home');
-                //   }).onError((error, stackTrace) {
-                //     CustomAlert.showSnackBar(
-                //       context,
-                //       error.toString().toLowerCase().contains("doctype")
-                //           ? "Maaf, Terjadi Galat!"
-                //           : error.toString(),
-                //       true,
-                //     );
-                //   });
-                // }
                 try {
                   final result = await context.read<AuthProvider>().login();
                   if (result.Success == true) {
-                    await context.read<AuthProvider>().updateFirebaseToken();
                     Navigator.pushReplacementNamed(context, '/home',
                         arguments: "");
                   } else {
@@ -138,7 +118,6 @@ class _Login2ViewState extends State<Login2View> {
               try {
                 final result = await context.read<AuthProvider>().login();
                 if (result.Success == true) {
-                  await context.read<AuthProvider>().updateFirebaseToken();
                   Navigator.pushReplacementNamed(context, '/home',
                       arguments: "");
                 } else {
@@ -150,8 +129,6 @@ class _Login2ViewState extends State<Login2View> {
                         ? "Maaf, Terjadi Galat!"
                         : "$e");
               }
-              // Navigator.push(
-              //     context, MaterialPageRoute(builder: (context) => MainHome()));
             }, borderRadius: BorderRadius.circular(10))
           ],
         ),

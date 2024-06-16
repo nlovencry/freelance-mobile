@@ -105,8 +105,8 @@ class BaseController<S extends BaseState> {
       List<http.MultipartFile>? files}) async {
     // print(body);
     Map<String, String> h = Map<String, String>();
-    h.putIfAbsent('Connection', () => 'Keep-Alive');
-    // h.putIfAbsent('Content-Type', () => 'application/json');
+    h.putIfAbsent('Connection', () => 'keep-alive');
+    h.putIfAbsent('Accept', () => 'application/json');
     var token = await getToken();
     if (token != null) h.putIfAbsent('Authorization', () => 'Bearer ' + token);
     if (headers != null) h.addAll(headers);
@@ -115,12 +115,14 @@ class BaseController<S extends BaseState> {
       log("==== PARAMETERS ====");
       log("URL : $url");
       log("BODY : $body");
+      log("HEADERS : ${h}");
+      final uri = Uri.parse(url);
+      final bodyUri = Uri.https(uri.authority, uri.path, body);
       Response response = await http
           .post(Uri.parse(url),
-              body: body, encoding: Encoding.getByName("utf-8"))
+              headers: h, body: body, encoding: Encoding.getByName("utf-8"))
           .timeout(Duration(seconds: 30),
               onTimeout: () => http.Response("Timeout", 504));
-      log("HEADERS : ${h}");
       log("RESPONSE POST $url : ${response.body}");
       log("====================");
       String log2 = "Log : " +

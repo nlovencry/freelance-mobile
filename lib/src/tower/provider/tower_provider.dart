@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
-import 'package:mata/common/base/base_response.dart';
+import '../../../common/base/base_response.dart';
 import '../../../common/base/base_controller.dart';
 import '../../../common/helper/constant.dart';
 import '../model/tower_model.dart';

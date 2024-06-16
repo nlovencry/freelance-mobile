@@ -4,7 +4,7 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
-// import 'package:string_validator/string_validator.dart';
+// import 'package:string_validator/string_validator.dart';z
 
 class Constant {
   /// KEY
@@ -13,10 +13,10 @@ class Constant {
   /// Please be carefully to change this keys because might affect with all entire project .
   ///
   static const String MAPS_KEY = "AIzaSyDDPvYz8jGLntwWp-Nii2F7bvGADm504Ts";
-  static const String DOMAIN = "bimops-api.erdata.id";
-  static const String DOMAIN2 = "bimops-api.erdata.id";
-  static const String BASE_API_FULL = "https://${DOMAIN}/api";
-  static const String BASE_API_FULL2 = "https://${DOMAIN2}/api";
+  static const String DOMAIN = "103.59.94.19";
+  static const String DOMAIN2 = "103.59.94.19";
+  static const String BASE_API_FULL = "http://${DOMAIN}";
+  static const String BASE_API_FULL2 = "http://${DOMAIN2}";
   static const String APP_NAME = "MATA";
 
   /// COlORS

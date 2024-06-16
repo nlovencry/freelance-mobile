@@ -134,9 +134,24 @@ class _Login2ViewState extends State<Login2View> {
                   TextStyle(color: Colors.black, fontWeight: FontWeight.w500),
             ),
             SizedBox(height: 60),
-            CustomButton.mainButton("Masuk", () {
-              Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => MainHome()));
+            CustomButton.mainButton("Masuk", () async {
+              try {
+                final result = await context.read<AuthProvider>().login();
+                if (result.Success == true) {
+                  await context.read<AuthProvider>().updateFirebaseToken();
+                  Navigator.pushReplacementNamed(context, '/home',
+                      arguments: "");
+                } else {
+                  Utils.showFailed(msg: result.Message ?? "Error");
+                }
+              } catch (e) {
+                Utils.showFailed(
+                    msg: e.toString().toLowerCase().contains("doctype")
+                        ? "Maaf, Terjadi Galat!"
+                        : "$e");
+              }
+              // Navigator.push(
+              //     context, MaterialPageRoute(builder: (context) => MainHome()));
             }, borderRadius: BorderRadius.circular(10))
           ],
         ),

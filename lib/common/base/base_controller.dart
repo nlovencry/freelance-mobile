@@ -64,8 +64,9 @@ class BaseController<S extends BaseState> {
     log("==== PARAMETERS ====");
     log("URL : $url");
     log("BODY : $bodyUri");
-    Response response =
-        await http.get(bodyUri, headers: h).timeout(Duration(minutes: 1));
+    Response response = await http.get(bodyUri, headers: h).timeout(
+        Duration(seconds: 30),
+        onTimeout: () => http.Response("Timeout", 504));
     log("RESPONSE GET $url : ${response.body}");
     log("====================");
 
@@ -105,7 +106,7 @@ class BaseController<S extends BaseState> {
     // print(body);
     Map<String, String> h = Map<String, String>();
     h.putIfAbsent('Connection', () => 'Keep-Alive');
-    h.putIfAbsent('accept', () => 'application/json');
+    // h.putIfAbsent('Content-Type', () => 'application/json');
     var token = await getToken();
     if (token != null) h.putIfAbsent('Authorization', () => 'Bearer ' + token);
     if (headers != null) h.addAll(headers);
@@ -116,8 +117,10 @@ class BaseController<S extends BaseState> {
       log("BODY : $body");
       Response response = await http
           .post(Uri.parse(url),
-              headers: h, body: body, encoding: Encoding.getByName("utf-8"))
-          .timeout(Duration(minutes: 1));
+              body: body, encoding: Encoding.getByName("utf-8"))
+          .timeout(Duration(seconds: 30),
+              onTimeout: () => http.Response("Timeout", 504));
+      log("HEADERS : ${h}");
       log("RESPONSE POST $url : ${response.body}");
       log("====================");
       String log2 = "Log : " +
@@ -161,7 +164,8 @@ class BaseController<S extends BaseState> {
       log("BODY : $body");
       log("FILES : $files");
       Response response = await http.Response.fromStream(await req.send())
-          .timeout(Duration(minutes: 1));
+          .timeout(Duration(seconds: 30),
+              onTimeout: () => http.Response("Timeout", 504));
       log("RESPONSE POST FILE $url : ${response.body}");
       log("====================");
       String log2 = "Log : " +
@@ -214,7 +218,8 @@ class BaseController<S extends BaseState> {
       Response response = await http
           .post(Uri.parse(url),
               headers: h, body: body, encoding: Encoding.getByName("utf-8"))
-          .timeout(Duration(minutes: 1));
+          .timeout(Duration(seconds: 30),
+              onTimeout: () => http.Response("Timeout", 504));
       log("RESPONSE PUT $url : ${response.body}");
       log("====================");
       String log2 = "Log : " +
@@ -258,7 +263,8 @@ class BaseController<S extends BaseState> {
       log("BODY : $body");
       log("FILES : $files");
       Response response = await http.Response.fromStream(await req.send())
-          .timeout(Duration(minutes: 1));
+          .timeout(Duration(seconds: 30),
+              onTimeout: () => http.Response("Timeout", 504));
       log("RESPONSE PUT FILE $url : ${response.body}");
       log("====================");
       String log2 = "Log : " +
@@ -307,7 +313,7 @@ class BaseController<S extends BaseState> {
     log("URL : $url");
     log("BODY : $bodyUri");
     Response response = await http.delete(bodyUri, headers: h).timeout(
-        Duration(minutes: 1),
+        Duration(seconds: 30),
         onTimeout: () => http.Response("Timeout", 504));
     log("RESPONSE DELETE $url : ${response.body}");
     log("====================");

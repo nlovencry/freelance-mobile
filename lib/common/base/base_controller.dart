@@ -64,7 +64,7 @@ class BaseController<S extends BaseState> {
     log("==== PARAMETERS ====");
     log("URL : $url");
     log("BODY : $bodyUri");
-    Response response = await http.get(bodyUri, headers: h).timeout(
+    Response response = await http.get(Uri.parse(url), headers: h).timeout(
         Duration(seconds: 30),
         onTimeout: () => http.Response("Timeout", 504));
     log("RESPONSE GET $url : ${response.body}");
@@ -81,13 +81,14 @@ class BaseController<S extends BaseState> {
             '\r\n' +
         "===================="
             '\r\n';
-    // if (kDebugMode) {
-    // XenoLog("GET").save(log2, alwaysLog: true);
+    // if (kDebugMode) {    // XenoLog("GET").save(log2, alwaysLog: true);
+
     // }
 
     if (response.body.contains("Unauthorized")) {
       // _preferences!.clear();
     }
+    if (response.body.contains("invalid token")) {}
     if (response.body.contains("Gateway time") ||
         response.body
             .toString()

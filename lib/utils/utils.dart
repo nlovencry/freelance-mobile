@@ -157,9 +157,9 @@ class Utils {
       ..maskType = EasyLoadingMaskType.black
       ..indicatorType = EasyLoadingIndicatorType.pulse
       ..backgroundColor = Constant.backgroundColor
-      ..dismissOnTap = false
+      ..dismissOnTap = true
       ..indicatorColor = Constant.primaryColor;
-    return await EasyLoading.show(dismissOnTap: false);
+    return await EasyLoading.show(dismissOnTap: true);
   }
 
   // show success

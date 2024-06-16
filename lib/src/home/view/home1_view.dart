@@ -1,3 +1,4 @@
+import 'package:mata/common/base/base_state.dart';
 import 'package:mata/common/component/custom_container.dart';
 import 'package:mata/common/component/custom_navigator.dart';
 import 'package:mata/common/helper/constant.dart';
@@ -5,6 +6,10 @@ import 'package:mata/src/data/view/data_add_view.dart';
 import 'package:mata/src/user/view/user_manage_view.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../../../utils/utils.dart';
+import '../../auth/provider/auth_provider.dart';
 
 class Home1View extends StatefulWidget {
   const Home1View({super.key});
@@ -13,7 +18,7 @@ class Home1View extends StatefulWidget {
   State<Home1View> createState() => _Home1ViewState();
 }
 
-class _Home1ViewState extends State<Home1View> {
+class _Home1ViewState extends BaseState<Home1View> {
   static const List<String> staticArray = [
     'Shaft',
     'Upper',
@@ -69,7 +74,33 @@ class _Home1ViewState extends State<Home1View> {
                   ],
                 ),
                 InkWell(
-                    onTap: () {
+                    onTap: () async {
+                      await Utils.showYesNoDialog(
+                        context: context,
+                        title: "Konfirmasi",
+                        desc: "Apakah Anda Yakin Ingin Keluar?",
+                        yesCallback: () => handleTap(() async {
+                          Navigator.pop(context);
+                          try {
+                            final result =
+                                await context.read<AuthProvider>().logout();
+                            if (result.success == true) {
+                              Navigator.pushReplacementNamed(context, '/login');
+                            } else {
+                              Utils.showFailed(msg: result.message);
+                            }
+                          } catch (e) {
+                            Utils.showFailed(
+                                msg: e
+                                        .toString()
+                                        .toLowerCase()
+                                        .contains("doctype")
+                                    ? "Maaf, Terjadi Galat!"
+                                    : "$e");
+                          }
+                        }),
+                        noCallback: () => Navigator.pop(context),
+                      );
                       // CusNav.nPush(context, UserManageView());
                     },
                     child: Image.asset('assets/icons/ic-prof-home.png',
@@ -111,8 +142,8 @@ class _Home1ViewState extends State<Home1View> {
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 16,
+                                  color: Colors.white,
+                                  fontSize: 16,
                                 ),
                               ),
                               SizedBox(
@@ -125,7 +156,6 @@ class _Home1ViewState extends State<Home1View> {
                                     fontWeight: FontWeight.bold,
                                     fontSize: 18),
                               ),
-
                             ],
                           ),
                         ),
@@ -149,9 +179,8 @@ class _Home1ViewState extends State<Home1View> {
                                     Text(
                                       "Add Data",
                                       style: TextStyle(
-                                        color: Constant.primaryColor,
-                                        fontWeight: FontWeight.w500
-                                      ),
+                                          color: Constant.primaryColor,
+                                          fontWeight: FontWeight.w500),
                                     ),
                                     SizedBox(
                                       width: 5,
@@ -174,15 +203,11 @@ class _Home1ViewState extends State<Home1View> {
                       children: [
                         Text(
                           "Pencapaian",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 12),
+                          style: TextStyle(color: Colors.white, fontSize: 12),
                         ),
                         Text(
                           "80%",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 12),
+                          style: TextStyle(color: Colors.white, fontSize: 12),
                         ),
                       ],
                     ),
@@ -210,7 +235,9 @@ class _Home1ViewState extends State<Home1View> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 20,),
+              SizedBox(
+                height: 20,
+              ),
               Text(
                 "Menu",
                 style: TextStyle(
@@ -222,54 +249,72 @@ class _Home1ViewState extends State<Home1View> {
                   shrinkWrap: true,
                   physics: ScrollPhysics(),
                   itemBuilder: (context, index) {
-                return Column(
-                  children: List.generate(
-                  staticArray.length,
-                      (indexx) => Column(
-                    children: [
-                      CustomContainer.mainCard(
-                        isShadow: false,
-                        child: Row(
+                    return Column(
+                      children: List.generate(
+                        staticArray.length,
+                        (indexx) => Column(
                           children: [
-                            Expanded(
-                              flex: 2,
-                              child: Container(
-                                height: 50,
-                                width: 50,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(40),
-                                    color: Colors.lightBlueAccent.shade200
-                                        .withOpacity(0.3),
-                                    image: DecorationImage(
-                                        image: AssetImage(staticImage[indexx]),
-                                        scale: 3)),
-                              ),
-                            ),
-                            SizedBox(width: 10,),
-                            Expanded(
-                              flex: 8,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                            CustomContainer.mainCard(
+                              isShadow: false,
+                              child: Row(
                                 children: [
-                                  Text(staticArray[indexx], style: Constant.iPrimaryMedium8.copyWith(fontSize: 16),),
-                                  Text("Cek laporan mengenai " + staticArray[indexx]),
+                                  Expanded(
+                                    flex: 2,
+                                    child: Container(
+                                      height: 50,
+                                      width: 50,
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(40),
+                                          color: Colors.lightBlueAccent.shade200
+                                              .withOpacity(0.3),
+                                          image: DecorationImage(
+                                              image: AssetImage(
+                                                  staticImage[indexx]),
+                                              scale: 3)),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Expanded(
+                                    flex: 8,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          staticArray[indexx],
+                                          style: Constant.iPrimaryMedium8
+                                              .copyWith(fontSize: 16),
+                                        ),
+                                        Text("Cek laporan mengenai " +
+                                            staticArray[indexx]),
+                                      ],
+                                    ),
+                                  ),
+                                  Expanded(
+                                      flex: 1,
+                                      child: Icon(
+                                        Icons.arrow_forward_ios,
+                                        color: Colors.grey,
+                                        size: 20,
+                                      ))
                                 ],
                               ),
                             ),
-                            Expanded(
-                                flex: 1,
-                                child: Icon(Icons.arrow_forward_ios, color: Colors.grey, size: 20,))
+                            SizedBox(
+                              height: 20,
+                            ),
                           ],
                         ),
                       ),
-                      SizedBox(height: 20,),
-                    ],
-                  ),
-                ),
-                );
-              }, separatorBuilder: (context, index) {
-                return SizedBox();
-              }, itemCount: 1),
+                    );
+                  },
+                  separatorBuilder: (context, index) {
+                    return SizedBox();
+                  },
+                  itemCount: 1),
               // Row(
               //   children: [
               //     Column(

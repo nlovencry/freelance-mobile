@@ -30,7 +30,7 @@ class _SplashViewState extends State<SplashView> {
     Timer(
         Duration(seconds: 3),
         () => Navigator.of(context).pushReplacementNamed(
-            isLoggedIn ? '/home' : '/login',
+            isLoggedIn ? '/login' : '/login',
             arguments: roles));
   }
 

@@ -194,28 +194,28 @@ class AuthProvider extends BaseController with ChangeNotifier {
     }
   }
 
-  Future< /*BaseResponse*/ void> logout() async {
+  Future<BaseResponse> logout() async {
     loading(true);
-    // final response =
-    //     BaseResponse.from(await post(Constant.BASE_API_FULL + '/logout'));
+    final response =
+        BaseResponse.from(await post(Constant.BASE_API_FULL + '/logout'));
 
-    // if (response.success) {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+    if (response.success) {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    // set to shared preferences
-    await prefs.remove(Constant.kSetPrefToken);
-    await prefs.remove(Constant.kSetPrefId);
-    await prefs.remove(Constant.kSetPrefName);
-    await prefs.remove(Constant.kSetPrefRoles);
-    await prefs.clear();
+      // set to shared preferences
+      await prefs.remove(Constant.kSetPrefToken);
+      await prefs.remove(Constant.kSetPrefId);
+      await prefs.remove(Constant.kSetPrefName);
+      await prefs.remove(Constant.kSetPrefRoles);
+      await prefs.clear();
 
-    loading(false);
-    //   return response;
-    // } else {
-    // final message = response.message;
-    loading(false);
-    // throw Exception(message);
-    // }
+      loading(false);
+      return response;
+    } else {
+      final message = response.message;
+      loading(false);
+      throw Exception(message);
+    }
   }
 
   Future<BaseResponse> postForgot() async {

@@ -407,6 +407,102 @@ class CustomTextField {
     );
   }
 
+  static Widget tableTextField({
+    required TextEditingController controller,
+    bool? obscureText,
+    Widget? suffixIcon,
+    String? suffixText,
+    TextInputType? textInputType,
+    bool enabled = true,
+    bool? enableInteractiveSelection,
+    FocusNode? focusNode,
+    bool? isDecimalFormatter,
+    bool readOnly = false,
+    Color? suffixIconColor,
+    FontWeight? labelFontWeight,
+    Color? fillColor,
+    Color? hintColor,
+    Color? borderColor,
+    Color? validatorTextColor,
+    int? maxLength,
+    Widget? prefix,
+    Widget? prefixIcon,
+    TextCapitalization? textCapitalization,
+    Function()? onEditingComplete,
+    Function()? onTap,
+    String? Function(String?)? validator,
+    Function(String)? onChange,
+    Color? activeBorderColor,
+    bool required = true,
+    List<TextInputFormatter>? inputFormatters,
+  }) {
+    return TextFormField(
+      readOnly: readOnly,
+      onTap: onTap,
+      // The validator receives the text that the user has entered.
+      decoration: InputDecoration(
+        contentPadding: EdgeInsets.zero,
+        suffixIcon: suffixIcon,
+        suffixText: suffixText ?? null,
+        filled: true,
+        fillColor:
+            fillColor ?? (enabled ? Colors.white : Constant.textHintColor),
+        hoverColor: Constant.primaryColor,
+        focusColor: Constant.primaryColor,
+        errorStyle: TextStyle(color: validatorTextColor ?? Colors.red),
+        hintStyle: TextStyle(color: hintColor ?? Constant.textHintColor2),
+        prefixIcon: prefix,
+        prefix: prefix == null ? SizedBox(width: 12) : null,
+        border: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: borderColor ?? Constant.borderLightColor,
+          ),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: borderColor ?? Constant.borderLightColor,
+          ),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            width: 0.5,
+            color: activeBorderColor ?? Constant.primaryColor,
+          ),
+        ),
+      ),
+      textInputAction: onEditingComplete != null ? TextInputAction.next : null,
+      obscureText: obscureText ?? false,
+      controller: controller,
+      keyboardType: textInputType ?? TextInputType.text,
+      enabled: enabled,
+      enableInteractiveSelection: enableInteractiveSelection ?? true,
+      // will disable paste operation
+      focusNode: focusNode ?? null,
+      inputFormatters: [
+        if (isDecimalFormatter ?? false) ThousandsSeparatorInputFormatter(),
+        if (maxLength != null) LengthLimitingTextInputFormatter(maxLength),
+        if (inputFormatters != null) ...[
+          ...inputFormatters,
+        ]
+      ],
+      textCapitalization: textCapitalization ?? TextCapitalization.none,
+      onEditingComplete: onEditingComplete,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      onChanged: (str) {
+        if (onChange != null) {
+          onChange(str);
+        }
+      },
+      validator: validator ??
+          (value) {
+            if ((value == null || value.isEmpty) && required) {
+              return "Maaf, ${'Ini'} wajib diisi";
+            }
+            return null;
+          },
+    );
+  }
+
   static Widget borderTextArea({
     double? borderWidth,
     required TextEditingController controller,

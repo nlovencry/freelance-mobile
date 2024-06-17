@@ -1,25 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:mata/src/data/view/data_add_upper_view.dart';
 import 'package:provider/provider.dart';
 import '../provider/data_add_provider.dart';
 import '../../shaft/view/shaft_view.dart';
 import '../../../common/component/custom_appbar.dart';
 import '../../../common/component/custom_button.dart';
 
-class DataAddView extends StatefulWidget {
-  const DataAddView({super.key});
+class DataAddUpperView extends StatefulWidget {
+  const DataAddUpperView({super.key});
 
   @override
-  State<DataAddView> createState() => _DataAddViewState();
+  State<DataAddUpperView> createState() => _DataAddUpperViewState();
 }
 
-class _DataAddViewState extends State<DataAddView> {
+class _DataAddUpperViewState extends State<DataAddUpperView> {
   @override
   void initState() {
-    final p = context.read<DataAddProvider>();
-    p.fetchTower(context);
-    p.resetData();
-    p.generateDataUpperRow();
     super.initState();
   }
 
@@ -33,19 +28,12 @@ class _DataAddViewState extends State<DataAddView> {
         padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
         child: Column(
           children: [
-            Expanded(
-              child: ListView(
-                children: [
-                  ...p.detailUnit(),
-                  ...p.shaftForm(),
-                ],
-              ),
-            ),
+            Expanded(child: ListView(children: [...p.upperForm(context)])),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 0, vertical: 10),
               child: CustomButton.mainButton('Selanjutnya', () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (c) => DataAddUpperView()));
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (c) => ShaftView()));
               }),
             ),
           ],

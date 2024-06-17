@@ -1,5 +1,8 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../../data/provider/data_add_provider.dart';
 
 class SampleChartView extends StatefulWidget {
   const SampleChartView({super.key});
@@ -190,6 +193,17 @@ class _Chart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final d = context.watch<DataAddProvider>();
+    // AC
+    final acUpper = d.acUpper;
+    final acClutch = d.acClutch;
+    final acTurbine = d.acTurbine;
+    // BD
+    final bdUpper = d.bdUpper;
+    final bdClutch = d.bdClutch;
+    final bdTurbine = d.bdTurbine;
+    // UPPER
+    final upper = d.upper;
     return LineChart(
       LineChartData(
         lineBarsData: [
@@ -206,10 +220,10 @@ class _Chart extends StatelessWidget {
           LineChartBarData(
             barWidth: 5,
             spots: [
-              FlSpot(0, 6),
+              FlSpot(acUpper[0], acUpper[1]),
               FlSpot(0, 0),
               FlSpot(0, 0),
-              FlSpot(2, -6),
+              FlSpot(bdUpper[0], bdUpper[1]),
             ],
             color: Color(0xff9E9E9E),
             dotData: FlDotData(show: false),

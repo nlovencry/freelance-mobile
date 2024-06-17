@@ -20,6 +20,8 @@ class _DataAddViewState extends State<DataAddView> {
     p.fetchTower(context);
     p.resetData();
     p.generateDataUpperRow();
+    p.generateDataClutchRow();
+    p.generateDataTurbineRow();
     super.initState();
   }
 
@@ -44,6 +46,7 @@ class _DataAddViewState extends State<DataAddView> {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 0, vertical: 10),
               child: CustomButton.mainButton('Selanjutnya', () {
+                FocusManager.instance.primaryFocus?.unfocus();
                 Navigator.push(context,
                     MaterialPageRoute(builder: (c) => DataAddUpperView()));
               }),

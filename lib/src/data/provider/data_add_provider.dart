@@ -1,13 +1,19 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:mata/src/data/model/create_data_param.dart';
 import 'package:mata/src/tower/model/tower_model.dart';
+import 'package:mata/src/turbine/model/turbine_create_model.dart';
 import 'package:mata/utils/utils.dart';
 import '../../../common/base/base_controller.dart';
 import '../../../common/helper/constant.dart';
 import '../../../common/component/custom_dropdown.dart';
 import '../../../common/component/custom_textfield.dart';
+import '../../tower/model/tower_create_model.dart';
+
+import 'package:http/http.dart' as http;
 
 class DataAddProvider extends BaseController with ChangeNotifier {
   GlobalKey<FormState> dataAddKey = GlobalKey<FormState>();
@@ -51,6 +57,7 @@ class DataAddProvider extends BaseController with ChangeNotifier {
     wDataUpperRow.clear();
     dataUpperC.clear();
     selectedTower = null;
+    formType = 'upper';
   }
 
   Future<TowerModel> fetchTower(BuildContext context) async {
@@ -61,6 +68,123 @@ class DataAddProvider extends BaseController with ChangeNotifier {
     if (response.statusCode == 201 || response.statusCode == 200) {
       final model = TowerModel.fromJson(jsonDecode(response.body));
       towerList = model.Data;
+      loading(false);
+      return model;
+    } else {
+      final message = jsonDecode(response.body)["Message"];
+      loading(false);
+      throw Exception(message);
+    }
+  }
+
+  TurbineCreateModel _turbineCreateModel = TurbineCreateModel();
+  TurbineCreateModel get turbineCreateModel => this._turbineCreateModel;
+  set turbineCreateModel(TurbineCreateModel value) =>
+      this._turbineCreateModel = value;
+
+  CreateDataParam _createDataParam = CreateDataParam();
+  CreateDataParam get createDataParam => this._createDataParam;
+  set createDataParam(CreateDataParam value) => this._createDataParam = value;
+
+  // AC
+  List<double> acClutch = [];
+  List<double> acTurbine = [];
+  List<double> acUpper = [];
+  // BD
+  List<double> bdClutch = [];
+  List<double> bdTurbine = [];
+  List<double> bdUpper = [];
+  // UPPER
+  List<double> upper = [];
+
+  setDataChart() {
+    // AC
+    final acData = turbineCreateModel.Data?.Chart?.AC;
+    final bdData = turbineCreateModel.Data?.Chart?.BD;
+    final upperData = turbineCreateModel.Data?.Chart?.Upper;
+    if (acData != null && acData.Upper != null)
+      acUpper =
+          acData.Upper!.split('|').map((e) => double.tryParse(e) ?? 0).toList();
+    if (acData != null && acData.Clutch != null)
+      acClutch = acData.Clutch!
+          .split('|')
+          .map((e) => double.tryParse(e) ?? 0)
+          .toList();
+    if (acData != null && acData.Turbine != null)
+      acTurbine = acData.Turbine!
+          .split('|')
+          .map((e) => double.tryParse(e) ?? 0)
+          .toList();
+    // BD
+    if (bdData != null && bdData.Upper != null)
+      bdUpper =
+          bdData.Upper!.split('|').map((e) => double.tryParse(e) ?? 0).toList();
+    if (bdData != null && bdData.Clutch != null)
+      bdClutch = bdData.Clutch!
+          .split('|')
+          .map((e) => double.tryParse(e) ?? 0)
+          .toList();
+    if (bdData != null && bdData.Turbine != null)
+      bdTurbine = bdData.Turbine!
+          .split('|')
+          .map((e) => double.tryParse(e) ?? 0)
+          .toList();
+    if (upperData != null)
+      upper = upperData.split('|').map((e) => double.tryParse(e) ?? 0).toList();
+  }
+
+  Future<TurbineCreateModel> createTurbines() async {
+    loading(true);
+    createDataParam = CreateDataParam(
+        TowerId: selectedTower,
+        GenBearingToCoupling: genBearingKoplingC.text,
+        CouplingToTurbine: koplingTurbinC.text,
+        Data: CreateDataParamData(
+            Upper: CreateDataParamDataUpper(A: [], B: [], C: [], D: []),
+            Clutch: CreateDataParamDataClutch(A: [], B: [], C: [], D: []),
+            Turbine: CreateDataParamDataTurbine(A: [], B: [], C: [], D: [])));
+    notifyListeners();
+    for (int i = 0; i < dataUpperC.length; i++) {
+      final itemA = dataUpperC[i][0];
+      final itemB = dataUpperC[i][1];
+      final itemC = dataUpperC[i][2];
+      final itemD = dataUpperC[i][3];
+      createDataParam.Data?.Upper?.A?.add(double.parse(itemA.text));
+      createDataParam.Data?.Upper?.B?.add(double.parse(itemB.text));
+      createDataParam.Data?.Upper?.C?.add(double.parse(itemC.text));
+      createDataParam.Data?.Upper?.D?.add(double.parse(itemD.text));
+    }
+    for (int i = 0; i < dataClutchC.length; i++) {
+      final itemA = dataClutchC[i][0];
+      final itemB = dataClutchC[i][1];
+      final itemC = dataClutchC[i][2];
+      final itemD = dataClutchC[i][3];
+      createDataParam.Data?.Clutch?.A?.add(double.parse(itemA.text));
+      createDataParam.Data?.Clutch?.B?.add(double.parse(itemB.text));
+      createDataParam.Data?.Clutch?.C?.add(double.parse(itemC.text));
+      createDataParam.Data?.Clutch?.D?.add(double.parse(itemD.text));
+    }
+    for (int i = 0; i < dataTurbineC.length; i++) {
+      final itemA = dataTurbineC[i][0];
+      final itemB = dataTurbineC[i][1];
+      final itemC = dataTurbineC[i][2];
+      final itemD = dataTurbineC[i][3];
+      createDataParam.Data?.Turbine?.A?.add(double.parse(itemA.text));
+      createDataParam.Data?.Turbine?.B?.add(double.parse(itemB.text));
+      createDataParam.Data?.Turbine?.C?.add(double.parse(itemC.text));
+      createDataParam.Data?.Turbine?.D?.add(double.parse(itemD.text));
+    }
+    log('CREATE DATA PARAM : ${createDataParam.toJson()}');
+    log('CREATE DATA PARAM : ${jsonEncode(createDataParam.toJson())}');
+    String param = jsonEncode(createDataParam.toJson());
+    final response = await post(Constant.BASE_API_FULL + '/turbines',
+        body: jsonDecode(param));
+
+    if (response.statusCode == 201 || response.statusCode == 200) {
+      final model = TurbineCreateModel.fromJson(jsonDecode(response.body));
+      turbineCreateModel = model;
+      // notifyListeners();
+      setDataChart();
       loading(false);
       return model;
     } else {
@@ -221,9 +345,16 @@ class DataAddProvider extends BaseController with ChangeNotifier {
     ];
   }
 
+  // WHICH TYPE
+  String _formType = 'upper';
+  String get formType => this._formType;
+  set formType(String value) {
+    this._formType = value;
+    // notifyListeners();
+  }
+
   // DATA UPPER
   List<List<TextEditingController>> dataUpperC = [];
-
   List<TableRow> wDataUpperRow = [];
 
   generateDataUpperRow() {
@@ -254,7 +385,7 @@ class DataAddProvider extends BaseController with ChangeNotifier {
     }
   }
 
-  Widget tableForm(BuildContext context) {
+  Widget tableFormUpper(BuildContext context) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -283,7 +414,7 @@ class DataAddProvider extends BaseController with ChangeNotifier {
               return Padding(
                 padding: EdgeInsets.symmetric(horizontal: 0, vertical: 12),
                 child: InkWell(
-                  onTap: index == 0 || index ==1 
+                  onTap: index == 0 || index == 1
                       ? null
                       : () async {
                           // jika ADD BARIS
@@ -353,7 +484,305 @@ class DataAddProvider extends BaseController with ChangeNotifier {
       Constant.xSizedBox8,
       Text("Masukan data upper pada tabel", style: Constant.grayMedium),
       Constant.xSizedBox16,
-      tableForm(context),
+      tableFormUpper(context),
+      // Container(
+      //   decoration: BoxDecoration(
+      //       border: Border.all(color: Constant.borderSearchColor),
+      //       borderRadius: BorderRadius.circular(5)),
+      //   child: Column(
+      //     children: [
+      //       labelNo(),
+      //       valueTable(),
+      //       valueTable(),
+      //       valueTable(),
+      //     ],
+      //   ),
+      // ),
+      Constant.xSizedBox16,
+    ];
+  }
+
+  // DATA CLUTCH /KOPLING
+  List<List<TextEditingController>> dataClutchC = [];
+  List<TableRow> wDataClutchRow = [];
+
+  generateDataClutchRow() {
+    for (int i = 0; i < 3; i++) {
+      if (i == 0) {
+        wDataClutchRow.add(TableRow(children: [
+          Text('\n\n', textAlign: TextAlign.center),
+          Text('\n1\n', textAlign: TextAlign.center),
+          Text('\n2\n', textAlign: TextAlign.center),
+          Text('\n3\n', textAlign: TextAlign.center),
+          Text('\n4\n', textAlign: TextAlign.center),
+        ]));
+      } else {
+        dataClutchC.add([
+          TextEditingController(),
+          TextEditingController(),
+          TextEditingController(),
+          TextEditingController()
+        ]);
+        wDataClutchRow.add(TableRow(children: [
+          Text('$i', textAlign: TextAlign.center),
+          CustomTextField.tableTextField(controller: dataClutchC[i - 1][0]),
+          CustomTextField.tableTextField(controller: dataClutchC[i - 1][1]),
+          CustomTextField.tableTextField(controller: dataClutchC[i - 1][2]),
+          CustomTextField.tableTextField(controller: dataClutchC[i - 1][3]),
+        ]));
+      }
+    }
+  }
+
+  Widget tableFormClutch(BuildContext context) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Expanded(
+          child: Table(
+            border: TableBorder.all(
+                color: Constant.borderSearchColor,
+                borderRadius: BorderRadius.circular(5)),
+            columnWidths: const <int, TableColumnWidth>{
+              0: FlexColumnWidth(),
+              1: FlexColumnWidth(),
+              2: FlexColumnWidth(),
+              3: FlexColumnWidth(),
+              4: FlexColumnWidth(),
+            },
+            defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+            children: wDataClutchRow,
+          ),
+        ),
+        Constant.xSizedBox12,
+        Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: List.generate(
+            wDataClutchRow.length + 1,
+            (index) {
+              return Padding(
+                padding: EdgeInsets.symmetric(horizontal: 0, vertical: 12),
+                child: InkWell(
+                  onTap: index == 0 || index == 1
+                      ? null
+                      : () async {
+                          // jika ADD BARIS
+                          if (index == wDataClutchRow.length) {
+                            dataClutchC.add([
+                              TextEditingController(),
+                              TextEditingController(),
+                              TextEditingController(),
+                              TextEditingController(),
+                            ]);
+                            wDataClutchRow.add(TableRow(children: [
+                              Text('$index', textAlign: TextAlign.center),
+                              CustomTextField.tableTextField(
+                                  controller: dataClutchC[index - 1][0]),
+                              CustomTextField.tableTextField(
+                                  controller: dataClutchC[index - 1][1]),
+                              CustomTextField.tableTextField(
+                                  controller: dataClutchC[index - 1][2]),
+                              CustomTextField.tableTextField(
+                                  controller: dataClutchC[index - 1][3]),
+                            ]));
+                          }
+                          // JIKA HAPUS BARIS DI INDEKS TERTENTU
+                          else {
+                            await Utils.showYesNoDialog(
+                              context: context,
+                              title: "Konfirmasi",
+                              desc: "Apakah Anda Yakin Ingin Hapus Data Ini?",
+                              yesCallback: () async {
+                                Navigator.pop(context);
+                                try {
+                                  if (wDataClutchRow.length > 2) {
+                                    wDataClutchRow.removeAt(index);
+                                    dataClutchC.removeAt(index - 1);
+                                  }
+                                } catch (e) {
+                                  Utils.showFailed(msg: "Gagal hapus data");
+                                }
+                              },
+                              noCallback: () => Navigator.pop(context),
+                            );
+                          }
+                          notifyListeners();
+                        },
+                  child: Icon(
+                    index == wDataClutchRow.length
+                        ? Icons.add_circle_rounded
+                        : Icons.remove_circle_rounded,
+                    color: index == 0 || index == 1
+                        ? Colors.white
+                        : index == wDataClutchRow.length
+                            ? Constant.greenColor
+                            : Constant.redColor,
+                  ),
+                ),
+              );
+            },
+          ),
+        )
+      ],
+    );
+  }
+
+  List<Widget> clutchForm(BuildContext context) {
+    return [
+      Text("Clutch", style: Constant.blackBold20),
+      Constant.xSizedBox8,
+      Text("Masukan data upper pada tabel", style: Constant.grayMedium),
+      Constant.xSizedBox16,
+      tableFormClutch(context),
+      // Container(
+      //   decoration: BoxDecoration(
+      //       border: Border.all(color: Constant.borderSearchColor),
+      //       borderRadius: BorderRadius.circular(5)),
+      //   child: Column(
+      //     children: [
+      //       labelNo(),
+      //       valueTable(),
+      //       valueTable(),
+      //       valueTable(),
+      //     ],
+      //   ),
+      // ),
+      Constant.xSizedBox16,
+    ];
+  }
+
+  // DATA TURBINE
+  List<List<TextEditingController>> dataTurbineC = [];
+  List<TableRow> wDataTurbineRow = [];
+
+  generateDataTurbineRow() {
+    for (int i = 0; i < 3; i++) {
+      if (i == 0) {
+        wDataTurbineRow.add(TableRow(children: [
+          Text('\n\n', textAlign: TextAlign.center),
+          Text('\n1\n', textAlign: TextAlign.center),
+          Text('\n2\n', textAlign: TextAlign.center),
+          Text('\n3\n', textAlign: TextAlign.center),
+          Text('\n4\n', textAlign: TextAlign.center),
+        ]));
+      } else {
+        dataTurbineC.add([
+          TextEditingController(),
+          TextEditingController(),
+          TextEditingController(),
+          TextEditingController()
+        ]);
+        wDataTurbineRow.add(TableRow(children: [
+          Text('$i', textAlign: TextAlign.center),
+          CustomTextField.tableTextField(controller: dataTurbineC[i - 1][0]),
+          CustomTextField.tableTextField(controller: dataTurbineC[i - 1][1]),
+          CustomTextField.tableTextField(controller: dataTurbineC[i - 1][2]),
+          CustomTextField.tableTextField(controller: dataTurbineC[i - 1][3]),
+        ]));
+      }
+    }
+  }
+
+  Widget tableFormTurbine(BuildContext context) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Expanded(
+          child: Table(
+            border: TableBorder.all(
+                color: Constant.borderSearchColor,
+                borderRadius: BorderRadius.circular(5)),
+            columnWidths: const <int, TableColumnWidth>{
+              0: FlexColumnWidth(),
+              1: FlexColumnWidth(),
+              2: FlexColumnWidth(),
+              3: FlexColumnWidth(),
+              4: FlexColumnWidth(),
+            },
+            defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+            children: wDataTurbineRow,
+          ),
+        ),
+        Constant.xSizedBox12,
+        Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: List.generate(
+            wDataTurbineRow.length + 1,
+            (index) {
+              return Padding(
+                padding: EdgeInsets.symmetric(horizontal: 0, vertical: 12),
+                child: InkWell(
+                  onTap: index == 0 || index == 1
+                      ? null
+                      : () async {
+                          // jika ADD BARIS
+                          if (index == wDataTurbineRow.length) {
+                            dataTurbineC.add([
+                              TextEditingController(),
+                              TextEditingController(),
+                              TextEditingController(),
+                              TextEditingController(),
+                            ]);
+                            wDataTurbineRow.add(TableRow(children: [
+                              Text('$index', textAlign: TextAlign.center),
+                              CustomTextField.tableTextField(
+                                  controller: dataTurbineC[index - 1][0]),
+                              CustomTextField.tableTextField(
+                                  controller: dataTurbineC[index - 1][1]),
+                              CustomTextField.tableTextField(
+                                  controller: dataTurbineC[index - 1][2]),
+                              CustomTextField.tableTextField(
+                                  controller: dataTurbineC[index - 1][3]),
+                            ]));
+                          }
+                          // JIKA HAPUS BARIS DI INDEKS TERTENTU
+                          else {
+                            await Utils.showYesNoDialog(
+                              context: context,
+                              title: "Konfirmasi",
+                              desc: "Apakah Anda Yakin Ingin Hapus Data Ini?",
+                              yesCallback: () async {
+                                Navigator.pop(context);
+                                try {
+                                  if (wDataTurbineRow.length > 2) {
+                                    wDataTurbineRow.removeAt(index);
+                                    dataTurbineC.removeAt(index - 1);
+                                  }
+                                } catch (e) {
+                                  Utils.showFailed(msg: "Gagal hapus data");
+                                }
+                              },
+                              noCallback: () => Navigator.pop(context),
+                            );
+                          }
+                          notifyListeners();
+                        },
+                  child: Icon(
+                    index == wDataTurbineRow.length
+                        ? Icons.add_circle_rounded
+                        : Icons.remove_circle_rounded,
+                    color: index == 0 || index == 1
+                        ? Colors.white
+                        : index == wDataTurbineRow.length
+                            ? Constant.greenColor
+                            : Constant.redColor,
+                  ),
+                ),
+              );
+            },
+          ),
+        )
+      ],
+    );
+  }
+
+  List<Widget> turbineForm(BuildContext context) {
+    return [
+      Text("Turbine", style: Constant.blackBold20),
+      Constant.xSizedBox8,
+      Text("Masukan data upper pada tabel", style: Constant.grayMedium),
+      Constant.xSizedBox16,
+      tableFormTurbine(context),
       // Container(
       //   decoration: BoxDecoration(
       //       border: Border.all(color: Constant.borderSearchColor),

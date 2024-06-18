@@ -44,7 +44,7 @@ class Constant {
   static Color textKomisiColor = Color(0xFFFFCB47);
   static Color textPriceColor = Color(0xFF3DA11A);
   static Color backgroundColor = Color(0xFFF9F9F9);
-  static Color textColorBlack = Color(0xff414D55);
+  static Color textColorBlack = Color(0xff1D273B);
   static Color textColorWhite = Colors.white;
   static Color textColorBlue = Color(0xFF041E42);
   static Color timerColor = Color(0xFFE7B641);

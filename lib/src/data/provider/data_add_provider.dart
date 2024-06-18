@@ -11,9 +11,6 @@ import '../../../common/base/base_controller.dart';
 import '../../../common/helper/constant.dart';
 import '../../../common/component/custom_dropdown.dart';
 import '../../../common/component/custom_textfield.dart';
-import '../../tower/model/tower_create_model.dart';
-
-import 'package:http/http.dart' as http;
 
 class DataAddProvider extends BaseController with ChangeNotifier {
   GlobalKey<FormState> dataAddKey = GlobalKey<FormState>();
@@ -55,9 +52,12 @@ class DataAddProvider extends BaseController with ChangeNotifier {
     totalC.clear();
     rasioC.clear();
     wDataUpperRow.clear();
+    wDataClutchRow.clear();
+    wDataTurbineRow.clear();
     dataUpperC.clear();
+    dataClutchC.clear();
+    dataTurbineC.clear();
     selectedTower = null;
-    formType = 'upper';
   }
 
   Future<TowerModel> fetchTower(BuildContext context) async {
@@ -343,14 +343,6 @@ class DataAddProvider extends BaseController with ChangeNotifier {
       ),
       Constant.xSizedBox16,
     ];
-  }
-
-  // WHICH TYPE
-  String _formType = 'upper';
-  String get formType => this._formType;
-  set formType(String value) {
-    this._formType = value;
-    // notifyListeners();
   }
 
   // DATA UPPER

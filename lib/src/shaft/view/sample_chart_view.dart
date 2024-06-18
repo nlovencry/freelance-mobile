@@ -5,7 +5,8 @@ import 'package:provider/provider.dart';
 import '../../data/provider/data_add_provider.dart';
 
 class SampleChartView extends StatefulWidget {
-  const SampleChartView({super.key});
+  final int activeIndex;
+  SampleChartView({super.key, required this.activeIndex});
 
   @override
   State<SampleChartView> createState() => _SampleChartViewState();
@@ -45,6 +46,7 @@ class _SampleChartViewState extends State<SampleChartView> {
                     child: _Chart(
                       baselineX,
                       (20 - (baselineY + 10)) - 10,
+                      widget.activeIndex,
                     ),
                   )
                 ],
@@ -70,8 +72,9 @@ class _SampleChartViewState extends State<SampleChartView> {
 class _Chart extends StatelessWidget {
   final double baselineX;
   final double baselineY;
+  final int activeIndex;
 
-  const _Chart(this.baselineX, this.baselineY) : super();
+  const _Chart(this.baselineX, this.baselineY, this.activeIndex) : super();
 
   Widget getHorizontalTitles(value, TitleMeta meta) {
     TextStyle style;
@@ -204,26 +207,41 @@ class _Chart extends StatelessWidget {
     final bdTurbine = d.bdTurbine;
     // UPPER
     final upper = d.upper;
+
+    FlSpot getFlSpot1() {
+      if (activeIndex == 1) return FlSpot(acClutch[0], acClutch[1]);
+      if (activeIndex == 2) return FlSpot(acTurbine[0], acTurbine[1]);
+      return FlSpot(acUpper[0], acUpper[1]);
+    }
+
+    FlSpot getFlSpot2() {
+      if (activeIndex == 1) return FlSpot(bdClutch[0], bdClutch[1]);
+      if (activeIndex == 2) return FlSpot(bdTurbine[0], bdTurbine[1]);
+      return FlSpot(bdUpper[0], bdUpper[1]);
+    }
+
     return LineChart(
       LineChartData(
         lineBarsData: [
-          LineChartBarData(
-            spots: [
-              FlSpot(0, 6),
-              FlSpot(1, 0),
-              FlSpot(1, 0),
-              FlSpot(2, -6),
-            ],
-            color: Color(0xffFABB00),
-            dotData: FlDotData(show: false),
-          ),
+          // LineChartBarData(
+          //   spots: [
+          //     FlSpot(0, 6),
+          //     FlSpot(1, 0),
+          //     FlSpot(1, 0),
+          //     FlSpot(2, -6),
+          //   ],
+          //   color: Color(0xffFABB00),
+          //   dotData: FlDotData(show: false),
+          // ),
           LineChartBarData(
             barWidth: 5,
             spots: [
-              FlSpot(acUpper[0], acUpper[1]),
+              getFlSpot1(),
+              // FlSpot(acUpper[0], acUpper[1]),
               FlSpot(0, 0),
               FlSpot(0, 0),
-              FlSpot(bdUpper[0], bdUpper[1]),
+              getFlSpot2(),
+              // FlSpot(bdUpper[0], bdUpper[1]),
             ],
             color: Color(0xff9E9E9E),
             dotData: FlDotData(show: false),

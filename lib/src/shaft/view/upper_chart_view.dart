@@ -1,18 +1,18 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:mata/common/helper/constant.dart';
 import 'package:provider/provider.dart';
 
 import '../../data/provider/data_add_provider.dart';
 
-class SampleChartView extends StatefulWidget {
-  final int activeIndex;
-  SampleChartView({super.key, required this.activeIndex});
+class UpperChartView extends StatefulWidget {
+  UpperChartView({super.key});
 
   @override
-  State<SampleChartView> createState() => _SampleChartViewState();
+  State<UpperChartView> createState() => _UpperChartViewState();
 }
 
-class _SampleChartViewState extends State<SampleChartView> {
+class _UpperChartViewState extends State<UpperChartView> {
   var baselineX = 0.0;
   var baselineY = 0.0;
 
@@ -46,7 +46,6 @@ class _SampleChartViewState extends State<SampleChartView> {
                     child: _Chart(
                       baselineX,
                       (20 - (baselineY + 10)) - 10,
-                      widget.activeIndex,
                     ),
                   )
                 ],
@@ -72,9 +71,8 @@ class _SampleChartViewState extends State<SampleChartView> {
 class _Chart extends StatelessWidget {
   final double baselineX;
   final double baselineY;
-  final int activeIndex;
 
-  const _Chart(this.baselineX, this.baselineY, this.activeIndex) : super();
+  const _Chart(this.baselineX, this.baselineY) : super();
 
   Widget getHorizontalTitles(value, TitleMeta meta) {
     TextStyle style;
@@ -92,7 +90,7 @@ class _Chart extends StatelessWidget {
     }
     return Padding(
       padding: const EdgeInsets.all(4.0),
-      child: Text('', style: style),
+      child: Text('A', style: style),
       // child: Text(meta.formattedValue, style: style),
     );
   }
@@ -113,7 +111,7 @@ class _Chart extends StatelessWidget {
     }
     return Padding(
       padding: const EdgeInsets.all(4.0),
-      child: Text('', style: style),
+      child: Text('B', style: style),
       // child: Text(meta.formattedValue, style: style),
     );
   }
@@ -135,7 +133,7 @@ class _Chart extends StatelessWidget {
 
     return Padding(
       padding: const EdgeInsets.all(4.0),
-      child: Text(activeIndex == 0 ? 'A' : 'B', style: style),
+      child: Text('C', style: style),
       // child: Text(meta.formattedValue, style: style),
     );
   }
@@ -157,7 +155,7 @@ class _Chart extends StatelessWidget {
 
     return Padding(
       padding: const EdgeInsets.all(4.0),
-      child: Text(activeIndex == 0 ? 'C' : 'D', style: style),
+      child: Text('D', style: style),
       // child: Text(meta.formattedValue, style: style),
     );
   }
@@ -197,64 +195,21 @@ class _Chart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final d = context.watch<DataAddProvider>();
-    // AC
-    final acUpper = d.acUpper;
-    final acClutch = d.acClutch;
-    final acTurbine = d.acTurbine;
-    // BD
-    final bdUpper = d.bdUpper;
-    final bdClutch = d.bdClutch;
-    final bdTurbine = d.bdTurbine;
     // UPPER
     final upper = d.upper;
-
-    FlSpot getFlSpotUpper() {
-      if (activeIndex == 1) return FlSpot(bdUpper[0], bdUpper[1]);
-      return FlSpot(acUpper[0], acUpper[1]);
-    }
-
-    FlSpot getFlSpotClutch() {
-      if (activeIndex == 1) return FlSpot(bdClutch[0], bdClutch[1]);
-      return FlSpot(acClutch[0], acClutch[1]);
-    }
-
-    FlSpot getFlSpotTurbine() {
-      if (activeIndex == 1) return FlSpot(bdTurbine[0], bdTurbine[1]);
-      return FlSpot(acTurbine[0], acTurbine[1]);
-    }
-
-    FlSpot getFlSpotYellowTop() {
-      if (activeIndex == 1) return FlSpot(bdUpper[0], bdUpper[1]);
-      return FlSpot(acUpper[0], acUpper[1]);
-    }
-
-    FlSpot getFlSpotYellowBottom() {
-      if (activeIndex == 1) return FlSpot(bdTurbine[0], bdTurbine[1]);
-      return FlSpot(acTurbine[0], acTurbine[1]);
-    }
 
     return LineChart(
       LineChartData(
         lineBarsData: [
           LineChartBarData(
-            barWidth: 2,
-            spots: [
-              getFlSpotYellowTop(),
-              getFlSpotYellowBottom(),
-            ],
-            color: Color(0xffFABB00),
-            dotData: FlDotData(show: false),
-          ),
-          LineChartBarData(
             barWidth: 4,
+            show: true,
             spots: [
-              getFlSpotUpper(),
-              getFlSpotClutch(),
-              getFlSpotClutch(),
-              getFlSpotTurbine(),
+              FlSpot(upper[0], upper[1]),
+              // FlSpot(0, 0),
             ],
-            color: Color(0xff9E9E9E),
-            dotData: FlDotData(show: false),
+            color: Constant.redColor,
+            dotData: FlDotData(show: true),
           ),
         ],
         // betweenBarsData: [BetweenBarsData(fromIndex: 0, toIndex: 2)],
@@ -294,11 +249,11 @@ class _Chart extends StatelessWidget {
           getDrawingHorizontalLine: getHorizontalVerticalLine,
           getDrawingVerticalLine: getVerticalVerticalLine,
         ),
-        minY: -5,
-        maxY: 5,
+        minY: -10,
+        maxY: 10,
         baselineY: baselineY,
-        minX: -15,
-        maxX: 15,
+        minX: -10,
+        maxX: 10,
         baselineX: baselineX,
       ),
       duration: Duration.zero,

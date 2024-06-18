@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_toggle_tab/flutter_toggle_tab.dart';
@@ -5,8 +7,10 @@ import 'package:mata/common/component/custom_appbar.dart';
 import 'package:mata/common/helper/constant.dart';
 import 'package:mata/src/shaft/view/sample_chart_view.dart';
 import 'package:provider/provider.dart';
+import 'package:sizer/sizer.dart';
 
 import '../../data/provider/data_add_provider.dart';
+import 'upper_chart_view.dart';
 
 class ShaftView extends StatefulWidget {
   const ShaftView({super.key});
@@ -23,6 +27,7 @@ class _ShaftViewState extends State<ShaftView> with TickerProviderStateMixin {
     final p = context.read<DataAddProvider>();
     tabController = TabController(length: 3, vsync: this);
     tabController.addListener(() {
+      log("INDEX ACTIVE : ${tabController.index}");
       setState(() {});
     });
     super.initState();
@@ -61,11 +66,7 @@ class _ShaftViewState extends State<ShaftView> with TickerProviderStateMixin {
             // selectedTextStyle:
             //     TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
             // unSelectedTextStyle: TextStyle(color: Colors.black87),
-            tabs: [
-              _buildTab("Upper"),
-              _buildTab("Clutch"),
-              _buildTab("Turbine")
-            ],
+            tabs: [_buildTab("A-C"), _buildTab("B-D"), _buildTab("Upper")],
             // selectedLabelIndex: (index) {
             //   setState(() {
             //     currentIndex = index;
@@ -107,23 +108,11 @@ class _ShaftViewState extends State<ShaftView> with TickerProviderStateMixin {
             ),
             Constant.xSizedBox16,
             toggleTab(),
-            Constant.xSizedBox16,
             Container(
-              color: Colors.white,
-              height: 325,
-              child: TabBarView(
-                controller: tabController,
-                children: [
-                  SampleChartView(activeIndex: 0),
-                  SampleChartView(activeIndex: 1),
-                  SampleChartView(activeIndex: 2),
-                  // UPPER LINGKARAN
-                  // SampleChartView(),
-                ],
-              ),
-            ),
+                child: tabController.index == 2
+                    ? UpperChartView()
+                    : SampleChartView(activeIndex: tabController.index)),
             Constant.xSizedBox16,
-
             Text('Detail Data', style: Constant.iBlackMedium16),
             Constant.xSizedBox8,
             Text(
@@ -227,18 +216,6 @@ class _ShaftViewState extends State<ShaftView> with TickerProviderStateMixin {
               ],
             ),
             Constant.xSizedBox18,
-            // Stack(
-            //   children: [
-            //     SampleChartView(),
-            //     // Positioned(
-            //     //   top: 0,
-            //     //   bottom: 0,
-            //     //   right: 0,
-            //     //   left: 0,
-            //     //   child: Icon(Icons.alarm),
-            //     // ),
-            //   ],
-            // ),
           ],
         ),
       ),

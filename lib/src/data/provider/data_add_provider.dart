@@ -16,7 +16,6 @@ class DataAddProvider extends BaseController with ChangeNotifier {
   GlobalKey<FormState> dataAddKey = GlobalKey<FormState>();
 
   TextEditingController pltaC = TextEditingController();
-  TextEditingController noUnitC = TextEditingController();
   TextEditingController genBearingKoplingC = TextEditingController();
   TextEditingController koplingTurbinC = TextEditingController();
   TextEditingController totalC = TextEditingController();
@@ -46,7 +45,6 @@ class DataAddProvider extends BaseController with ChangeNotifier {
 
   resetData() {
     pltaC.clear();
-    noUnitC.clear();
     genBearingKoplingC.clear();
     koplingTurbinC.clear();
     totalC.clear();
@@ -97,40 +95,71 @@ class DataAddProvider extends BaseController with ChangeNotifier {
   // UPPER
   List<double> upper = [];
 
+  double divideUntilTwoDigits(double val) {
+    if (val > 10 && val < 100) return val / 10;
+    if (val > 100 && val < 1000) return val / 100;
+    if (val > 1000 && val < 10000) return val / 1000;
+    if (val > 10000 && val < 100000) return val / 10000;
+    if (val > 100000 && val < 1000000) return val / 100000;
+    return val;
+  }
+
   setDataChart() {
     // AC
     final acData = turbineCreateModel.Data?.Chart?.AC;
     final bdData = turbineCreateModel.Data?.Chart?.BD;
     final upperData = turbineCreateModel.Data?.Chart?.Upper;
     if (acData != null && acData.Upper != null)
-      acUpper =
-          acData.Upper!.split('|').map((e) => double.tryParse(e) ?? 0).toList();
+      acUpper = acData.Upper!
+          .split('|')
+          .map((e) => divideUntilTwoDigits(double.tryParse(e) ?? 0))
+          .toList();
     if (acData != null && acData.Clutch != null)
       acClutch = acData.Clutch!
           .split('|')
-          .map((e) => double.tryParse(e) ?? 0)
+          .map((e) => divideUntilTwoDigits(double.tryParse(e) ?? 0))
           .toList();
-    if (acData != null && acData.Turbine != null)
-      acTurbine = acData.Turbine!
-          .split('|')
-          .map((e) => double.tryParse(e) ?? 0)
-          .toList();
+    if (acData != null && acData.Turbine != null) {
+      acTurbine = acData.Turbine!.split('|').map((e) {
+        double num = divideUntilTwoDigits(double.tryParse(e) ?? 0);
+        if (num > 0) return num;
+        return num;
+      }).toList();
+      acTurbine[1] = -acTurbine[1];
+    }
     // BD
     if (bdData != null && bdData.Upper != null)
-      bdUpper =
-          bdData.Upper!.split('|').map((e) => double.tryParse(e) ?? 0).toList();
+      bdUpper = bdData.Upper!
+          .split('|')
+          .map((e) => divideUntilTwoDigits(double.tryParse(e) ?? 0))
+          .toList();
     if (bdData != null && bdData.Clutch != null)
       bdClutch = bdData.Clutch!
           .split('|')
-          .map((e) => double.tryParse(e) ?? 0)
+          .map((e) => divideUntilTwoDigits(double.tryParse(e) ?? 0))
           .toList();
-    if (bdData != null && bdData.Turbine != null)
-      bdTurbine = bdData.Turbine!
-          .split('|')
-          .map((e) => double.tryParse(e) ?? 0)
-          .toList();
+    if (bdData != null && bdData.Turbine != null) {
+      bdTurbine = bdData.Turbine!.split('|').map((e) {
+        double num = divideUntilTwoDigits(double.tryParse(e) ?? 0);
+        if (num > 0) return num;
+        return num;
+      }).toList();
+
+      bdTurbine[1] = -bdTurbine[1];
+    }
     if (upperData != null)
-      upper = upperData.split('|').map((e) => double.tryParse(e) ?? 0).toList();
+      upper = upperData
+          .split('|')
+          .map((e) => divideUntilTwoDigits(double.tryParse(e) ?? 0))
+          .toList();
+    log("AC UPPER : $acUpper");
+    log("AC CLUTCH : $acClutch");
+    log("AC TURBINE : $acTurbine");
+
+    ///
+    log("BD UPPER : $bdUpper");
+    log("BD CLUTCH : $bdClutch");
+    log("BD TURBINE : $bdTurbine");
   }
 
   Future<TurbineCreateModel> createTurbines() async {
@@ -200,7 +229,6 @@ class DataAddProvider extends BaseController with ChangeNotifier {
     if (selected != null) {
       selectedTower = v;
       pltaC.text = selected;
-      noUnitC.text = v ?? '';
     }
   }
 
@@ -224,12 +252,6 @@ class DataAddProvider extends BaseController with ChangeNotifier {
             .toList(),
         onChanged: onChangedPLTA,
       ),
-      Constant.xSizedBox16,
-      CustomTextField.borderTextField(
-          enabled: false,
-          readOnly: true,
-          controller: noUnitC,
-          labelText: "No Unit"),
       Constant.xSizedBox16,
     ];
   }
@@ -354,10 +376,10 @@ class DataAddProvider extends BaseController with ChangeNotifier {
       if (i == 0) {
         wDataUpperRow.add(TableRow(children: [
           Text('\n\n', textAlign: TextAlign.center),
-          Text('\n1\n', textAlign: TextAlign.center),
-          Text('\n2\n', textAlign: TextAlign.center),
-          Text('\n3\n', textAlign: TextAlign.center),
-          Text('\n4\n', textAlign: TextAlign.center),
+          Text('\nA\n', textAlign: TextAlign.center),
+          Text('\nB\n', textAlign: TextAlign.center),
+          Text('\nC\n', textAlign: TextAlign.center),
+          Text('\nD\n', textAlign: TextAlign.center),
         ]));
       } else {
         dataUpperC.add([
@@ -503,10 +525,10 @@ class DataAddProvider extends BaseController with ChangeNotifier {
       if (i == 0) {
         wDataClutchRow.add(TableRow(children: [
           Text('\n\n', textAlign: TextAlign.center),
-          Text('\n1\n', textAlign: TextAlign.center),
-          Text('\n2\n', textAlign: TextAlign.center),
-          Text('\n3\n', textAlign: TextAlign.center),
-          Text('\n4\n', textAlign: TextAlign.center),
+          Text('\nA\n', textAlign: TextAlign.center),
+          Text('\nB\n', textAlign: TextAlign.center),
+          Text('\nC\n', textAlign: TextAlign.center),
+          Text('\nD\n', textAlign: TextAlign.center),
         ]));
       } else {
         dataClutchC.add([
@@ -652,10 +674,10 @@ class DataAddProvider extends BaseController with ChangeNotifier {
       if (i == 0) {
         wDataTurbineRow.add(TableRow(children: [
           Text('\n\n', textAlign: TextAlign.center),
-          Text('\n1\n', textAlign: TextAlign.center),
-          Text('\n2\n', textAlign: TextAlign.center),
-          Text('\n3\n', textAlign: TextAlign.center),
-          Text('\n4\n', textAlign: TextAlign.center),
+          Text('\nA\n', textAlign: TextAlign.center),
+          Text('\nB\n', textAlign: TextAlign.center),
+          Text('\nC\n', textAlign: TextAlign.center),
+          Text('\nD\n', textAlign: TextAlign.center),
         ]));
       } else {
         dataTurbineC.add([

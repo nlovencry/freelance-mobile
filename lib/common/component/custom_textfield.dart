@@ -433,7 +433,7 @@ class CustomTextField {
     String? Function(String?)? validator,
     Function(String)? onChange,
     Color? activeBorderColor,
-    bool required = true,
+    bool required = false,
     List<TextInputFormatter>? inputFormatters,
   }) {
     return TextFormField(
@@ -483,7 +483,8 @@ class CustomTextField {
         if (maxLength != null) LengthLimitingTextInputFormatter(maxLength),
         if (inputFormatters != null) ...[
           ...inputFormatters,
-        ]
+        ],
+        LengthLimitingTextInputFormatter(1000000),
       ],
       textCapitalization: textCapitalization ?? TextCapitalization.none,
       onEditingComplete: onEditingComplete,

@@ -34,9 +34,7 @@ class _ShaftViewState extends State<ShaftView> with TickerProviderStateMixin {
     final shaft =
         context.watch<DataAddProvider>().turbineCreateModel.Data?.Shaft;
     Widget _buildTab(String tag) {
-      return Tab(
-          child: Text(tag,
-              style: TextStyle(fontSize: 17, color: Constant.primaryColor)));
+      return Tab(child: Text(tag, style: TextStyle(fontSize: 18)));
     }
 
     Widget toggleTab() {
@@ -49,6 +47,10 @@ class _ShaftViewState extends State<ShaftView> with TickerProviderStateMixin {
             isScrollable: true,
             controller: tabController,
             indicatorWeight: 4,
+            unselectedLabelColor: Constant.grayColor,
+            labelColor: Constant.primaryColor,
+            unselectedLabelStyle: TextStyle(fontWeight: FontWeight.w300),
+
             indicatorColor: Constant.primaryColor,
             // width: 91, // width in percent
             // borderRadius: 30,

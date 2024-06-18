@@ -108,34 +108,50 @@ class _MainHomeState extends State<MainHome> {
           items: [
             BottomNavigationBarItem(
               icon: Container(
-                  padding: EdgeInsets.only(bottom: 4),
-                  width: 25,
-                  height: 25,
-                  child: FittedBox(
-                      child: Image.asset(currentIndex == 0
-                          ? 'assets/icons/ic-home-blue.png'
-                          : 'assets/icons/ic-home-gray.png'))),
+                padding: EdgeInsets.only(bottom: 4),
+                width: 25,
+                height: 25,
+                child: FittedBox(
+                  child: Image.asset(
+                    'assets/icons/ic-home.png',
+                    color: currentIndex == 0
+                        ? Constant.primaryColor
+                        : Color(0xff8A8C8D),
+                  ),
+                ),
+              ),
               label: 'Beranda',
             ),
             BottomNavigationBarItem(
-                icon: Container(
-                    padding: EdgeInsets.only(bottom: 4),
-                    width: 25,
-                    height: 25,
-                    child: FittedBox(
-                        child: Image.asset(currentIndex == 1
-                            ? 'assets/icons/ic-transaction-blue.png'
-                            : 'assets/icons/ic-transaction-gray.png'))),
-                label: 'Form'),
+              icon: Container(
+                padding: EdgeInsets.only(bottom: 4),
+                width: 25,
+                height: 25,
+                child: FittedBox(
+                  child: Image.asset(
+                    'assets/icons/ic-form.png',
+                    color: currentIndex == 1
+                        ? Constant.primaryColor
+                        : Color(0xff8A8C8D),
+                  ),
+                ),
+              ),
+              label: 'Form',
+            ),
             BottomNavigationBarItem(
               icon: Container(
-                  padding: EdgeInsets.only(bottom: 4),
-                  width: 25,
-                  height: 25,
-                  child: FittedBox(
-                      child: Image.asset(currentIndex == 2
-                          ? 'assets/icons/ic-wo-blue.png'
-                          : 'assets/icons/ic-wo-gray.png'))),
+                padding: EdgeInsets.only(bottom: 4),
+                width: 25,
+                height: 25,
+                child: FittedBox(
+                  child: Image.asset(
+                    'assets/icons/ic-riwayat.png',
+                    color: currentIndex == 2
+                        ? Constant.primaryColor
+                        : Color(0xff8A8C8D),
+                  ),
+                ),
+              ),
               label: 'Riwayat',
             ),
             BottomNavigationBarItem(
@@ -144,9 +160,12 @@ class _MainHomeState extends State<MainHome> {
                   width: 25,
                   height: 25,
                   child: FittedBox(
-                      child: Image.asset(currentIndex == 3
-                          ? 'assets/icons/ic-report-blue.png'
-                          : 'assets/icons/ic-report-gray.png'))),
+                      child: Image.asset(
+                    'assets/icons/ic-profile.png',
+                    color: currentIndex == 3
+                        ? Constant.primaryColor
+                        : Color(0xff8A8C8D),
+                  ))),
               label: 'Profile',
             ),
           ],
@@ -174,9 +193,9 @@ class _MainHomeState extends State<MainHome> {
         },
         child: [
           Home1View(),
-          TransactionView(),
-          WorkOrderView(),
-          ReportView()
+          SizedBox(),
+          SizedBox(),
+          SizedBox(),
           // ProfileView(jumpToJamaah, jumpToSubAgen)
         ][currentIndex],
       ),

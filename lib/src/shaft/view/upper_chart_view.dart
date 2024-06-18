@@ -21,7 +21,7 @@ class _UpperChartViewState extends State<UpperChartView> {
     return AspectRatio(
       aspectRatio: 1.10,
       child: Padding(
-        padding: const EdgeInsets.only(left: 0, right: 0),
+        padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 30),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -200,14 +200,34 @@ class _Chart extends StatelessWidget {
 
     return LineChart(
       LineChartData(
+        lineTouchData: LineTouchData(
+          enabled: true,
+          touchTooltipData: LineTouchTooltipData(
+            getTooltipItems: (touchedSpots) {
+              return touchedSpots.map((LineBarSpot touchedSpot) {
+                final textStyle = TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 14,
+                );
+                return LineTooltipItem(
+                  '${touchedSpot.x.toStringAsFixed(0)},${touchedSpot.y.toStringAsFixed(0)}',
+                  textStyle,
+                );
+              }).toList();
+            },
+            tooltipBgColor: Constant.primaryColor,
+          ),
+        ),
         lineBarsData: [
           LineChartBarData(
-            barWidth: 4,
+            barWidth: 2,
             show: true,
             spots: [
               FlSpot(upper[0], upper[1]),
-              // FlSpot(0, 0),
+              FlSpot(0, 0),
             ],
+            belowBarData: BarAreaData(show: false),
             color: Constant.redColor,
             dotData: FlDotData(show: true),
           ),

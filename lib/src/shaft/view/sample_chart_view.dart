@@ -21,7 +21,7 @@ class _SampleChartViewState extends State<SampleChartView> {
     return AspectRatio(
       aspectRatio: 1.10,
       child: Padding(
-        padding: const EdgeInsets.only(left: 0, right: 0),
+        padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 30),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -237,7 +237,7 @@ class _Chart extends StatelessWidget {
       LineChartData(
         lineBarsData: [
           LineChartBarData(
-            barWidth: 2,
+            barWidth: 1,
             spots: [
               getFlSpotYellowTop(),
               getFlSpotYellowBottom(),
@@ -246,14 +246,14 @@ class _Chart extends StatelessWidget {
             dotData: FlDotData(show: false),
           ),
           LineChartBarData(
-            barWidth: 4,
+            barWidth: 2,
             spots: [
               getFlSpotUpper(),
               getFlSpotClutch(),
               getFlSpotClutch(),
               getFlSpotTurbine(),
             ],
-            color: Color(0xff9E9E9E),
+            color: Colors.green,
             dotData: FlDotData(show: false),
           ),
         ],

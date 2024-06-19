@@ -179,7 +179,12 @@ class _MainHomeState extends State<MainHome> {
       bottomNavigationBar: customBottomNav(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
-        child: Icon(Icons.add),
+        child: CircleAvatar(
+          radius: 60,
+          backgroundColor: Constant.primaryColor,
+          child:
+              Image.asset('assets/icons/ic-button.png', width: 40, height: 40),
+        ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       body: WillPopScope(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mata/src/data/view/data_add_upper_view.dart';
+import 'package:mata/utils/utils.dart';
 import 'package:provider/provider.dart';
 import '../provider/data_add_provider.dart';
 import '../../shaft/view/shaft_view.dart';
@@ -46,9 +47,21 @@ class _DataAddViewState extends State<DataAddView> {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 0, vertical: 10),
               child: CustomButton.mainButton('Selanjutnya', () {
+                final dataP = context.read<DataAddProvider>();
                 FocusManager.instance.primaryFocus?.unfocus();
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (c) => DataAddUpperView()));
+                String? msg;
+                if (dataP.selectedTower == null) msg = 'Harap Pilih PLTA';
+                if (dataP.genBearingKoplingC.text.isEmpty)
+                  msg = 'Harap Isi Gen Bearing Kopling';
+                if (dataP.koplingTurbinC.text.isEmpty)
+                  msg = 'Harap Isi Kopling Turbin';
+                if (msg != null) {
+                  Utils.showFailed(msg: msg);
+                  return;
+                } else {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (c) => DataAddUpperView()));
+                }
               }),
             ),
           ],

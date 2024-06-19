@@ -7,6 +7,7 @@ import 'package:mata/src/user/view/user_manage_view.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../utils/utils.dart';
 import '../../auth/provider/auth_provider.dart';
@@ -19,6 +20,8 @@ class Home1View extends StatefulWidget {
 }
 
 class _Home1ViewState extends BaseState<Home1View> {
+  String? name;
+  String? division;
   static const List<String> staticArray = [
     'Shaft',
     'Upper',
@@ -41,6 +44,19 @@ class _Home1ViewState extends BaseState<Home1View> {
   ];
 
   @override
+  void initState() {
+    getData();
+    super.initState();
+  }
+
+  getData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    name = prefs.getString(Constant.kSetPrefName);
+    division = prefs.getString(Constant.kSetPrefRoles);
+    setState(() {});
+  }
+
+  @override
   Widget build(BuildContext context) {
     Widget headKonten() {
       return Container(
@@ -57,7 +73,7 @@ class _Home1ViewState extends BaseState<Home1View> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Alifano Reinanda",
+                      name ?? "Alifano Reinanda",
                       style: TextStyle(
                           color: Colors.white,
                           fontSize: 24,
@@ -65,7 +81,7 @@ class _Home1ViewState extends BaseState<Home1View> {
                     ),
                     Constant.xSizedBox8,
                     Text(
-                      "Turbine Engineer",
+                      division ?? "Turbine Engineer",
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 16,
@@ -344,9 +360,7 @@ class _Home1ViewState extends BaseState<Home1View> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             headKonten(),
-            SizedBox(
-              height: 5,
-            ),
+            SizedBox(height: 5),
             bodyKonten(),
           ],
         ),

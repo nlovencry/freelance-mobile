@@ -29,33 +29,48 @@ class _DataAddTurbineViewState extends BaseState<DataAddTurbineView> {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 0, vertical: 10),
               child: CustomButton.mainButton('Selanjutnya', () async {
+                final dataP = context.read<DataAddProvider>();
                 FocusManager.instance.primaryFocus?.unfocus();
-
-                await Utils.showYesNoDialog(
-                  context: context,
-                  title: "Konfirmasi",
-                  desc: "Apakah Data Anda Sudah Benar?",
-                  yesCallback: () => handleTap(() async {
-                    Navigator.pop(context);
-                    try {
-                      final response = await p.createTurbines();
-                      if (response.Success == true) {
-                        Utils.showSuccess(msg: response.Message ?? "Sukses");
-                        await Future.delayed(Duration(seconds: 2));
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (c) => ShaftView()));
-                      } else {
-                        Utils.showFailed(msg: response.Message ?? "Error");
-                      }
-                    } catch (e) {
-                      Utils.showFailed(
-                          msg: e.toString().toLowerCase().contains("doctype")
-                              ? "Maaf, Terjadi Galat!"
-                              : "$e");
+                String? msg;
+                for (int i = 0; i < dataP.dataTurbineC.length; i++) {
+                  for (int j = 0; j < dataP.dataTurbineC[i].length; j++) {
+                    if (dataP.dataTurbineC[i][j].text.isEmpty) {
+                      msg = 'Harap isi data yang kosong';
+                      break;
                     }
-                  }),
-                  noCallback: () => Navigator.pop(context),
-                );
+                  }
+                  if (msg != null) break;
+                }
+                if (msg != null) {
+                  Utils.showFailed(msg: msg);
+                  return;
+                } else {
+                  await Utils.showYesNoDialog(
+                    context: context,
+                    title: "Konfirmasi",
+                    desc: "Apakah Data Anda Sudah Benar?",
+                    yesCallback: () => handleTap(() async {
+                      Navigator.pop(context);
+                      try {
+                        final response = await p.createTurbines();
+                        if (response.Success == true) {
+                          Utils.showSuccess(msg: response.Message ?? "Sukses");
+                          await Future.delayed(Duration(seconds: 2));
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (c) => ShaftView()));
+                        } else {
+                          Utils.showFailed(msg: response.Message ?? "Error");
+                        }
+                      } catch (e) {
+                        Utils.showFailed(
+                            msg: e.toString().toLowerCase().contains("doctype")
+                                ? "Maaf, Terjadi Galat!"
+                                : "$e");
+                      }
+                    }),
+                    noCallback: () => Navigator.pop(context),
+                  );
+                }
               }),
             ),
           ],

@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart';
 import 'package:http/http.dart' as http;
+import 'package:mata/common/helper/constant.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../utils/utils.dart';
@@ -58,12 +59,20 @@ class BaseController<S extends BaseState> {
     if (token != null) h.putIfAbsent('Authorization', () => 'Bearer ' + token);
     if (headers != null) h.addAll(headers as Map<String, String>);
 
-    final uri = Uri.parse(url);
-    final bodyUri = Uri.https(uri.authority, uri.path, body);
-
     log("==== PARAMETERS ====");
     log("URL : $url");
-    log("BODY : $bodyUri");
+    log("BODY : $body");
+    log("HEADERS : ${h}");
+    url = url + '?';
+    body?.forEach((key, value) {
+      if (!url.contains('&'))
+        url = url + '$key=$value';
+      else
+        url = url + '&$key=$value';
+    });
+    final uri = Uri.parse(url);
+    final bodyUri = Uri.https(Constant.DOMAIN, '$url', body);
+
     Response response = await http.get(Uri.parse(url), headers: h).timeout(
         Duration(seconds: 30),
         onTimeout: () => http.Response("Timeout", 504));

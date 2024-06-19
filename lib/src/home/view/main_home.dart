@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../common/helper/constant.dart';
 import '../../../utils/utils.dart';
+import '../../turbine/view/turbine_view.dart';
 
 class MainHome extends StatefulWidget {
   final int? index;
@@ -199,7 +200,7 @@ class _MainHomeState extends State<MainHome> {
         child: [
           Home1View(),
           SizedBox(),
-          SizedBox(),
+          TurbineView(),
           SizedBox(),
           // ProfileView(jumpToJamaah, jumpToSubAgen)
         ][currentIndex],

@@ -88,12 +88,15 @@ class DataAddProvider extends BaseController with ChangeNotifier {
   List<double> acClutch = [];
   List<double> acTurbine = [];
   List<double> acUpper = [];
+  double acCrockedLine = 0.0;
   // BD
   List<double> bdClutch = [];
   List<double> bdTurbine = [];
   List<double> bdUpper = [];
+  double bdCrockedLine = 0.0;
   // UPPER
   List<double> upper = [];
+  double upperCrockedLine = 0.0;
 
   double divideUntilTwoDigits(double val) {
     if (val > 10 && val < 100) return val / 10;
@@ -107,8 +110,11 @@ class DataAddProvider extends BaseController with ChangeNotifier {
   setDataChart() {
     // AC
     final acData = turbineCreateModel.Data?.Chart?.AC;
+    final acCrockness = turbineCreateModel.Data?.ACCrockedness;
     final bdData = turbineCreateModel.Data?.Chart?.BD;
+    final bdCrockness = turbineCreateModel.Data?.BDCrockedness;
     final upperData = turbineCreateModel.Data?.Chart?.Upper;
+    final upperCrockness = turbineCreateModel.Data?.TotalCrockedness;
     if (acData != null && acData.Upper != null)
       acUpper = acData.Upper!
           .split('|')
@@ -152,14 +158,23 @@ class DataAddProvider extends BaseController with ChangeNotifier {
           .split('|')
           .map((e) => divideUntilTwoDigits(double.tryParse(e) ?? 0))
           .toList();
+
+    acCrockedLine = divideUntilTwoDigits(acCrockness ?? 0);
+    bdCrockedLine = divideUntilTwoDigits(bdCrockness ?? 0);
+    upperCrockedLine = divideUntilTwoDigits(upperCrockness ?? 0);
     log("AC UPPER : $acUpper");
     log("AC CLUTCH : $acClutch");
     log("AC TURBINE : $acTurbine");
+    log("AC CROCKED : $acCrockedLine");
 
     ///
     log("BD UPPER : $bdUpper");
     log("BD CLUTCH : $bdClutch");
     log("BD TURBINE : $bdTurbine");
+    log("BD CROCKED : $bdCrockedLine");
+    // UPPER
+    log("UPPER : $upper");
+    log("UPPER CROCKED : $upperCrockedLine");
   }
 
   Future<TurbineCreateModel> createTurbines() async {
@@ -372,7 +387,7 @@ class DataAddProvider extends BaseController with ChangeNotifier {
   List<TableRow> wDataUpperRow = [];
 
   generateDataUpperRow() {
-    for (int i = 0; i < 3; i++) {
+    for (int i = 0; i < 5; i++) {
       if (i == 0) {
         wDataUpperRow.add(TableRow(children: [
           Text('\n\n', textAlign: TextAlign.center),
@@ -419,75 +434,75 @@ class DataAddProvider extends BaseController with ChangeNotifier {
             children: wDataUpperRow,
           ),
         ),
-        Constant.xSizedBox12,
-        Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: List.generate(
-            wDataUpperRow.length + 1,
-            (index) {
-              return Padding(
-                padding: EdgeInsets.symmetric(horizontal: 0, vertical: 12),
-                child: InkWell(
-                  onTap: index == 0 || index == 1
-                      ? null
-                      : () async {
-                          // jika ADD BARIS
-                          if (index == wDataUpperRow.length) {
-                            dataUpperC.add([
-                              TextEditingController(),
-                              TextEditingController(),
-                              TextEditingController(),
-                              TextEditingController(),
-                            ]);
-                            wDataUpperRow.add(TableRow(children: [
-                              Text('$index', textAlign: TextAlign.center),
-                              CustomTextField.tableTextField(
-                                  controller: dataUpperC[index - 1][0]),
-                              CustomTextField.tableTextField(
-                                  controller: dataUpperC[index - 1][1]),
-                              CustomTextField.tableTextField(
-                                  controller: dataUpperC[index - 1][2]),
-                              CustomTextField.tableTextField(
-                                  controller: dataUpperC[index - 1][3]),
-                            ]));
-                          }
-                          // JIKA HAPUS BARIS DI INDEKS TERTENTU
-                          else {
-                            await Utils.showYesNoDialog(
-                              context: context,
-                              title: "Konfirmasi",
-                              desc: "Apakah Anda Yakin Ingin Hapus Data Ini?",
-                              yesCallback: () async {
-                                Navigator.pop(context);
-                                try {
-                                  if (wDataUpperRow.length > 2) {
-                                    wDataUpperRow.removeAt(index);
-                                    dataUpperC.removeAt(index - 1);
-                                  }
-                                } catch (e) {
-                                  Utils.showFailed(msg: "Gagal hapus data");
-                                }
-                              },
-                              noCallback: () => Navigator.pop(context),
-                            );
-                          }
-                          notifyListeners();
-                        },
-                  child: Icon(
-                    index == wDataUpperRow.length
-                        ? Icons.add_circle_rounded
-                        : Icons.remove_circle_rounded,
-                    color: index == 0 || index == 1
-                        ? Colors.white
-                        : index == wDataUpperRow.length
-                            ? Constant.greenColor
-                            : Constant.redColor,
-                  ),
-                ),
-              );
-            },
-          ),
-        )
+        // Constant.xSizedBox12,
+        // Column(
+        //   mainAxisAlignment: MainAxisAlignment.start,
+        //   children: List.generate(
+        //     wDataUpperRow.length + 1,
+        //     (index) {
+        //       return Padding(
+        //         padding: EdgeInsets.symmetric(horizontal: 0, vertical: 12),
+        //         child: InkWell(
+        //           onTap: index == 0 || index == 1
+        //               ? null
+        //               : () async {
+        //                   // jika ADD BARIS
+        //                   if (index == wDataUpperRow.length) {
+        //                     dataUpperC.add([
+        //                       TextEditingController(),
+        //                       TextEditingController(),
+        //                       TextEditingController(),
+        //                       TextEditingController(),
+        //                     ]);
+        //                     wDataUpperRow.add(TableRow(children: [
+        //                       Text('$index', textAlign: TextAlign.center),
+        //                       CustomTextField.tableTextField(
+        //                           controller: dataUpperC[index - 1][0]),
+        //                       CustomTextField.tableTextField(
+        //                           controller: dataUpperC[index - 1][1]),
+        //                       CustomTextField.tableTextField(
+        //                           controller: dataUpperC[index - 1][2]),
+        //                       CustomTextField.tableTextField(
+        //                           controller: dataUpperC[index - 1][3]),
+        //                     ]));
+        //                   }
+        //                   // JIKA HAPUS BARIS DI INDEKS TERTENTU
+        //                   else {
+        //                     await Utils.showYesNoDialog(
+        //                       context: context,
+        //                       title: "Konfirmasi",
+        //                       desc: "Apakah Anda Yakin Ingin Hapus Data Ini?",
+        //                       yesCallback: () async {
+        //                         Navigator.pop(context);
+        //                         try {
+        //                           if (wDataUpperRow.length > 2) {
+        //                             wDataUpperRow.removeAt(index);
+        //                             dataUpperC.removeAt(index - 1);
+        //                           }
+        //                         } catch (e) {
+        //                           Utils.showFailed(msg: "Gagal hapus data");
+        //                         }
+        //                       },
+        //                       noCallback: () => Navigator.pop(context),
+        //                     );
+        //                   }
+        //                   notifyListeners();
+        //                 },
+        //           child: Icon(
+        //             index == wDataUpperRow.length
+        //                 ? Icons.add_circle_rounded
+        //                 : Icons.remove_circle_rounded,
+        //             color: index == 0 || index == 1
+        //                 ? Colors.white
+        //                 : index == wDataUpperRow.length
+        //                     ? Constant.greenColor
+        //                     : Constant.redColor,
+        //           ),
+        //         ),
+        //       );
+        //     },
+        //   ),
+        // )
       ],
     );
   }
@@ -521,7 +536,7 @@ class DataAddProvider extends BaseController with ChangeNotifier {
   List<TableRow> wDataClutchRow = [];
 
   generateDataClutchRow() {
-    for (int i = 0; i < 3; i++) {
+    for (int i = 0; i < 5; i++) {
       if (i == 0) {
         wDataClutchRow.add(TableRow(children: [
           Text('\n\n', textAlign: TextAlign.center),
@@ -568,75 +583,75 @@ class DataAddProvider extends BaseController with ChangeNotifier {
             children: wDataClutchRow,
           ),
         ),
-        Constant.xSizedBox12,
-        Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: List.generate(
-            wDataClutchRow.length + 1,
-            (index) {
-              return Padding(
-                padding: EdgeInsets.symmetric(horizontal: 0, vertical: 12),
-                child: InkWell(
-                  onTap: index == 0 || index == 1
-                      ? null
-                      : () async {
-                          // jika ADD BARIS
-                          if (index == wDataClutchRow.length) {
-                            dataClutchC.add([
-                              TextEditingController(),
-                              TextEditingController(),
-                              TextEditingController(),
-                              TextEditingController(),
-                            ]);
-                            wDataClutchRow.add(TableRow(children: [
-                              Text('$index', textAlign: TextAlign.center),
-                              CustomTextField.tableTextField(
-                                  controller: dataClutchC[index - 1][0]),
-                              CustomTextField.tableTextField(
-                                  controller: dataClutchC[index - 1][1]),
-                              CustomTextField.tableTextField(
-                                  controller: dataClutchC[index - 1][2]),
-                              CustomTextField.tableTextField(
-                                  controller: dataClutchC[index - 1][3]),
-                            ]));
-                          }
-                          // JIKA HAPUS BARIS DI INDEKS TERTENTU
-                          else {
-                            await Utils.showYesNoDialog(
-                              context: context,
-                              title: "Konfirmasi",
-                              desc: "Apakah Anda Yakin Ingin Hapus Data Ini?",
-                              yesCallback: () async {
-                                Navigator.pop(context);
-                                try {
-                                  if (wDataClutchRow.length > 2) {
-                                    wDataClutchRow.removeAt(index);
-                                    dataClutchC.removeAt(index - 1);
-                                  }
-                                } catch (e) {
-                                  Utils.showFailed(msg: "Gagal hapus data");
-                                }
-                              },
-                              noCallback: () => Navigator.pop(context),
-                            );
-                          }
-                          notifyListeners();
-                        },
-                  child: Icon(
-                    index == wDataClutchRow.length
-                        ? Icons.add_circle_rounded
-                        : Icons.remove_circle_rounded,
-                    color: index == 0 || index == 1
-                        ? Colors.white
-                        : index == wDataClutchRow.length
-                            ? Constant.greenColor
-                            : Constant.redColor,
-                  ),
-                ),
-              );
-            },
-          ),
-        )
+        // Constant.xSizedBox12,
+        // Column(
+        //   mainAxisAlignment: MainAxisAlignment.start,
+        //   children: List.generate(
+        //     wDataClutchRow.length + 1,
+        //     (index) {
+        //       return Padding(
+        //         padding: EdgeInsets.symmetric(horizontal: 0, vertical: 12),
+        //         child: InkWell(
+        //           onTap: index == 0 || index == 1
+        //               ? null
+        //               : () async {
+        //                   // jika ADD BARIS
+        //                   if (index == wDataClutchRow.length) {
+        //                     dataClutchC.add([
+        //                       TextEditingController(),
+        //                       TextEditingController(),
+        //                       TextEditingController(),
+        //                       TextEditingController(),
+        //                     ]);
+        //                     wDataClutchRow.add(TableRow(children: [
+        //                       Text('$index', textAlign: TextAlign.center),
+        //                       CustomTextField.tableTextField(
+        //                           controller: dataClutchC[index - 1][0]),
+        //                       CustomTextField.tableTextField(
+        //                           controller: dataClutchC[index - 1][1]),
+        //                       CustomTextField.tableTextField(
+        //                           controller: dataClutchC[index - 1][2]),
+        //                       CustomTextField.tableTextField(
+        //                           controller: dataClutchC[index - 1][3]),
+        //                     ]));
+        //                   }
+        //                   // JIKA HAPUS BARIS DI INDEKS TERTENTU
+        //                   else {
+        //                     await Utils.showYesNoDialog(
+        //                       context: context,
+        //                       title: "Konfirmasi",
+        //                       desc: "Apakah Anda Yakin Ingin Hapus Data Ini?",
+        //                       yesCallback: () async {
+        //                         Navigator.pop(context);
+        //                         try {
+        //                           if (wDataClutchRow.length > 2) {
+        //                             wDataClutchRow.removeAt(index);
+        //                             dataClutchC.removeAt(index - 1);
+        //                           }
+        //                         } catch (e) {
+        //                           Utils.showFailed(msg: "Gagal hapus data");
+        //                         }
+        //                       },
+        //                       noCallback: () => Navigator.pop(context),
+        //                     );
+        //                   }
+        //                   notifyListeners();
+        //                 },
+        //           child: Icon(
+        //             index == wDataClutchRow.length
+        //                 ? Icons.add_circle_rounded
+        //                 : Icons.remove_circle_rounded,
+        //             color: index == 0 || index == 1
+        //                 ? Colors.white
+        //                 : index == wDataClutchRow.length
+        //                     ? Constant.greenColor
+        //                     : Constant.redColor,
+        //           ),
+        //         ),
+        //       );
+        //     },
+        //   ),
+        // )
       ],
     );
   }
@@ -670,7 +685,7 @@ class DataAddProvider extends BaseController with ChangeNotifier {
   List<TableRow> wDataTurbineRow = [];
 
   generateDataTurbineRow() {
-    for (int i = 0; i < 3; i++) {
+    for (int i = 0; i < 5; i++) {
       if (i == 0) {
         wDataTurbineRow.add(TableRow(children: [
           Text('\n\n', textAlign: TextAlign.center),
@@ -717,75 +732,75 @@ class DataAddProvider extends BaseController with ChangeNotifier {
             children: wDataTurbineRow,
           ),
         ),
-        Constant.xSizedBox12,
-        Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: List.generate(
-            wDataTurbineRow.length + 1,
-            (index) {
-              return Padding(
-                padding: EdgeInsets.symmetric(horizontal: 0, vertical: 12),
-                child: InkWell(
-                  onTap: index == 0 || index == 1
-                      ? null
-                      : () async {
-                          // jika ADD BARIS
-                          if (index == wDataTurbineRow.length) {
-                            dataTurbineC.add([
-                              TextEditingController(),
-                              TextEditingController(),
-                              TextEditingController(),
-                              TextEditingController(),
-                            ]);
-                            wDataTurbineRow.add(TableRow(children: [
-                              Text('$index', textAlign: TextAlign.center),
-                              CustomTextField.tableTextField(
-                                  controller: dataTurbineC[index - 1][0]),
-                              CustomTextField.tableTextField(
-                                  controller: dataTurbineC[index - 1][1]),
-                              CustomTextField.tableTextField(
-                                  controller: dataTurbineC[index - 1][2]),
-                              CustomTextField.tableTextField(
-                                  controller: dataTurbineC[index - 1][3]),
-                            ]));
-                          }
-                          // JIKA HAPUS BARIS DI INDEKS TERTENTU
-                          else {
-                            await Utils.showYesNoDialog(
-                              context: context,
-                              title: "Konfirmasi",
-                              desc: "Apakah Anda Yakin Ingin Hapus Data Ini?",
-                              yesCallback: () async {
-                                Navigator.pop(context);
-                                try {
-                                  if (wDataTurbineRow.length > 2) {
-                                    wDataTurbineRow.removeAt(index);
-                                    dataTurbineC.removeAt(index - 1);
-                                  }
-                                } catch (e) {
-                                  Utils.showFailed(msg: "Gagal hapus data");
-                                }
-                              },
-                              noCallback: () => Navigator.pop(context),
-                            );
-                          }
-                          notifyListeners();
-                        },
-                  child: Icon(
-                    index == wDataTurbineRow.length
-                        ? Icons.add_circle_rounded
-                        : Icons.remove_circle_rounded,
-                    color: index == 0 || index == 1
-                        ? Colors.white
-                        : index == wDataTurbineRow.length
-                            ? Constant.greenColor
-                            : Constant.redColor,
-                  ),
-                ),
-              );
-            },
-          ),
-        )
+        // Constant.xSizedBox12,
+        // Column(
+        //   mainAxisAlignment: MainAxisAlignment.start,
+        //   children: List.generate(
+        //     wDataTurbineRow.length + 1,
+        //     (index) {
+        //       return Padding(
+        //         padding: EdgeInsets.symmetric(horizontal: 0, vertical: 12),
+        //         child: InkWell(
+        //           onTap: index == 0 || index == 1
+        //               ? null
+        //               : () async {
+        //                   // jika ADD BARIS
+        //                   if (index == wDataTurbineRow.length) {
+        //                     dataTurbineC.add([
+        //                       TextEditingController(),
+        //                       TextEditingController(),
+        //                       TextEditingController(),
+        //                       TextEditingController(),
+        //                     ]);
+        //                     wDataTurbineRow.add(TableRow(children: [
+        //                       Text('$index', textAlign: TextAlign.center),
+        //                       CustomTextField.tableTextField(
+        //                           controller: dataTurbineC[index - 1][0]),
+        //                       CustomTextField.tableTextField(
+        //                           controller: dataTurbineC[index - 1][1]),
+        //                       CustomTextField.tableTextField(
+        //                           controller: dataTurbineC[index - 1][2]),
+        //                       CustomTextField.tableTextField(
+        //                           controller: dataTurbineC[index - 1][3]),
+        //                     ]));
+        //                   }
+        //                   // JIKA HAPUS BARIS DI INDEKS TERTENTU
+        //                   else {
+        //                     await Utils.showYesNoDialog(
+        //                       context: context,
+        //                       title: "Konfirmasi",
+        //                       desc: "Apakah Anda Yakin Ingin Hapus Data Ini?",
+        //                       yesCallback: () async {
+        //                         Navigator.pop(context);
+        //                         try {
+        //                           if (wDataTurbineRow.length > 2) {
+        //                             wDataTurbineRow.removeAt(index);
+        //                             dataTurbineC.removeAt(index - 1);
+        //                           }
+        //                         } catch (e) {
+        //                           Utils.showFailed(msg: "Gagal hapus data");
+        //                         }
+        //                       },
+        //                       noCallback: () => Navigator.pop(context),
+        //                     );
+        //                   }
+        //                   notifyListeners();
+        //                 },
+        //           child: Icon(
+        //             index == wDataTurbineRow.length
+        //                 ? Icons.add_circle_rounded
+        //                 : Icons.remove_circle_rounded,
+        //             color: index == 0 || index == 1
+        //                 ? Colors.white
+        //                 : index == wDataTurbineRow.length
+        //                     ? Constant.greenColor
+        //                     : Constant.redColor,
+        //           ),
+        //         ),
+        //       );
+        //     },
+        //   ),
+        // )
       ],
     );
   }

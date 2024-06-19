@@ -6,29 +6,34 @@ class TurbineCreateModelDataDetailDataUpperD {
 {
   "1": 55,
   "2": 55,
-  "3": 55
+  "3": 55,
+  "4": 55
 } 
 */
 
   int? the1;
   int? the2;
   int? the3;
+  int? the4;
 
   TurbineCreateModelDataDetailDataUpperD({
     this.the1,
     this.the2,
     this.the3,
+    this.the4,
   });
   TurbineCreateModelDataDetailDataUpperD.fromJson(Map<String, dynamic> json) {
     the1 = json['1']?.toInt();
     the2 = json['2']?.toInt();
     the3 = json['3']?.toInt();
+    the4 = json['4']?.toInt();
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data['1'] = the1;
     data['2'] = the2;
     data['3'] = the3;
+    data['4'] = the4;
     return data;
   }
 }
@@ -37,30 +42,35 @@ class TurbineCreateModelDataDetailDataUpperC {
 /*
 {
   "1": 46,
-  "2": 46,
-  "3": 46
+  "2": 45,
+  "3": 46,
+  "4": 46
 } 
 */
 
   int? the1;
   int? the2;
   int? the3;
+  int? the4;
 
   TurbineCreateModelDataDetailDataUpperC({
     this.the1,
     this.the2,
     this.the3,
+    this.the4,
   });
   TurbineCreateModelDataDetailDataUpperC.fromJson(Map<String, dynamic> json) {
     the1 = json['1']?.toInt();
     the2 = json['2']?.toInt();
     the3 = json['3']?.toInt();
+    the4 = json['4']?.toInt();
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data['1'] = the1;
     data['2'] = the2;
     data['3'] = the3;
+    data['4'] = the4;
     return data;
   }
 }
@@ -70,29 +80,34 @@ class TurbineCreateModelDataDetailDataUpperB {
 {
   "1": 48,
   "2": 48,
-  "3": 48
+  "3": 48,
+  "4": 48
 } 
 */
 
   int? the1;
   int? the2;
   int? the3;
+  int? the4;
 
   TurbineCreateModelDataDetailDataUpperB({
     this.the1,
     this.the2,
     this.the3,
+    this.the4,
   });
   TurbineCreateModelDataDetailDataUpperB.fromJson(Map<String, dynamic> json) {
     the1 = json['1']?.toInt();
     the2 = json['2']?.toInt();
     the3 = json['3']?.toInt();
+    the4 = json['4']?.toInt();
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data['1'] = the1;
     data['2'] = the2;
     data['3'] = the3;
+    data['4'] = the4;
     return data;
   }
 }
@@ -102,29 +117,34 @@ class TurbineCreateModelDataDetailDataUpperA {
 {
   "1": 50,
   "2": 50,
-  "3": 50
+  "3": 50,
+  "4": 50
 } 
 */
 
   int? the1;
   int? the2;
   int? the3;
+  int? the4;
 
   TurbineCreateModelDataDetailDataUpperA({
     this.the1,
     this.the2,
     this.the3,
+    this.the4,
   });
   TurbineCreateModelDataDetailDataUpperA.fromJson(Map<String, dynamic> json) {
     the1 = json['1']?.toInt();
     the2 = json['2']?.toInt();
     the3 = json['3']?.toInt();
+    the4 = json['4']?.toInt();
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data['1'] = the1;
     data['2'] = the2;
     data['3'] = the3;
+    data['4'] = the4;
     return data;
   }
 }
@@ -135,22 +155,26 @@ class TurbineCreateModelDataDetailDataUpper {
   "A": {
     "1": 50,
     "2": 50,
-    "3": 50
+    "3": 50,
+    "4": 50
   },
   "B": {
     "1": 48,
     "2": 48,
-    "3": 48
+    "3": 48,
+    "4": 48
   },
   "C": {
     "1": 46,
-    "2": 46,
-    "3": 46
+    "2": 45,
+    "3": 46,
+    "4": 46
   },
   "D": {
     "1": 55,
     "2": 55,
-    "3": 55
+    "3": 55,
+    "4": 55
   }
 } 
 */
@@ -699,22 +723,26 @@ class TurbineCreateModelDataDetailData {
     "A": {
       "1": 50,
       "2": 50,
-      "3": 50
+      "3": 50,
+      "4": 50
     },
     "B": {
       "1": 48,
       "2": 48,
-      "3": 48
+      "3": 48,
+      "4": 48
     },
     "C": {
       "1": 46,
-      "2": 46,
-      "3": 46
+      "2": 45,
+      "3": 46,
+      "4": 46
     },
     "D": {
       "1": 55,
       "2": 55,
-      "3": 55
+      "3": 55,
+      "4": 55
     }
   }
 } 
@@ -791,7 +819,7 @@ class TurbineCreateModelDataChartAC {
 /*
 {
   "Clutch": "0.000000|0",
-  "Turbine": "2.000000|424.000000",
+  "Turbine": "2.250000|424.000000",
   "Upper": "0|440.000000"
 } 
 */
@@ -824,7 +852,7 @@ class TurbineCreateModelDataChart {
 {
   "AC": {
     "Clutch": "0.000000|0",
-    "Turbine": "2.000000|424.000000",
+    "Turbine": "2.250000|424.000000",
     "Upper": "0|440.000000"
   },
   "BD": {
@@ -832,7 +860,7 @@ class TurbineCreateModelDataChart {
     "Turbine": "-8.500000|424.000000",
     "Upper": "0|440.000000"
   },
-  "Upper": "1.037380|5.422861"
+  "Upper": "0.802517|5.422861"
 } 
 */
 
@@ -907,8 +935,8 @@ class TurbineCreateModelDataShaft {
 class TurbineCreateModelData {
 /*
 {
-  "Id": "01J0EZ1PABW54SCWCVQEEHEM7E",
-  "TowerName": "PLTA Malang - 0H823A1",
+  "Id": "01J0S8N8MN5PJFNY1VBE43E358",
+  "TowerName": "PLTA Kebumen - 0H823Z9",
   "Shaft": {
     "GenBearingToCoupling": 440,
     "CouplingToTurbine": 424,
@@ -918,7 +946,7 @@ class TurbineCreateModelData {
   "Chart": {
     "AC": {
       "Clutch": "0.000000|0",
-      "Turbine": "2.000000|424.000000",
+      "Turbine": "2.250000|424.000000",
       "Upper": "0|440.000000"
     },
     "BD": {
@@ -926,7 +954,7 @@ class TurbineCreateModelData {
       "Turbine": "-8.500000|424.000000",
       "Upper": "0|440.000000"
     },
-    "Upper": "1.037380|5.422861"
+    "Upper": "0.802517|5.422861"
   },
   "DetailData": {
     "Clutch": {
@@ -985,27 +1013,33 @@ class TurbineCreateModelData {
       "A": {
         "1": 50,
         "2": 50,
-        "3": 50
+        "3": 50,
+        "4": 50
       },
       "B": {
         "1": 48,
         "2": 48,
-        "3": 48
+        "3": 48,
+        "4": 48
       },
       "C": {
         "1": 46,
-        "2": 46,
-        "3": 46
+        "2": 45,
+        "3": 46,
+        "4": 46
       },
       "D": {
         "1": 55,
         "2": 55,
-        "3": 55
+        "3": 55,
+        "4": 55
       }
     }
   },
-  "TotalCrockedness": 2.5417003978062613,
-  "CreatedAt": "2024-06-16 05:07:21",
+  "ACCrockedness": 0.8025173611111114,
+  "BDCrockedness": 5.422860939643349,
+  "TotalCrockedness": 2.4950708007498426,
+  "CreatedAt": "2024-06-20 05:07:44",
   "CreatedBy": "aditya fullname"
 } 
 */
@@ -1015,6 +1049,8 @@ class TurbineCreateModelData {
   TurbineCreateModelDataShaft? Shaft;
   TurbineCreateModelDataChart? Chart;
   TurbineCreateModelDataDetailData? DetailData;
+  double? ACCrockedness;
+  double? BDCrockedness;
   double? TotalCrockedness;
   String? CreatedAt;
   String? CreatedBy;
@@ -1025,6 +1061,8 @@ class TurbineCreateModelData {
     this.Shaft,
     this.Chart,
     this.DetailData,
+    this.ACCrockedness,
+    this.BDCrockedness,
     this.TotalCrockedness,
     this.CreatedAt,
     this.CreatedBy,
@@ -1041,6 +1079,8 @@ class TurbineCreateModelData {
     DetailData = (json['DetailData'] != null)
         ? TurbineCreateModelDataDetailData.fromJson(json['DetailData'])
         : null;
+    ACCrockedness = json['ACCrockedness']?.toDouble();
+    BDCrockedness = json['BDCrockedness']?.toDouble();
     TotalCrockedness = json['TotalCrockedness']?.toDouble();
     CreatedAt = json['CreatedAt']?.toString();
     CreatedBy = json['CreatedBy']?.toString();
@@ -1058,6 +1098,8 @@ class TurbineCreateModelData {
     if (DetailData != null) {
       data['DetailData'] = DetailData!.toJson();
     }
+    data['ACCrockedness'] = ACCrockedness;
+    data['BDCrockedness'] = BDCrockedness;
     data['TotalCrockedness'] = TotalCrockedness;
     data['CreatedAt'] = CreatedAt;
     data['CreatedBy'] = CreatedBy;
@@ -1072,8 +1114,8 @@ class TurbineCreateModel {
   "StatusCode": 200,
   "Message": "berhasil menambahkan data turbine baru",
   "Data": {
-    "Id": "01J0EZ1PABW54SCWCVQEEHEM7E",
-    "TowerName": "PLTA Malang - 0H823A1",
+    "Id": "01J0S8N8MN5PJFNY1VBE43E358",
+    "TowerName": "PLTA Kebumen - 0H823Z9",
     "Shaft": {
       "GenBearingToCoupling": 440,
       "CouplingToTurbine": 424,
@@ -1083,7 +1125,7 @@ class TurbineCreateModel {
     "Chart": {
       "AC": {
         "Clutch": "0.000000|0",
-        "Turbine": "2.000000|424.000000",
+        "Turbine": "2.250000|424.000000",
         "Upper": "0|440.000000"
       },
       "BD": {
@@ -1091,7 +1133,7 @@ class TurbineCreateModel {
         "Turbine": "-8.500000|424.000000",
         "Upper": "0|440.000000"
       },
-      "Upper": "1.037380|5.422861"
+      "Upper": "0.802517|5.422861"
     },
     "DetailData": {
       "Clutch": {
@@ -1150,27 +1192,33 @@ class TurbineCreateModel {
         "A": {
           "1": 50,
           "2": 50,
-          "3": 50
+          "3": 50,
+          "4": 50
         },
         "B": {
           "1": 48,
           "2": 48,
-          "3": 48
+          "3": 48,
+          "4": 48
         },
         "C": {
           "1": 46,
-          "2": 46,
-          "3": 46
+          "2": 45,
+          "3": 46,
+          "4": 46
         },
         "D": {
           "1": 55,
           "2": 55,
-          "3": 55
+          "3": 55,
+          "4": 55
         }
       }
     },
-    "TotalCrockedness": 2.5417003978062613,
-    "CreatedAt": "2024-06-16 05:07:21",
+    "ACCrockedness": 0.8025173611111114,
+    "BDCrockedness": 5.422860939643349,
+    "TotalCrockedness": 2.4950708007498426,
+    "CreatedAt": "2024-06-20 05:07:44",
     "CreatedBy": "aditya fullname"
   }
 } 

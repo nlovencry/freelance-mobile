@@ -197,6 +197,7 @@ class _Chart extends StatelessWidget {
     final d = context.watch<DataAddProvider>();
     // UPPER
     final upper = d.upper;
+    final upperCrockedLine = d.upperCrockedLine;
 
     return LineChart(
       LineChartData(
@@ -228,7 +229,18 @@ class _Chart extends StatelessWidget {
               FlSpot(0, 0),
             ],
             belowBarData: BarAreaData(show: false),
-            color: Constant.redColor,
+            color: Colors.green,
+            dotData: FlDotData(show: true),
+          ),
+          LineChartBarData(
+            barWidth: 2,
+            show: true,
+            spots: [
+              FlSpot(upperCrockedLine, 0),
+              FlSpot(0, 0),
+            ],
+            belowBarData: BarAreaData(show: false),
+            color: Colors.red,
             dotData: FlDotData(show: true),
           ),
         ],

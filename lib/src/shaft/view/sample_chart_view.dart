@@ -201,10 +201,12 @@ class _Chart extends StatelessWidget {
     final acUpper = d.acUpper;
     final acClutch = d.acClutch;
     final acTurbine = d.acTurbine;
+    final acCrockedLine = d.acCrockedLine;
     // BD
     final bdUpper = d.bdUpper;
     final bdClutch = d.bdClutch;
     final bdTurbine = d.bdTurbine;
+    final bdCrockedLine = d.bdCrockedLine;
     // UPPER
     final upper = d.upper;
 
@@ -233,11 +235,23 @@ class _Chart extends StatelessWidget {
       return FlSpot(acTurbine[0], acTurbine[1]);
     }
 
+    FlSpot getCrockedLine() {
+      if (activeIndex == 1)
+        return FlSpot(bdClutch[0] < 0 ? -bdCrockedLine : bdCrockedLine, 0);
+      return FlSpot(acClutch[0] < 0 ? -acCrockedLine : acCrockedLine, 0);
+    }
+
     return LineChart(
       LineChartData(
         lineBarsData: [
           LineChartBarData(
-            barWidth: 1,
+            barWidth: 2,
+            spots: [getFlSpotClutch(), getCrockedLine()],
+            color: Colors.red,
+            dotData: FlDotData(show: false),
+          ),
+          LineChartBarData(
+            barWidth: 2,
             spots: [
               getFlSpotYellowTop(),
               getFlSpotYellowBottom(),

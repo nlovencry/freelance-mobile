@@ -412,7 +412,6 @@ class CustomTextField {
     bool? obscureText,
     Widget? suffixIcon,
     String? suffixText,
-    TextInputType? textInputType,
     bool enabled = true,
     bool? enableInteractiveSelection,
     FocusNode? focusNode,
@@ -424,7 +423,6 @@ class CustomTextField {
     Color? hintColor,
     Color? borderColor,
     Color? validatorTextColor,
-    int? maxLength,
     Widget? prefix,
     Widget? prefixIcon,
     TextCapitalization? textCapitalization,
@@ -473,14 +471,13 @@ class CustomTextField {
       textInputAction: onEditingComplete != null ? TextInputAction.next : null,
       obscureText: obscureText ?? false,
       controller: controller,
-      keyboardType: textInputType ?? TextInputType.text,
+      keyboardType: TextInputType.number,
       enabled: enabled,
       enableInteractiveSelection: enableInteractiveSelection ?? true,
       // will disable paste operation
       focusNode: focusNode ?? null,
       inputFormatters: [
         if (isDecimalFormatter ?? false) ThousandsSeparatorInputFormatter(),
-        if (maxLength != null) LengthLimitingTextInputFormatter(maxLength),
         if (inputFormatters != null) ...[
           ...inputFormatters,
         ],

@@ -9,6 +9,7 @@ import 'package:mata/src/transaction/asset_meter/provider/asset_meter_provider.d
 import 'package:mata/src/transaction/operation_hours/provider/operation_hours_provider.dart';
 import 'package:mata/src/transaction/provider/transaction_provider.dart';
 import 'package:mata/src/transaction/view/transaction_view.dart';
+import 'package:mata/src/turbine/provider/turbine_provider.dart';
 import 'package:mata/src/work_order/provider/work_order_provider.dart';
 import 'package:mata/src/work_order/wo_agreement/provider/wo_agreement_provider.dart';
 import 'package:mata/src/work_order/wo_realization/provider/wo_realization_provider.dart';
@@ -236,6 +237,8 @@ class MyApp extends StatelessWidget {
                 create: (context) => DataAddProvider()),
             ChangeNotifierProvider<TowerProvider>(
                 create: (context) => TowerProvider()),
+            ChangeNotifierProvider<TurbineProvider>(
+                create: (context) => TurbineProvider()),
             ChangeNotifierProvider<AuthProvider>(
                 create: (context) => AuthProvider()),
             ChangeNotifierProvider<HomeProvider>(

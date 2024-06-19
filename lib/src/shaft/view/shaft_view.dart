@@ -9,6 +9,7 @@ import 'package:mata/src/shaft/view/sample_chart_view.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../common/component/custom_textfield.dart';
 import '../../data/provider/data_add_provider.dart';
 import 'upper_chart_view.dart';
 
@@ -38,6 +39,12 @@ class _ShaftViewState extends State<ShaftView> with TickerProviderStateMixin {
     final d = context.watch<DataAddProvider>();
     final shaft =
         context.watch<DataAddProvider>().turbineCreateModel.Data?.Shaft;
+    final upperData = context
+        .watch<DataAddProvider>()
+        .turbineCreateModel
+        .Data
+        ?.DetailData
+        ?.Upper;
     Widget _buildTab(String tag) {
       return Tab(child: Text(tag, style: TextStyle(fontSize: 18)));
     }
@@ -78,6 +85,201 @@ class _ShaftViewState extends State<ShaftView> with TickerProviderStateMixin {
         ),
       );
     }
+
+    Widget acBdActive() => Column(
+          children: [
+            Container(
+              color: Color(0xffEFEFEF),
+              padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+              child: Row(
+                children: [
+                  Expanded(
+                    flex: 5,
+                    child: Text(
+                      'Gen. Bearing-Kopling',
+                      style: TextStyle(color: Constant.textColorBlack),
+                    ),
+                  ),
+                  Constant.xSizedBox8,
+                  Expanded(
+                    flex: 5,
+                    child: Text(
+                      '${shaft?.GenBearingToCoupling ?? 0}',
+                      style: TextStyle(fontWeight: FontWeight.w500),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              color: Colors.white,
+              padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+              child: Row(
+                children: [
+                  Expanded(
+                    flex: 5,
+                    child: Text(
+                      'Kopling - Turbin',
+                      style: TextStyle(color: Constant.textColorBlack),
+                    ),
+                  ),
+                  Constant.xSizedBox8,
+                  Expanded(
+                    flex: 5,
+                    child: Text(
+                      '${shaft?.CouplingToTurbine ?? 0}',
+                      style: TextStyle(fontWeight: FontWeight.w500),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              color: Color(0xffEFEFEF),
+              padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+              child: Row(
+                children: [
+                  Expanded(
+                    flex: 5,
+                    child: Text(
+                      'Total',
+                      style: TextStyle(color: Constant.textColorBlack),
+                    ),
+                  ),
+                  Constant.xSizedBox8,
+                  Expanded(
+                    flex: 5,
+                    child: Text(
+                      '${shaft?.Total ?? 0}',
+                      style: TextStyle(fontWeight: FontWeight.w500),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              color: Colors.white,
+              padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+              child: Row(
+                children: [
+                  Expanded(
+                    flex: 5,
+                    child: Text(
+                      'Rasio',
+                      style: TextStyle(color: Constant.textColorBlack),
+                    ),
+                  ),
+                  Constant.xSizedBox8,
+                  Expanded(
+                    flex: 5,
+                    child: Text(
+                      (shaft?.Ratio ?? 0).toStringAsFixed(2),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        );
+
+    Widget upperActive() => Table(
+          border: TableBorder.all(
+              color: Constant.borderSearchColor,
+              borderRadius: BorderRadius.circular(5)),
+          columnWidths: const <int, TableColumnWidth>{
+            0: FlexColumnWidth(),
+            1: FlexColumnWidth(),
+            2: FlexColumnWidth(),
+            3: FlexColumnWidth(),
+            4: FlexColumnWidth(),
+          },
+          defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+          children: [
+            TableRow(children: [
+              Text('\n\n', textAlign: TextAlign.center),
+              Text('\nA\n', textAlign: TextAlign.center),
+              Text('\nB\n', textAlign: TextAlign.center),
+              Text('\nC\n', textAlign: TextAlign.center),
+              Text('\nD\n', textAlign: TextAlign.center),
+            ]),
+            TableRow(children: [
+              Text('1', textAlign: TextAlign.center),
+              CustomTextField.tableTextField(
+                  readOnly: true,
+                  controller: TextEditingController()
+                    ..text = '${upperData?.A?.the1 ?? 0}'),
+              CustomTextField.tableTextField(
+                  readOnly: true,
+                  controller: TextEditingController()
+                    ..text = '${upperData?.B?.the1 ?? 0}'),
+              CustomTextField.tableTextField(
+                  readOnly: true,
+                  controller: TextEditingController()
+                    ..text = '${upperData?.C?.the1 ?? 0}'),
+              CustomTextField.tableTextField(
+                  readOnly: true,
+                  controller: TextEditingController()
+                    ..text = '${upperData?.D?.the1 ?? 0}'),
+            ]),
+            TableRow(children: [
+              Text('2', textAlign: TextAlign.center),
+              CustomTextField.tableTextField(
+                  readOnly: true,
+                  controller: TextEditingController()
+                    ..text = '${upperData?.A?.the2 ?? 0}'),
+              CustomTextField.tableTextField(
+                  readOnly: true,
+                  controller: TextEditingController()
+                    ..text = '${upperData?.B?.the2 ?? 0}'),
+              CustomTextField.tableTextField(
+                  readOnly: true,
+                  controller: TextEditingController()
+                    ..text = '${upperData?.C?.the2 ?? 0}'),
+              CustomTextField.tableTextField(
+                  readOnly: true,
+                  controller: TextEditingController()
+                    ..text = '${upperData?.D?.the2 ?? 0}'),
+            ]),
+            TableRow(children: [
+              Text('3', textAlign: TextAlign.center),
+              CustomTextField.tableTextField(
+                  readOnly: true,
+                  controller: TextEditingController()
+                    ..text = '${upperData?.A?.the3 ?? 0}'),
+              CustomTextField.tableTextField(
+                  readOnly: true,
+                  controller: TextEditingController()
+                    ..text = '${upperData?.B?.the3 ?? 0}'),
+              CustomTextField.tableTextField(
+                  readOnly: true,
+                  controller: TextEditingController()
+                    ..text = '${upperData?.C?.the3 ?? 0}'),
+              CustomTextField.tableTextField(
+                  readOnly: true,
+                  controller: TextEditingController()
+                    ..text = '${upperData?.D?.the3 ?? 0}'),
+            ]),
+            TableRow(children: [
+              Text('3', textAlign: TextAlign.center),
+              CustomTextField.tableTextField(
+                  readOnly: true,
+                  controller: TextEditingController()
+                    ..text = '${upperData?.A?.the4 ?? 0}'),
+              CustomTextField.tableTextField(
+                  readOnly: true,
+                  controller: TextEditingController()
+                    ..text = '${upperData?.B?.the4 ?? 0}'),
+              CustomTextField.tableTextField(
+                  readOnly: true,
+                  controller: TextEditingController()
+                    ..text = '${upperData?.C?.the4 ?? 0}'),
+              CustomTextField.tableTextField(
+                  readOnly: true,
+                  controller: TextEditingController()
+                    ..text = '${upperData?.D?.the4 ?? 0}'),
+            ]),
+          ],
+        );
 
     return Scaffold(
       appBar: CustomAppBar.appBar(context, 'Shaft'),
@@ -120,101 +322,7 @@ class _ShaftViewState extends State<ShaftView> with TickerProviderStateMixin {
               style: TextStyle(fontSize: 12, color: Constant.grayColor),
             ),
             Constant.xSizedBox16,
-            Column(
-              children: [
-                Container(
-                  color: Color(0xffEFEFEF),
-                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        flex: 5,
-                        child: Text(
-                          'Gen. Bearing-Kopling',
-                          style: TextStyle(color: Constant.textColorBlack),
-                        ),
-                      ),
-                      Constant.xSizedBox8,
-                      Expanded(
-                        flex: 5,
-                        child: Text(
-                          '${shaft?.GenBearingToCoupling ?? 0}',
-                          style: TextStyle(fontWeight: FontWeight.w500),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  color: Colors.white,
-                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        flex: 5,
-                        child: Text(
-                          'Kopling - Turbin',
-                          style: TextStyle(color: Constant.textColorBlack),
-                        ),
-                      ),
-                      Constant.xSizedBox8,
-                      Expanded(
-                        flex: 5,
-                        child: Text(
-                          '${shaft?.CouplingToTurbine ?? 0}',
-                          style: TextStyle(fontWeight: FontWeight.w500),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  color: Color(0xffEFEFEF),
-                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        flex: 5,
-                        child: Text(
-                          'Total',
-                          style: TextStyle(color: Constant.textColorBlack),
-                        ),
-                      ),
-                      Constant.xSizedBox8,
-                      Expanded(
-                        flex: 5,
-                        child: Text(
-                          '${shaft?.Total ?? 0}',
-                          style: TextStyle(fontWeight: FontWeight.w500),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  color: Colors.white,
-                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        flex: 5,
-                        child: Text(
-                          'Rasio',
-                          style: TextStyle(color: Constant.textColorBlack),
-                        ),
-                      ),
-                      Constant.xSizedBox8,
-                      Expanded(
-                        flex: 5,
-                        child: Text(
-                          (shaft?.Ratio ?? 0).toStringAsFixed(2),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
+            tabController.index == 2 ? upperActive() : acBdActive(),
             Constant.xSizedBox18,
           ],
         ),

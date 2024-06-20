@@ -1,12 +1,10 @@
 import 'dart:convert';
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:mata/src/data/model/create_data_param.dart';
-import 'package:mata/src/tower/model/tower_model.dart';
-import 'package:mata/src/turbine/model/turbine_create_model.dart';
-import 'package:mata/utils/utils.dart';
+import '../model/create_data_param.dart';
+import '../../tower/model/tower_model.dart';
+import '../../turbine/model/turbine_create_model.dart';
 import '../../../common/base/base_controller.dart';
 import '../../../common/helper/constant.dart';
 import '../../../common/component/custom_dropdown.dart';
@@ -75,6 +73,29 @@ class DataAddProvider extends BaseController with ChangeNotifier {
     }
   }
 
+  TurbineCreateModel _turbineDetailModel = TurbineCreateModel();
+  TurbineCreateModel get turbineDetailModel => this._turbineDetailModel;
+  set turbineDetailModel(TurbineCreateModel value) =>
+      this._turbineDetailModel = value;
+
+  Future<TurbineCreateModel> fetchTurbineDetail(String id) async {
+    loading(true);
+    final response = await get(Constant.BASE_API_FULL + '/turbines/$id');
+
+    if (response.statusCode == 201 || response.statusCode == 200) {
+      final model = TurbineCreateModel.fromJson(jsonDecode(response.body));
+      turbineDetailModel = model;
+      notifyListeners();
+      setDataChartDetail();
+      loading(false);
+      return model;
+    } else {
+      final message = jsonDecode(response.body)["Message"];
+      loading(false);
+      throw Exception(message);
+    }
+  }
+
   TurbineCreateModel _turbineCreateModel = TurbineCreateModel();
   TurbineCreateModel get turbineCreateModel => this._turbineCreateModel;
   set turbineCreateModel(TurbineCreateModel value) =>
@@ -115,6 +136,76 @@ class DataAddProvider extends BaseController with ChangeNotifier {
     final bdCrockness = turbineCreateModel.Data?.BDCrockedness;
     final upperData = turbineCreateModel.Data?.Chart?.Upper;
     final upperCrockness = turbineCreateModel.Data?.TotalCrockedness;
+    if (acData != null && acData.Upper != null)
+      acUpper = acData.Upper!
+          .split('|')
+          .map((e) => divideUntilTwoDigits(double.tryParse(e) ?? 0))
+          .toList();
+    if (acData != null && acData.Clutch != null)
+      acClutch = acData.Clutch!
+          .split('|')
+          .map((e) => divideUntilTwoDigits(double.tryParse(e) ?? 0))
+          .toList();
+    if (acData != null && acData.Turbine != null) {
+      acTurbine = acData.Turbine!.split('|').map((e) {
+        double num = divideUntilTwoDigits(double.tryParse(e) ?? 0);
+        if (num > 0) return num;
+        return num;
+      }).toList();
+      acTurbine[1] = -acTurbine[1];
+    }
+    // BD
+    if (bdData != null && bdData.Upper != null)
+      bdUpper = bdData.Upper!
+          .split('|')
+          .map((e) => divideUntilTwoDigits(double.tryParse(e) ?? 0))
+          .toList();
+    if (bdData != null && bdData.Clutch != null)
+      bdClutch = bdData.Clutch!
+          .split('|')
+          .map((e) => divideUntilTwoDigits(double.tryParse(e) ?? 0))
+          .toList();
+    if (bdData != null && bdData.Turbine != null) {
+      bdTurbine = bdData.Turbine!.split('|').map((e) {
+        double num = divideUntilTwoDigits(double.tryParse(e) ?? 0);
+        if (num > 0) return num;
+        return num;
+      }).toList();
+
+      bdTurbine[1] = -bdTurbine[1];
+    }
+    if (upperData != null)
+      upper = upperData
+          .split('|')
+          .map((e) => divideUntilTwoDigits(double.tryParse(e) ?? 0))
+          .toList();
+
+    acCrockedLine = divideUntilTwoDigits(acCrockness ?? 0);
+    bdCrockedLine = divideUntilTwoDigits(bdCrockness ?? 0);
+    upperCrockedLine = divideUntilTwoDigits(upperCrockness ?? 0);
+    log("AC UPPER : $acUpper");
+    log("AC CLUTCH : $acClutch");
+    log("AC TURBINE : $acTurbine");
+    log("AC CROCKED : $acCrockedLine");
+
+    ///
+    log("BD UPPER : $bdUpper");
+    log("BD CLUTCH : $bdClutch");
+    log("BD TURBINE : $bdTurbine");
+    log("BD CROCKED : $bdCrockedLine");
+    // UPPER
+    log("UPPER : $upper");
+    log("UPPER CROCKED : $upperCrockedLine");
+  }
+
+  setDataChartDetail() {
+    // AC
+    final acData = turbineDetailModel.Data?.Chart?.AC;
+    final acCrockness = turbineDetailModel.Data?.ACCrockedness;
+    final bdData = turbineDetailModel.Data?.Chart?.BD;
+    final bdCrockness = turbineDetailModel.Data?.BDCrockedness;
+    final upperData = turbineDetailModel.Data?.Chart?.Upper;
+    final upperCrockness = turbineDetailModel.Data?.TotalCrockedness;
     if (acData != null && acData.Upper != null)
       acUpper = acData.Upper!
           .split('|')

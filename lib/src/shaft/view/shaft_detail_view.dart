@@ -10,35 +10,41 @@ import '../../../common/component/custom_textfield.dart';
 import '../../data/provider/data_add_provider.dart';
 import 'upper_chart_view.dart';
 
-class ShaftView extends StatefulWidget {
-  const ShaftView({super.key});
-
+class ShaftDetailView extends StatefulWidget {
+  ShaftDetailView({super.key, required this.id});
+  final String id;
   @override
-  State<ShaftView> createState() => _ShaftViewState();
+  State<ShaftDetailView> createState() => _ShaftDetailViewState();
 }
 
-class _ShaftViewState extends State<ShaftView> with TickerProviderStateMixin {
+class _ShaftDetailViewState extends State<ShaftDetailView>
+    with TickerProviderStateMixin {
   int currentIndex = 0;
   late TabController tabController;
   @override
   void initState() {
+    getData();
+    super.initState();
+  }
+
+  getData() async {
     final p = context.read<DataAddProvider>();
     tabController = TabController(length: 3, vsync: this);
     tabController.addListener(() {
       log("INDEX ACTIVE : ${tabController.index}");
       setState(() {});
     });
-    super.initState();
+    await p.fetchTurbineDetail(widget.id);
   }
 
   @override
   Widget build(BuildContext context) {
     final d = context.watch<DataAddProvider>();
     final shaft =
-        context.watch<DataAddProvider>().turbineCreateModel.Data?.Shaft;
+        context.watch<DataAddProvider>().turbineDetailModel.Data?.Shaft;
     final upperData = context
         .watch<DataAddProvider>()
-        .turbineCreateModel
+        .turbineDetailModel
         .Data
         ?.DetailData
         ?.Upper;
@@ -59,25 +65,8 @@ class _ShaftViewState extends State<ShaftView> with TickerProviderStateMixin {
             unselectedLabelColor: Constant.grayColor,
             labelColor: Constant.primaryColor,
             unselectedLabelStyle: TextStyle(fontWeight: FontWeight.w300),
-
             indicatorColor: Constant.primaryColor,
-            // width: 91, // width in percent
-            // borderRadius: 30,
-            // height: 50,
-            // selectedIndex: currentIndex,
-            // selectedBackgroundColors: [Constant.primaryColor],
-            // unSelectedBackgroundColors: [Color(0xffffffff)],
-            // selectedTextStyle:
-            //     TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-            // unSelectedTextStyle: TextStyle(color: Colors.black87),
             tabs: [_buildTab("A-C"), _buildTab("B-D"), _buildTab("Upper")],
-            // selectedLabelIndex: (index) {
-            //   setState(() {
-            //     currentIndex = index;
-            //     tabController.index = index;
-            //   });
-            // },
-            // isScroll: false,
           ),
         ),
       );
@@ -299,7 +288,7 @@ class _ShaftViewState extends State<ShaftView> with TickerProviderStateMixin {
                 )),
                 Constant.xSizedBox4,
                 Text(
-                  '${DateFormat('dd/MM/yyyy  |  HH : mm').format(DateFormat('yyyy-MM-dd HH:mm:ss').parse(d.turbineCreateModel.Data?.CreatedAt ?? '${DateTime.now()}'))}',
+                  '${DateFormat('dd/MM/yyyy  |  HH : mm').format(DateFormat('yyyy-MM-dd HH:mm:ss').parse(d.turbineDetailModel.Data?.CreatedAt ?? '${DateTime.now()}'))}',
                   style: TextStyle(color: Constant.textColorBlack),
                 ),
               ],

@@ -241,6 +241,7 @@ class _Chart extends StatelessWidget {
       return FlSpot(acClutch[0] < 0 ? -acCrockedLine : acCrockedLine, 0);
     }
 
+    if (acClutch.isEmpty) return SizedBox();
     return LineChart(
       LineChartData(
         lineBarsData: [

@@ -55,6 +55,8 @@ class TurbineProvider extends BaseController with ChangeNotifier {
     this._pagingController = value;
   }
 
+  String? next;
+
   TurbineModel _turbineModel = TurbineModel();
   TurbineModel get turbineModel => this._turbineModel;
   set turbineModel(TurbineModel value) => this._turbineModel = value;
@@ -68,9 +70,11 @@ class TurbineProvider extends BaseController with ChangeNotifier {
     isFetching = true;
     if (withLoading) loading(true);
     Map<String, String> param = {
-      // 'page': '$page',
+      'Page': '$page',
       'Search': turbineSearchC.text,
+      'PerPage': "10",
     };
+    if (next != null) param.addAll({'Next': next ?? ''});
     log("PANGGIL");
     final response = await get(
       Constant.BASE_API_FULL + '/turbines',
@@ -88,9 +92,12 @@ class TurbineProvider extends BaseController with ChangeNotifier {
       final isLastPage = newItems.length < pageSize;
 
       if (isLastPage) {
+        next = null;
         pagingController.appendLastPage(newItems as List<TurbineModelData>);
       } else {
         final nextPageKey = page += 1;
+        if (model.Meta?.Next != null && model.Meta?.Next != '')
+          next = model.Meta?.Next ?? '';
         pagingController.appendPage(
             newItems as List<TurbineModelData>, nextPageKey);
       }
@@ -107,12 +114,12 @@ class TurbineProvider extends BaseController with ChangeNotifier {
     // }
   }
 
-  Future<TurbineDetailModel> fetchTurbineDetail(int id) async {
+  Future<TurbineCreateModel> fetchTurbineDetail(int id) async {
     loading(true);
     final response = await get(Constant.BASE_API_FULL + '/turbines/$id');
 
     if (response.statusCode == 201 || response.statusCode == 200) {
-      final model = TurbineDetailModel.fromJson(jsonDecode(response.body));
+      final model = TurbineCreateModel.fromJson(jsonDecode(response.body));
       loading(false);
       return model;
     } else {

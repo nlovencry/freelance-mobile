@@ -64,14 +64,9 @@ class BaseController<S extends BaseState> {
     log("BODY : $body");
     log("HEADERS : ${h}");
     url = url + '?';
-    body?.forEach((key, value) {
-      if (!url.contains('&'))
-        url = url + '$key=$value';
-      else
-        url = url + '&$key=$value';
-    });
-    final uri = Uri.parse(url);
-    final bodyUri = Uri.https(Constant.DOMAIN, '$url', body);
+    String param = Uri(queryParameters: body).query;
+    final uri = Uri.parse('$url?$param');
+    // final bodyUri = Uri.https(Constant.DOMAIN, '$url', body);
 
     Response response = await http.get(Uri.parse(url), headers: h).timeout(
         Duration(seconds: 30),
@@ -84,7 +79,7 @@ class BaseController<S extends BaseState> {
             '\r\n' +
         "URL : $url"
             '\r\n' +
-        "BODY : $bodyUri"
+        "BODY : $body"
             '\r\n' +
         "RESPONSE GET $url : ${response.body}"
             '\r\n' +

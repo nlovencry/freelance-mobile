@@ -246,7 +246,7 @@ class _ShaftDetailViewState extends State<ShaftDetailView>
                     ..text = '${upperData?.D?.the3 ?? 0}'),
             ]),
             TableRow(children: [
-              Text('3', textAlign: TextAlign.center),
+              Text('4', textAlign: TextAlign.center),
               CustomTextField.tableTextField(
                   readOnly: true,
                   controller: TextEditingController()
@@ -307,7 +307,9 @@ class _ShaftDetailViewState extends State<ShaftDetailView>
               style: TextStyle(fontSize: 12, color: Constant.grayColor),
             ),
             Constant.xSizedBox16,
-            tabController.index == 2 ? upperActive() : acBdActive(),
+            upperActive(),
+            Constant.xSizedBox16,
+            acBdActive(),
             Constant.xSizedBox18,
           ],
         ),

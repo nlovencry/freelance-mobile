@@ -452,6 +452,7 @@ class Constant {
   static const String kSetPrefRole = "role";
   static const String kSetPrefCanAssess = "can_assess";
   static const String kIsBreakPresence = "is_break_presence";
+  static const String kSetPrefParamCreateTurbine = "param_create_turbine";
 
   static const String kCheckIn = "check_in";
   static const String kCheckOut = "check_out";

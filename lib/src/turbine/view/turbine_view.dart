@@ -26,15 +26,18 @@ class _TurbineViewState extends BaseState<TurbineView> {
   @override
   void initState() {
     final turbineP = context.read<TurbineProvider>();
-    turbineP.pagingController = PagingController(firstPageKey: 1)
-      ..addPageRequestListener(
-          (pageKey) => turbineP.fetchTurbine(page: pageKey));
+    // turbineP.pagingController = PagingController(firstPageKey: 1)
+    //   ..addPageRequestListener(
+    //       (pageKey) => turbineP.fetchTurbine(page: pageKey));
+    turbineP.fetchTurbine(withLoading: true);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     final turbineP = context.watch<TurbineProvider>();
+    final turbineData =
+        context.watch<TurbineProvider>().turbineModel.Data ?? [];
     final pagingC = context.watch<TurbineProvider>().pagingController;
 
     Widget search() => CustomTextField.borderTextField(
@@ -74,39 +77,28 @@ class _TurbineViewState extends BaseState<TurbineView> {
           color: Colors.white,
           child: RefreshIndicator(
             color: Constant.primaryColor,
-            onRefresh: () async => pagingC.refresh(),
+            onRefresh: () async =>
+                await context.read<TurbineProvider>().fetchTurbine(),
+            // onRefresh: () async => pagingC.refresh(),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                search(),
-                Constant.xSizedBox16,
+                // search(),
+                // Constant.xSizedBox16,
                 Text("Turbine List",
                     style: Constant.grayMedium.copyWith(
                         color: Colors.black38, fontWeight: FontWeight.w500)),
                 Constant.xSizedBox16,
                 Flexible(
-                  child: PagedListView.separated(
-                    shrinkWrap: true,
-                    pagingController: pagingC,
-                    padding: EdgeInsets.fromLTRB(4, 18, 4, 20),
-                    separatorBuilder: (_, __) => Constant.xSizedBox16,
-                    builderDelegate:
-                        PagedChildBuilderDelegate<TurbineModelData>(
-                      firstPageProgressIndicatorBuilder: (_) => Container(
-                        color: Colors.white,
-                        padding: EdgeInsets.only(top: 32),
-                        child: CustomLoadingIndicator.buildIndicator(),
-                      ),
-                      newPageProgressIndicatorBuilder: (_) => Container(
-                        color: Colors.white,
-                        child: CustomLoadingIndicator.buildIndicator(),
-                      ),
-                      noItemsFoundIndicatorBuilder: (_) => Padding(
-                        padding: const EdgeInsets.only(top: 56),
-                        child: Utils.notFoundImage(),
-                      ),
-                      itemBuilder: (context, item, indexs) {
+                  child: ListView.separated(
+                      shrinkWrap: true,
+                      itemCount: turbineData.length,
+                      // pagingController: pagingC,
+                      padding: EdgeInsets.fromLTRB(4, 18, 4, 20),
+                      separatorBuilder: (_, __) => Constant.xSizedBox16,
+                      itemBuilder: (context, index) {
+                        final item = turbineData[index];
                         return InkWell(
                           onTap: () async {
                             FocusManager.instance.primaryFocus?.unfocus();
@@ -115,7 +107,7 @@ class _TurbineViewState extends BaseState<TurbineView> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                        ShaftDetailView(id: item.Id ?? '')));
+                                        ShaftDetailView(id: item?.Id ?? '')));
                             if (f != null) {
                               pagingC.refresh();
                             }
@@ -136,7 +128,7 @@ class _TurbineViewState extends BaseState<TurbineView> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          Text(item.TowerName ?? "-",
+                                          Text(item?.TowerName ?? "-",
                                               style: Constant.blackBold),
                                           SizedBox(height: 5),
                                         ],
@@ -150,8 +142,8 @@ class _TurbineViewState extends BaseState<TurbineView> {
                                             CrossAxisAlignment.end,
                                         children: [
                                           Text(
-                                            '${DateFormat('dd/MM/yyyy  |  HH : mm').format(DateFormat('yyyy-MM-dd HH:mm:ss').parse(item.CreatedAt ?? '${DateTime.now()}'))}',
-                                            style: Constant.grayRegular,
+                                            '${DateFormat('dd/MM/yyyy  |  HH : mm').format(DateFormat('yyyy-MM-dd HH:mm:ss').parse(item?.CreatedAt ?? '${DateTime.now()}'))}',
+                                            // style: Constant.gray,
                                             textAlign: TextAlign.right,
                                           ),
                                           SizedBox(height: 7),
@@ -165,9 +157,84 @@ class _TurbineViewState extends BaseState<TurbineView> {
                             ),
                           ),
                         );
-                      },
-                    ),
-                  ),
+                      }
+                      // builderDelegate:
+                      //     PagedChildBuilderDelegate<TurbineModelData>(
+                      //   firstPageProgressIndicatorBuilder: (_) => Container(
+                      //     color: Colors.white,
+                      //     padding: EdgeInsets.only(top: 32),
+                      //     child: CustomLoadingIndicator.buildIndicator(),
+                      //   ),
+                      //   newPageProgressIndicatorBuilder: (_) => Container(
+                      //     color: Colors.white,
+                      //     child: CustomLoadingIndicator.buildIndicator(),
+                      //   ),
+                      //   noItemsFoundIndicatorBuilder: (_) => Padding(
+                      //     padding: const EdgeInsets.only(top: 56),
+                      //     child: Utils.notFoundImage(),
+                      //   ),
+                      //   itemBuilder: (context, item, indexs) {
+                      //     return InkWell(
+                      //       onTap: () async {
+                      //         FocusManager.instance.primaryFocus?.unfocus();
+                      //         turbineP.turbineSearchC.clear();
+                      //         final f = await Navigator.push(
+                      //             context,
+                      //             MaterialPageRoute(
+                      //                 builder: (context) =>
+                      //                     ShaftDetailView(id: item.Id ?? '')));
+                      //         if (f != null) {
+                      //           pagingC.refresh();
+                      //         }
+
+                      //         // turbineP.turbineModelData =
+                      //         //     TurbineModelData();
+                      //       },
+                      //       child: CustomContainer.mainCard(
+                      //         child: Column(
+                      //           crossAxisAlignment: CrossAxisAlignment.start,
+                      //           children: [
+                      //             Row(
+                      //               crossAxisAlignment: CrossAxisAlignment.start,
+                      //               children: [
+                      //                 Expanded(
+                      //                   flex: 5,
+                      //                   child: Column(
+                      //                     crossAxisAlignment:
+                      //                         CrossAxisAlignment.start,
+                      //                     children: [
+                      //                       Text(item.TowerName ?? "-",
+                      //                           style: Constant.blackBold),
+                      //                       SizedBox(height: 5),
+                      //                     ],
+                      //                   ),
+                      //                 ),
+                      //                 Constant.xSizedBox4,
+                      //                 Expanded(
+                      //                   flex: 5,
+                      //                   child: Column(
+                      //                     crossAxisAlignment:
+                      //                         CrossAxisAlignment.end,
+                      //                     children: [
+                      //                       Text(
+                      //                         '${DateFormat('dd/MM/yyyy  |  HH : mm').format(DateFormat('yyyy-MM-dd HH:mm:ss').parse(item.CreatedAt ?? '${DateTime.now()}'))}',
+                      //                         style: Constant.grayRegular,
+                      //                         textAlign: TextAlign.right,
+                      //                       ),
+                      //                       SizedBox(height: 7),
+                      //                     ],
+                      //                   ),
+                      //                 ),
+                      //               ],
+                      //             ),
+                      //             Constant.xSizedBox12,
+                      //           ],
+                      //         ),
+                      //       ),
+                      //     );
+                      //   },
+                      // ),
+                      ),
                 ),
                 // SizedBox(height: 8),
               ],

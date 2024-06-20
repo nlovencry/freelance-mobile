@@ -2,6 +2,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../common/helper/constant.dart';
 import '../../data/provider/data_add_provider.dart';
 
 class SampleChartView extends StatefulWidget {
@@ -244,6 +245,25 @@ class _Chart extends StatelessWidget {
     if (acClutch.isEmpty) return SizedBox();
     return LineChart(
       LineChartData(
+        lineTouchData: LineTouchData(
+          enabled: false,
+          touchTooltipData: LineTouchTooltipData(
+            getTooltipItems: (touchedSpots) {
+              return touchedSpots.map((LineBarSpot touchedSpot) {
+                final textStyle = TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 14,
+                );
+                return LineTooltipItem(
+                  '${touchedSpot.x.toStringAsFixed(0)},${touchedSpot.y.toStringAsFixed(0)}',
+                  textStyle,
+                );
+              }).toList();
+            },
+            tooltipBgColor: Constant.primaryColor,
+          ),
+        ),
         lineBarsData: [
           LineChartBarData(
             barWidth: 2,

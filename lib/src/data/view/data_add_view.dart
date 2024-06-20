@@ -20,9 +20,7 @@ class _DataAddViewState extends State<DataAddView> {
     final p = context.read<DataAddProvider>();
     p.fetchTower(context);
     p.resetData();
-    p.generateDataUpperRow();
-    p.generateDataClutchRow();
-    p.generateDataTurbineRow();
+    p.generateAllData();
     super.initState();
   }
 

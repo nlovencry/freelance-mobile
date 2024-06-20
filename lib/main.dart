@@ -48,6 +48,7 @@ import 'src/auth/view/confirmation_view.dart';
 import 'src/auth/view/token_view.dart';
 
 import 'src/user/provider/user_provider.dart';
+import 'utils/nav_observer.dart';
 import 'utils/utils.dart';
 import 'firebase_options.dart';
 
@@ -216,6 +217,10 @@ void main() async {
   );
 }
 
+class NavigationService {
+  static GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+}
+
 Future<bool> requestPermission(Permission permission) async {
   PermissionStatus status = await permission.request();
   return [PermissionStatus.granted, PermissionStatus.limited].contains(status);
@@ -302,8 +307,8 @@ class MyApp extends StatelessWidget {
             localizationsDelegates: context.localizationDelegates,
             supportedLocales: context.supportedLocales,
             locale: context.locale,
-            // navigatorObservers: [XNObsever()],
-            // navigatorKey: NavigationService.navigatorKey,
+            navigatorObservers: [XNObsever()],
+            navigatorKey: NavigationService.navigatorKey,
             theme: Constant.mainThemeData,
             color: Constant.primaryColor,
             initialRoute: '/',

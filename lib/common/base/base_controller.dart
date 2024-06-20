@@ -5,7 +5,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart';
 import 'package:http/http.dart' as http;
+import 'package:mata/common/component/custom_alert.dart';
 import 'package:mata/common/helper/constant.dart';
+import 'package:mata/main.dart';
+import 'package:mata/src/splash_view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../utils/utils.dart';
@@ -63,9 +66,9 @@ class BaseController<S extends BaseState> {
     log("URL : $url");
     log("BODY : $body");
     log("HEADERS : ${h}");
-    url = url + '?';
-    String param = Uri(queryParameters: body).query;
-    final uri = Uri.parse('$url?$param');
+    if (body != null) url = url + '?';
+    // String param = Uri(queryParameters: body).query;
+    // final uri = Uri.parse('$url?$param');
     // final bodyUri = Uri.https(Constant.DOMAIN, '$url', body);
 
     Response response = await http.get(Uri.parse(url), headers: h).timeout(
@@ -90,9 +93,21 @@ class BaseController<S extends BaseState> {
     // }
 
     if (response.body.contains("Unauthorized")) {
-      // _preferences!.clear();
+      _preferences!.clear();
+      BuildContext? context = NavigationService.navigatorKey.currentContext;
+      if (context != null) {
+        CustomAlert.showSnackBar(context, 'Harap Login Ulang', true);
+        Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+      }
     }
-    if (response.body.contains("invalid token")) {}
+    if (response.body.contains("invalid token")) {
+      _preferences!.clear();
+      BuildContext? context = NavigationService.navigatorKey.currentContext;
+      if (context != null) {
+        CustomAlert.showSnackBar(context, 'Harap Login Ulang', true);
+        Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+      }
+    }
     if (response.body.contains("Gateway time") ||
         response.body
             .toString()
@@ -148,7 +163,20 @@ class BaseController<S extends BaseState> {
       // }
 
       if (response.body.contains("Unauthorized")) {
-        // _preferences!.clear();
+        _preferences!.clear();
+        BuildContext? context = NavigationService.navigatorKey.currentContext;
+        if (context != null) {
+          CustomAlert.showSnackBar(context, 'Harap Login Ulang', true);
+          Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+        }
+      }
+      if (response.body.contains("invalid token")) {
+        _preferences!.clear();
+        BuildContext? context = NavigationService.navigatorKey.currentContext;
+        if (context != null) {
+          CustomAlert.showSnackBar(context, 'Harap Login Ulang', true);
+          Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+        }
       }
       if (response.body.contains("Gateway time") ||
           response.body
@@ -193,7 +221,20 @@ class BaseController<S extends BaseState> {
       // }
 
       if (response.body.contains("Unauthorized")) {
-        // _preferences!.clear();
+        _preferences!.clear();
+        BuildContext? context = NavigationService.navigatorKey.currentContext;
+        if (context != null) {
+          CustomAlert.showSnackBar(context, 'Harap Login Ulang', true);
+          Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+        }
+      }
+      if (response.body.contains("invalid token")) {
+        _preferences!.clear();
+        BuildContext? context = NavigationService.navigatorKey.currentContext;
+        if (context != null) {
+          CustomAlert.showSnackBar(context, 'Harap Login Ulang', true);
+          Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+        }
       }
       if (response.body.contains("Gateway time") ||
           response.body
@@ -247,7 +288,20 @@ class BaseController<S extends BaseState> {
       // }
 
       if (response.body.contains("Unauthorized")) {
-        // _preferences!.clear();
+        _preferences!.clear();
+        BuildContext? context = NavigationService.navigatorKey.currentContext;
+        if (context != null) {
+          CustomAlert.showSnackBar(context, 'Harap Login Ulang', true);
+          Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+        }
+      }
+      if (response.body.contains("invalid token")) {
+        _preferences!.clear();
+        BuildContext? context = NavigationService.navigatorKey.currentContext;
+        if (context != null) {
+          CustomAlert.showSnackBar(context, 'Harap Login Ulang', true);
+          Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+        }
       }
       if (response.body.contains("Gateway time") ||
           response.body
@@ -292,7 +346,20 @@ class BaseController<S extends BaseState> {
       // }
 
       if (response.body.contains("Unauthorized")) {
-        // _preferences!.clear();
+        _preferences!.clear();
+        BuildContext? context = NavigationService.navigatorKey.currentContext;
+        if (context != null) {
+          CustomAlert.showSnackBar(context, 'Harap Login Ulang', true);
+          Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+        }
+      }
+      if (response.body.contains("invalid token")) {
+        _preferences!.clear();
+        BuildContext? context = NavigationService.navigatorKey.currentContext;
+        if (context != null) {
+          CustomAlert.showSnackBar(context, 'Harap Login Ulang', true);
+          Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+        }
       }
       if (response.body.contains("Gateway time") ||
           response.body
@@ -341,7 +408,20 @@ class BaseController<S extends BaseState> {
     // }
 
     if (response.body.contains("Unauthorized")) {
-      // _preferences!.clear();
+      _preferences!.clear();
+      BuildContext? context = NavigationService.navigatorKey.currentContext;
+      if (context != null) {
+        CustomAlert.showSnackBar(context, 'Harap Login Ulang', true);
+        Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+      }
+    }
+    if (response.body.contains("invalid token")) {
+      _preferences!.clear();
+      BuildContext? context = NavigationService.navigatorKey.currentContext;
+      if (context != null) {
+        CustomAlert.showSnackBar(context, 'Harap Login Ulang', true);
+        Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+      }
     }
     if (response.body.contains("Gateway time") ||
         response.body

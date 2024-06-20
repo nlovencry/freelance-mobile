@@ -232,17 +232,17 @@ class _Chart extends StatelessWidget {
             color: Colors.green,
             dotData: FlDotData(show: true),
           ),
-          LineChartBarData(
-            barWidth: 2,
-            show: true,
-            spots: [
-              FlSpot(upperCrockedLine, 0),
-              FlSpot(0, 0),
-            ],
-            belowBarData: BarAreaData(show: false),
-            color: Colors.red,
-            dotData: FlDotData(show: true),
-          ),
+          // LineChartBarData(
+          //   barWidth: 2,
+          //   show: true,
+          //   spots: [
+          //     FlSpot(upperCrockedLine, 0),
+          //     // FlSpot(0, 0),
+          //   ],
+          //   belowBarData: BarAreaData(show: false),
+          //   color: Colors.red,
+          //   dotData: FlDotData(show: true),
+          // ),
         ],
         // betweenBarsData: [BetweenBarsData(fromIndex: 0, toIndex: 2)],
         titlesData: FlTitlesData(

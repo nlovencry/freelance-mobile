@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../model/create_data_param.dart';
 import '../../tower/model/tower_model.dart';
 import '../../turbine/model/turbine_create_model.dart';
@@ -101,9 +102,9 @@ class DataAddProvider extends BaseController with ChangeNotifier {
   set turbineCreateModel(TurbineCreateModel value) =>
       this._turbineCreateModel = value;
 
-  CreateDataParam _createDataParam = CreateDataParam();
-  CreateDataParam get createDataParam => this._createDataParam;
-  set createDataParam(CreateDataParam value) => this._createDataParam = value;
+  CreateDataParam? _createDataParam = CreateDataParam();
+  CreateDataParam? get createDataParam => this._createDataParam;
+  set createDataParam(CreateDataParam? value) => this._createDataParam = value;
 
   // AC
   List<double> acClutch = [];
@@ -284,38 +285,43 @@ class DataAddProvider extends BaseController with ChangeNotifier {
       final itemB = dataUpperC[i][1];
       final itemC = dataUpperC[i][2];
       final itemD = dataUpperC[i][3];
-      createDataParam.Data?.Upper?.A?.add(double.parse(itemA.text));
-      createDataParam.Data?.Upper?.B?.add(double.parse(itemB.text));
-      createDataParam.Data?.Upper?.C?.add(double.parse(itemC.text));
-      createDataParam.Data?.Upper?.D?.add(double.parse(itemD.text));
+      createDataParam?.Data?.Upper?.A?.add(double.parse(itemA.text));
+      createDataParam?.Data?.Upper?.B?.add(double.parse(itemB.text));
+      createDataParam?.Data?.Upper?.C?.add(double.parse(itemC.text));
+      createDataParam?.Data?.Upper?.D?.add(double.parse(itemD.text));
     }
     for (int i = 0; i < dataClutchC.length; i++) {
       final itemA = dataClutchC[i][0];
       final itemB = dataClutchC[i][1];
       final itemC = dataClutchC[i][2];
       final itemD = dataClutchC[i][3];
-      createDataParam.Data?.Clutch?.A?.add(double.parse(itemA.text));
-      createDataParam.Data?.Clutch?.B?.add(double.parse(itemB.text));
-      createDataParam.Data?.Clutch?.C?.add(double.parse(itemC.text));
-      createDataParam.Data?.Clutch?.D?.add(double.parse(itemD.text));
+      createDataParam?.Data?.Clutch?.A?.add(double.parse(itemA.text));
+      createDataParam?.Data?.Clutch?.B?.add(double.parse(itemB.text));
+      createDataParam?.Data?.Clutch?.C?.add(double.parse(itemC.text));
+      createDataParam?.Data?.Clutch?.D?.add(double.parse(itemD.text));
     }
     for (int i = 0; i < dataTurbineC.length; i++) {
       final itemA = dataTurbineC[i][0];
       final itemB = dataTurbineC[i][1];
       final itemC = dataTurbineC[i][2];
       final itemD = dataTurbineC[i][3];
-      createDataParam.Data?.Turbine?.A?.add(double.parse(itemA.text));
-      createDataParam.Data?.Turbine?.B?.add(double.parse(itemB.text));
-      createDataParam.Data?.Turbine?.C?.add(double.parse(itemC.text));
-      createDataParam.Data?.Turbine?.D?.add(double.parse(itemD.text));
+      createDataParam?.Data?.Turbine?.A?.add(double.parse(itemA.text));
+      createDataParam?.Data?.Turbine?.B?.add(double.parse(itemB.text));
+      createDataParam?.Data?.Turbine?.C?.add(double.parse(itemC.text));
+      createDataParam?.Data?.Turbine?.D?.add(double.parse(itemD.text));
     }
-    log('CREATE DATA PARAM : ${createDataParam.toJson()}');
-    log('CREATE DATA PARAM : ${jsonEncode(createDataParam.toJson())}');
-    String param = jsonEncode(createDataParam.toJson());
+    log('CREATE DATA PARAM : ${createDataParam?.toJson()}');
+    log('CREATE DATA PARAM : ${jsonEncode(createDataParam?.toJson())}');
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String param = jsonEncode(createDataParam?.toJson());
+    prefs.setString(Constant.kSetPrefParamCreateTurbine, param);
+    createDataParam = CreateDataParam.fromJson(jsonDecode(param));
     final response = await post(Constant.BASE_API_FULL + '/turbines',
         body: jsonDecode(param));
 
     if (response.statusCode == 201 || response.statusCode == 200) {
+      prefs.remove(Constant.kSetPrefParamCreateTurbine);
+      createDataParam = CreateDataParam();
       final model = TurbineCreateModel.fromJson(jsonDecode(response.body));
       turbineCreateModel = model;
       // notifyListeners();
@@ -473,6 +479,59 @@ class DataAddProvider extends BaseController with ChangeNotifier {
     ];
   }
 
+  generateAllData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? data = prefs.getString(Constant.kSetPrefParamCreateTurbine);
+    log('CREATE DATA PARAM : $data');
+    if (data != null) {
+      createDataParam = CreateDataParam.fromJson(jsonDecode(data));
+      generateShaftLocalData(createDataParam);
+      generateDataUpperRowLocal();
+      generateDataClutchRowLocal();
+      generateDataTurbineRowLocal();
+      notifyListeners();
+    } else {
+      generateDataUpperRow();
+      generateDataClutchRow();
+      generateDataTurbineRow();
+    }
+  }
+
+  generateShaftLocalData(CreateDataParam? data) {
+    if (data != null) {
+      selectedTower = data.TowerId;
+      String? towerName = (towerList ?? [])
+          .firstWhere((element) => element?.Id == data.TowerId)
+          ?.Name;
+      if (towerName != null && towerName != '') pltaC.text = towerName;
+      if (data.GenBearingToCoupling != null)
+        genBearingKoplingC.text = data.GenBearingToCoupling ?? '';
+      if (data.CouplingToTurbine != null)
+        koplingTurbinC.text = data.CouplingToTurbine ?? '';
+      if ((data.CouplingToTurbine == null || data.CouplingToTurbine == '') &&
+          (data.GenBearingToCoupling == '' ||
+              data.GenBearingToCoupling == '')) {
+        totalC.text = '0';
+        rasioC.text = '0';
+      } else {
+        if (data.CouplingToTurbine?.trim() != '') {
+          int value = int.parse(data.CouplingToTurbine ?? '0');
+          if (genBearingKoplingC.text.isEmpty) {
+            totalC.text = "$value";
+            rasioC.text = '0';
+          } else {
+            totalC.text = "${value + int.parse(genBearingKoplingC.text)}";
+            rasioC.text =
+                "${(int.parse(koplingTurbinC.text) / int.parse(totalC.text)).toStringAsFixed(2)}";
+          }
+        } else {
+          totalC.text = "${int.parse(genBearingKoplingC.text)}";
+          rasioC.text = '0';
+        }
+      }
+    }
+  }
+
   // DATA UPPER
   List<List<TextEditingController>> dataUpperC = [];
   List<TableRow> wDataUpperRow = [];
@@ -494,6 +553,76 @@ class DataAddProvider extends BaseController with ChangeNotifier {
           TextEditingController(),
           TextEditingController()
         ]);
+        wDataUpperRow.add(TableRow(children: [
+          Text('$i', textAlign: TextAlign.center),
+          CustomTextField.tableTextField(controller: dataUpperC[i - 1][0]),
+          CustomTextField.tableTextField(controller: dataUpperC[i - 1][1]),
+          CustomTextField.tableTextField(controller: dataUpperC[i - 1][2]),
+          CustomTextField.tableTextField(controller: dataUpperC[i - 1][3]),
+        ]));
+      }
+    }
+  }
+
+  generateDataUpperRowLocal() {
+    for (int i = 0; i < 5; i++) {
+      if (i == 0) {
+        wDataUpperRow.add(TableRow(children: [
+          Text('\n\n', textAlign: TextAlign.center),
+          Text('\nA\n', textAlign: TextAlign.center),
+          Text('\nB\n', textAlign: TextAlign.center),
+          Text('\nC\n', textAlign: TextAlign.center),
+          Text('\nD\n', textAlign: TextAlign.center),
+        ]));
+      } else {
+        if (i == 1) {
+          dataUpperC.add([
+            TextEditingController()
+              ..text = (createDataParam?.Data?.Upper?.A?[0]).toString(),
+            TextEditingController()
+              ..text = (createDataParam?.Data?.Upper?.A?[1]).toString(),
+            TextEditingController()
+              ..text = (createDataParam?.Data?.Upper?.A?[2]).toString(),
+            TextEditingController()
+              ..text = (createDataParam?.Data?.Upper?.A?[3]).toString(),
+          ]);
+        }
+        if (i == 2) {
+          dataUpperC.add([
+            TextEditingController()
+              ..text = (createDataParam?.Data?.Upper?.B?[0]).toString(),
+            TextEditingController()
+              ..text = (createDataParam?.Data?.Upper?.B?[1]).toString(),
+            TextEditingController()
+              ..text = (createDataParam?.Data?.Upper?.B?[2]).toString(),
+            TextEditingController()
+              ..text = (createDataParam?.Data?.Upper?.B?[3]).toString(),
+          ]);
+        }
+        if (i == 3) {
+          dataUpperC.add([
+            TextEditingController()
+              ..text = (createDataParam?.Data?.Upper?.C?[0]).toString(),
+            TextEditingController()
+              ..text = (createDataParam?.Data?.Upper?.C?[1]).toString(),
+            TextEditingController()
+              ..text = (createDataParam?.Data?.Upper?.C?[2]).toString(),
+            TextEditingController()
+              ..text = (createDataParam?.Data?.Upper?.C?[3]).toString(),
+          ]);
+        }
+        if (i == 4) {
+          dataUpperC.add([
+            TextEditingController()
+              ..text = (createDataParam?.Data?.Upper?.D?[0]).toString(),
+            TextEditingController()
+              ..text = (createDataParam?.Data?.Upper?.D?[1]).toString(),
+            TextEditingController()
+              ..text = (createDataParam?.Data?.Upper?.D?[2]).toString(),
+            TextEditingController()
+              ..text = (createDataParam?.Data?.Upper?.D?[3]).toString(),
+          ]);
+        }
         wDataUpperRow.add(TableRow(children: [
           Text('$i', textAlign: TextAlign.center),
           CustomTextField.tableTextField(controller: dataUpperC[i - 1][0]),
@@ -654,6 +783,76 @@ class DataAddProvider extends BaseController with ChangeNotifier {
     }
   }
 
+  generateDataClutchRowLocal() {
+    for (int i = 0; i < 5; i++) {
+      if (i == 0) {
+        wDataClutchRow.add(TableRow(children: [
+          Text('\n\n', textAlign: TextAlign.center),
+          Text('\nA\n', textAlign: TextAlign.center),
+          Text('\nB\n', textAlign: TextAlign.center),
+          Text('\nC\n', textAlign: TextAlign.center),
+          Text('\nD\n', textAlign: TextAlign.center),
+        ]));
+      } else {
+        if (i == 1) {
+          dataClutchC.add([
+            TextEditingController()
+              ..text = (createDataParam?.Data?.Clutch?.A?[0]).toString(),
+            TextEditingController()
+              ..text = (createDataParam?.Data?.Clutch?.A?[1]).toString(),
+            TextEditingController()
+              ..text = (createDataParam?.Data?.Clutch?.A?[2]).toString(),
+            TextEditingController()
+              ..text = (createDataParam?.Data?.Clutch?.A?[3]).toString(),
+          ]);
+        }
+        if (i == 2) {
+          dataClutchC.add([
+            TextEditingController()
+              ..text = (createDataParam?.Data?.Clutch?.B?[0]).toString(),
+            TextEditingController()
+              ..text = (createDataParam?.Data?.Clutch?.B?[1]).toString(),
+            TextEditingController()
+              ..text = (createDataParam?.Data?.Clutch?.B?[2]).toString(),
+            TextEditingController()
+              ..text = (createDataParam?.Data?.Clutch?.B?[3]).toString(),
+          ]);
+        }
+        if (i == 3) {
+          dataClutchC.add([
+            TextEditingController()
+              ..text = (createDataParam?.Data?.Clutch?.C?[0]).toString(),
+            TextEditingController()
+              ..text = (createDataParam?.Data?.Clutch?.C?[1]).toString(),
+            TextEditingController()
+              ..text = (createDataParam?.Data?.Clutch?.C?[2]).toString(),
+            TextEditingController()
+              ..text = (createDataParam?.Data?.Clutch?.C?[3]).toString(),
+          ]);
+        }
+        if (i == 4) {
+          dataClutchC.add([
+            TextEditingController()
+              ..text = (createDataParam?.Data?.Clutch?.D?[0]).toString(),
+            TextEditingController()
+              ..text = (createDataParam?.Data?.Clutch?.D?[1]).toString(),
+            TextEditingController()
+              ..text = (createDataParam?.Data?.Clutch?.D?[2]).toString(),
+            TextEditingController()
+              ..text = (createDataParam?.Data?.Clutch?.D?[3]).toString(),
+          ]);
+        }
+        wDataClutchRow.add(TableRow(children: [
+          Text('$i', textAlign: TextAlign.center),
+          CustomTextField.tableTextField(controller: dataClutchC[i - 1][0]),
+          CustomTextField.tableTextField(controller: dataClutchC[i - 1][1]),
+          CustomTextField.tableTextField(controller: dataClutchC[i - 1][2]),
+          CustomTextField.tableTextField(controller: dataClutchC[i - 1][3]),
+        ]));
+      }
+    }
+  }
+
   Widget tableFormClutch(BuildContext context) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -792,6 +991,76 @@ class DataAddProvider extends BaseController with ChangeNotifier {
           TextEditingController(),
           TextEditingController()
         ]);
+        wDataTurbineRow.add(TableRow(children: [
+          Text('$i', textAlign: TextAlign.center),
+          CustomTextField.tableTextField(controller: dataTurbineC[i - 1][0]),
+          CustomTextField.tableTextField(controller: dataTurbineC[i - 1][1]),
+          CustomTextField.tableTextField(controller: dataTurbineC[i - 1][2]),
+          CustomTextField.tableTextField(controller: dataTurbineC[i - 1][3]),
+        ]));
+      }
+    }
+  }
+
+  generateDataTurbineRowLocal() {
+    for (int i = 0; i < 5; i++) {
+      if (i == 0) {
+        wDataTurbineRow.add(TableRow(children: [
+          Text('\n\n', textAlign: TextAlign.center),
+          Text('\nA\n', textAlign: TextAlign.center),
+          Text('\nB\n', textAlign: TextAlign.center),
+          Text('\nC\n', textAlign: TextAlign.center),
+          Text('\nD\n', textAlign: TextAlign.center),
+        ]));
+      } else {
+        if (i == 1) {
+          dataTurbineC.add([
+            TextEditingController()
+              ..text = (createDataParam?.Data?.Turbine?.A?[0]).toString(),
+            TextEditingController()
+              ..text = (createDataParam?.Data?.Turbine?.A?[1]).toString(),
+            TextEditingController()
+              ..text = (createDataParam?.Data?.Turbine?.A?[2]).toString(),
+            TextEditingController()
+              ..text = (createDataParam?.Data?.Turbine?.A?[3]).toString(),
+          ]);
+        }
+        if (i == 2) {
+          dataTurbineC.add([
+            TextEditingController()
+              ..text = (createDataParam?.Data?.Turbine?.B?[0]).toString(),
+            TextEditingController()
+              ..text = (createDataParam?.Data?.Turbine?.B?[1]).toString(),
+            TextEditingController()
+              ..text = (createDataParam?.Data?.Turbine?.B?[2]).toString(),
+            TextEditingController()
+              ..text = (createDataParam?.Data?.Turbine?.B?[3]).toString(),
+          ]);
+        }
+        if (i == 3) {
+          dataTurbineC.add([
+            TextEditingController()
+              ..text = (createDataParam?.Data?.Turbine?.C?[0]).toString(),
+            TextEditingController()
+              ..text = (createDataParam?.Data?.Turbine?.C?[1]).toString(),
+            TextEditingController()
+              ..text = (createDataParam?.Data?.Turbine?.C?[2]).toString(),
+            TextEditingController()
+              ..text = (createDataParam?.Data?.Turbine?.C?[3]).toString(),
+          ]);
+        }
+        if (i == 4) {
+          dataTurbineC.add([
+            TextEditingController()
+              ..text = (createDataParam?.Data?.Turbine?.D?[0]).toString(),
+            TextEditingController()
+              ..text = (createDataParam?.Data?.Turbine?.D?[1]).toString(),
+            TextEditingController()
+              ..text = (createDataParam?.Data?.Turbine?.D?[2]).toString(),
+            TextEditingController()
+              ..text = (createDataParam?.Data?.Turbine?.D?[3]).toString(),
+          ]);
+        }
         wDataTurbineRow.add(TableRow(children: [
           Text('$i', textAlign: TextAlign.center),
           CustomTextField.tableTextField(controller: dataTurbineC[i - 1][0]),

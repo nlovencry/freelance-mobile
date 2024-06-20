@@ -458,10 +458,10 @@ class CreateDataParam {
   });
   CreateDataParam.fromJson(Map<String, dynamic> json) {
     TowerId = json['TowerId']?.toString();
-    GenBearingToCoupling = json['GenBearingToCoupling']?.toInt();
-    CouplingToTurbine = json['CouplingToTurbine']?.toInt();
+    GenBearingToCoupling = json['GenBearingToCoupling'].toString();
+    CouplingToTurbine = json['CouplingToTurbine'].toString();
     Data = (json['Data'] != null)
-        ? CreateDataParamData.fromJson(json['Data'])
+        ? CreateDataParamData.fromJson(jsonDecode(json['Data']))
         : null;
   }
   Map<String, String> toJson() {

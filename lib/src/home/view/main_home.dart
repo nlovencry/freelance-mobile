@@ -91,9 +91,10 @@ class _MainHomeState extends State<MainHome> {
       return BottomAppBar(
         shape: CircularNotchedRectangle(),
         notchMargin: 5,
-        padding: EdgeInsets.only(top: 5),
+        // padding: EdgeInsets.only(top: 5),
         child: BottomNavigationBar(
-          backgroundColor: const Color.fromRGBO(255, 255, 255, 1),
+          // backgroundColor: const Color.fromRGBO(255, 255, 255, 1),
+          backgroundColor: Colors.white,
           selectedFontSize: 13,
           unselectedFontSize: 13,
           unselectedItemColor: Constant.textHintColor2,

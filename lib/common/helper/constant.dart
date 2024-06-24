@@ -26,7 +26,7 @@ class Constant {
   ///
   /// Constant.firstColor;
   ///
-  static Color primaryColor = Color(0xFF0C3862);
+  static Color primaryColor = Color(0x0C335BFF);
   static Color secondaryColor = Color(0xFF2F5273);
   static Color thirdColor = Color(0xFFFBBB00);
   static Color tertiaryColor = Color(0xFF8CC6FF);
@@ -119,6 +119,12 @@ class Constant {
     color: textColorBlack,
     fontSize: 13,
     fontWeight: medium,
+  );
+  static TextStyle blackRegular12 = TextStyle(
+    fontFamily: 'SF-Pro-Display',
+    color: textColorBlack,
+    fontSize: 12,
+    fontWeight: FontWeight.w300,
   );
   static TextStyle iBlackMedium = TextStyle(
     fontFamily: 'SF-Pro-Display',
@@ -268,7 +274,7 @@ class Constant {
   );
   static TextStyle grayRegular13 = TextStyle(
     fontFamily: 'SF-Pro-Display',
-    color: lightGrayColor,
+    color: grayColor,
     fontSize: 13,
   );
   static TextStyle grayMedium10 = TextStyle(

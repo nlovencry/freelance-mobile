@@ -100,11 +100,11 @@ class _RiwayatViewState extends BaseState<RiwayatView> {
                     children: [
                       Text("Filter",
                           style: Constant.grayMedium.copyWith(
-                              color: Colors.black38, fontWeight: FontWeight.w500)),
+                              color: Colors.black, fontWeight: FontWeight.w400)),
                       Container(
                         height: 30,
                         width: 90,
-                        padding: EdgeInsets.all(5),
+                        padding: EdgeInsets.all(2),
                         decoration: BoxDecoration(
                           border: Border.all(
                             width: 1,
@@ -123,9 +123,9 @@ class _RiwayatViewState extends BaseState<RiwayatView> {
                                     'Tanggal',
                                     style: TextStyle(
                                       color: Colors.grey,
-                                      fontSize: 10,
+                                      fontSize: 12,
                                       fontFamily: 'Open-Sans',
-                                      fontWeight: FontWeight.bold,
+                                      fontWeight: FontWeight.w400,
                                     ),
                                   ),
                                   SizedBox(width: 5,),
@@ -186,44 +186,55 @@ class _RiwayatViewState extends BaseState<RiwayatView> {
                             // turbineP.turbineModelData =
                             //     TurbineModelData();
                           },
-                          child: CustomContainer.mainCard(
+                          child: Container(
+                            padding: EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                              border: Border.all(width: 1, color: Colors.grey.withOpacity(0.5)),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Expanded(
-                                      flex: 5,
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(item?.TowerName ?? "-",
-                                              style: Constant.blackBold),
-                                          SizedBox(height: 5),
-                                        ],
-                                      ),
+                                    Text(
+                                      '${DateFormat('HH : mm').format(DateFormat('yyyy-MM-dd HH:mm:ss').parse(item?.CreatedAt ?? '${DateTime.now()}'))}',
+                                      style: Constant.blackRegular12,
                                     ),
-                                    Constant.xSizedBox4,
-                                    Expanded(
-                                      flex: 5,
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.end,
-                                        children: [
-                                          Text(
-                                            '${DateFormat('dd/MM/yyyy  |  HH : mm').format(DateFormat('yyyy-MM-dd HH:mm:ss').parse(item?.CreatedAt ?? '${DateTime.now()}'))}',
-                                            // style: Constant.gray,
-                                            textAlign: TextAlign.right,
-                                          ),
-                                          SizedBox(height: 7),
-                                        ],
-                                      ),
+                                    Text(
+                                      '${DateFormat('dd MMM yyyy').format(DateFormat('yyyy-MM-dd HH:mm:ss').parse(item?.CreatedAt ?? '${DateTime.now()}'))}',
+                                      style: Constant.blackRegular12,
                                     ),
                                   ],
                                 ),
-                                Constant.xSizedBox12,
+                                SizedBox(height: 5),
+                                Divider(
+                                  thickness: 0.5,
+                                  color: Colors.grey.withOpacity(0.5),
+                                ),
+                                SizedBox(height: 5),
+                                Row(
+                                  children: [
+                                    Image.asset(
+                                      'assets/icons/ic-file.png',
+                                      scale: 3.5,
+                                    ),
+                                    SizedBox(width: 10),
+                                    Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text(item?.TowerName ?? "-",
+                                            style: Constant.blackBold),
+                                        SizedBox(height: 5),
+                                        Text(item?.TowerName ?? "-",
+                                            style: Constant.grayRegular13),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                                Constant.xSizedBox8,
                               ],
                             ),
                           ),

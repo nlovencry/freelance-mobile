@@ -1,8 +1,10 @@
 import 'dart:io';
 
+import 'package:mata/src/data/view/data_add_view.dart';
 import 'package:mata/src/home/model/home_model.dart';
 import 'package:mata/src/home/view/home1_view.dart';
 import 'package:mata/src/home/view/home_view.dart';
+import 'package:mata/src/profil/view/profile_view.dart';
 import 'package:mata/src/report/view/report_view.dart';
 
 import 'package:mata/src/transaction/view/transaction_view.dart';
@@ -199,9 +201,9 @@ class _MainHomeState extends State<MainHome> {
         },
         child: [
           Home1View(),
-          SizedBox(),
+          DataAddView(),
           TurbineView(),
-          SizedBox(),
+          ProfileView(),
           // ProfileView(jumpToJamaah, jumpToSubAgen)
         ][currentIndex],
       ),

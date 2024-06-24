@@ -1,7 +1,9 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:mata/common/component/custom_appbar.dart';
 import 'package:mata/common/component/custom_container.dart';
+import 'package:mata/common/component/custom_dropdown.dart';
 import 'package:mata/common/component/custom_textfield.dart';
 import 'package:mata/src/data/view/data_add_upper_view.dart';
 import 'package:flutter/material.dart';
@@ -17,12 +19,12 @@ import '../../shaft/view/shaft_detail_view.dart';
 import '../model/turbine_model.dart';
 import '../provider/turbine_provider.dart';
 
-class TurbineView extends StatefulWidget {
+class RiwayatView extends StatefulWidget {
   @override
-  State<TurbineView> createState() => _TurbineViewState();
+  State<RiwayatView> createState() => _RiwayatViewState();
 }
 
-class _TurbineViewState extends BaseState<TurbineView> {
+class _RiwayatViewState extends BaseState<RiwayatView> {
   @override
   void initState() {
     final turbineP = context.read<TurbineProvider>();
@@ -66,15 +68,21 @@ class _TurbineViewState extends BaseState<TurbineView> {
       backgroundColor: Colors.white,
       appBar: CustomAppBar.appBar(
         context,
-        "Turbine List",
+        "Riwayat",
+        textStyle: TextStyle(
+          color: Colors.white,
+          fontWeight: FontWeight.w600,
+          fontSize: 16
+        ),
         titleSpacing: 20,
         isLeading: false,
+        color: Constant.primaryColor,
       ),
       body: SafeArea(
         child: Container(
           padding:
-              EdgeInsets.fromLTRB(20, 0, 20, kBottomNavigationBarHeight - 42),
-          color: Colors.white,
+              EdgeInsets.fromLTRB(20, 10, 20, kBottomNavigationBarHeight - 42),
+          color: Colors.transparent,
           child: RefreshIndicator(
             color: Constant.primaryColor,
             onRefresh: () async =>
@@ -86,9 +94,72 @@ class _TurbineViewState extends BaseState<TurbineView> {
               children: [
                 // search(),
                 // Constant.xSizedBox16,
-                Text("Turbine List",
-                    style: Constant.grayMedium.copyWith(
-                        color: Colors.black38, fontWeight: FontWeight.w500)),
+                Container(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text("Filter",
+                          style: Constant.grayMedium.copyWith(
+                              color: Colors.black38, fontWeight: FontWeight.w500)),
+                      Container(
+                        height: 30,
+                        width: 90,
+                        padding: EdgeInsets.all(5),
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            width: 1,
+                            color: Colors.grey.withOpacity(0.5),
+                          ),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            PopupMenuButton<String>(
+                              position: PopupMenuPosition.under,
+                              child: Row(
+                                children: [
+                                  Text(
+                                    'Tanggal',
+                                    style: TextStyle(
+                                      color: Colors.grey,
+                                      fontSize: 10,
+                                      fontFamily: 'Open-Sans',
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  SizedBox(width: 5,),
+                                  Icon(Icons.keyboard_arrow_down, size: 15,)
+                                ],
+                              ),
+                              itemBuilder: (BuildContext context) =>
+                              <PopupMenuEntry<String>>[
+                                PopupMenuItem<String>(
+                                  value: 'transaksi',
+                                  child: Text('Transaksi'),
+                                ),
+                                PopupMenuItem<String>(
+                                  value: 'informasi',
+                                  child: Text('Informasi'),
+                                ),
+                                PopupMenuItem<String>(
+                                  value: 'feed',
+                                  child: Text('Feed'),
+                                ),
+                                // Tambahkan PopupMenuItem sesuai kebutuhan
+                              ],
+                              onSelected: (String result) {
+                                // Tindakan yang akan diambil ketika opsi dipilih
+                                log('Selected: $result');
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
+
+                    ],
+                  ),
+                ),
                 Constant.xSizedBox16,
                 Flexible(
                   child: ListView.separated(

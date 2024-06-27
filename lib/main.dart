@@ -302,7 +302,7 @@ class MyApp extends StatelessWidget {
             //     create: (context) => DetailPenarikanKomisiProvider()),
           ],
           child: MaterialApp(
-            title: 'VAHT',
+            title: 'MATA',
             restorationScopeId: 'root',
             localizationsDelegates: context.localizationDelegates,
             supportedLocales: context.supportedLocales,

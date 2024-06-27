@@ -97,6 +97,29 @@ class DataAddProvider extends BaseController with ChangeNotifier {
     }
   }
 
+  TurbineCreateModel _turbineLatestModel = TurbineCreateModel();
+  TurbineCreateModel get turbineLatestModel => this._turbineLatestModel;
+  set turbineLatestModel(TurbineCreateModel value) =>
+      this._turbineLatestModel = value;
+
+  Future<TurbineCreateModel> fetchTurbineLatest() async {
+    loading(true);
+    final response = await get(Constant.BASE_API_FULL + '/turbines/latest');
+
+    if (response.statusCode == 201 || response.statusCode == 200) {
+      final model = TurbineCreateModel.fromJson(jsonDecode(response.body));
+      turbineLatestModel = model;
+      notifyListeners();
+      setDataChartLatest();
+      loading(false);
+      return model;
+    } else {
+      final message = jsonDecode(response.body)["Message"];
+      loading(false);
+      throw Exception(message);
+    }
+  }
+
   TurbineCreateModel _turbineCreateModel = TurbineCreateModel();
   TurbineCreateModel get turbineCreateModel => this._turbineCreateModel;
   set turbineCreateModel(TurbineCreateModel value) =>
@@ -269,6 +292,76 @@ class DataAddProvider extends BaseController with ChangeNotifier {
     log("UPPER CROCKED : $upperCrockedLine");
   }
 
+  setDataChartLatest() {
+    // AC
+    final acData = turbineLatestModel.Data?.Chart?.AC;
+    final acCrockness = turbineLatestModel.Data?.ACCrockedness;
+    final bdData = turbineLatestModel.Data?.Chart?.BD;
+    final bdCrockness = turbineLatestModel.Data?.BDCrockedness;
+    final upperData = turbineLatestModel.Data?.Chart?.Upper;
+    final upperCrockness = turbineLatestModel.Data?.TotalCrockedness;
+    if (acData != null && acData.Upper != null)
+      acUpper = acData.Upper!
+          .split('|')
+          .map((e) => divideUntilTwoDigits(double.tryParse(e) ?? 0))
+          .toList();
+    if (acData != null && acData.Clutch != null)
+      acClutch = acData.Clutch!
+          .split('|')
+          .map((e) => divideUntilTwoDigits(double.tryParse(e) ?? 0))
+          .toList();
+    if (acData != null && acData.Turbine != null) {
+      acTurbine = acData.Turbine!.split('|').map((e) {
+        double num = divideUntilTwoDigits(double.tryParse(e) ?? 0);
+        if (num > 0) return num;
+        return num;
+      }).toList();
+      acTurbine[1] = -acTurbine[1];
+    }
+    // BD
+    if (bdData != null && bdData.Upper != null)
+      bdUpper = bdData.Upper!
+          .split('|')
+          .map((e) => divideUntilTwoDigits(double.tryParse(e) ?? 0))
+          .toList();
+    if (bdData != null && bdData.Clutch != null)
+      bdClutch = bdData.Clutch!
+          .split('|')
+          .map((e) => divideUntilTwoDigits(double.tryParse(e) ?? 0))
+          .toList();
+    if (bdData != null && bdData.Turbine != null) {
+      bdTurbine = bdData.Turbine!.split('|').map((e) {
+        double num = divideUntilTwoDigits(double.tryParse(e) ?? 0);
+        if (num > 0) return num;
+        return num;
+      }).toList();
+
+      bdTurbine[1] = -bdTurbine[1];
+    }
+    if (upperData != null)
+      upper = upperData
+          .split('|')
+          .map((e) => divideUntilTwoDigits(double.tryParse(e) ?? 0))
+          .toList();
+
+    acCrockedLine = divideUntilTwoDigits(acCrockness ?? 0);
+    bdCrockedLine = divideUntilTwoDigits(bdCrockness ?? 0);
+    upperCrockedLine = divideUntilTwoDigits(upperCrockness ?? 0);
+    log("AC UPPER : $acUpper");
+    log("AC CLUTCH : $acClutch");
+    log("AC TURBINE : $acTurbine");
+    log("AC CROCKED : $acCrockedLine");
+
+    ///
+    log("BD UPPER : $bdUpper");
+    log("BD CLUTCH : $bdClutch");
+    log("BD TURBINE : $bdTurbine");
+    log("BD CROCKED : $bdCrockedLine");
+    // UPPER
+    log("UPPER : $upper");
+    log("UPPER CROCKED : $upperCrockedLine");
+  }
+
   Future<TurbineCreateModel> createTurbines() async {
     loading(true);
     createDataParam = CreateDataParam(
@@ -368,45 +461,51 @@ class DataAddProvider extends BaseController with ChangeNotifier {
     ];
   }
 
-  onChangedShaft(String v) {
-    if (v.trim() == '' && koplingTurbinC.text.isEmpty) {
-      totalC.text = '0';
-      rasioC.text = '0';
-    } else {
-      if (v.trim() != '') {
-        int value = int.parse(v);
-        if (koplingTurbinC.text.isEmpty) {
-          totalC.text = "$value";
-          rasioC.text = '0';
-        } else {
-          totalC.text = "${value + int.parse(koplingTurbinC.text)}";
-          rasioC.text =
-              "${(value / int.parse(totalC.text)).toStringAsFixed(2)}";
-        }
-      } else {
-        totalC.text = "${int.parse(koplingTurbinC.text)}";
-        rasioC.text = '0';
-      }
-    }
-  }
+  // onChangedShaft(String v) {
+  //   if (v.trim() == '' && koplingTurbinC.text.isEmpty) {
+  //     totalC.text = '0';
+  //     rasioC.text = '0';
+  //   } else {
+  //     if (v.trim() != '') {
+  //       double value = double.tryParse(v) ?? 0;
+  //       if (koplingTurbinC.text.isEmpty) {
+  //         totalC.text = "$value";
+  //         rasioC.text = '0';
+  //       } else {
+  //         totalC.text =
+  //             "${value + (double.tryParse(koplingTurbinC.text) ?? 0)}";
+  //         rasioC.text =
+  //             "${(value / (double.tryParse(totalC.text) ?? 0)).toStringAsFixed(2)}";
+  //       }
+  //     } else {
+  //       totalC.text = "${double.tryParse(koplingTurbinC.text)}";
+  //       rasioC.text = '0';
+  //     }
+  //   }
+  // }
 
-  onChangedBearingToKopling(String v) {
+  onChangedBearingToCoupling(String v) {
     if (v.trim() == '' && koplingTurbinC.text.isEmpty) {
       totalC.text = '0';
       rasioC.text = '0';
     } else {
       if (v.trim() != '') {
-        int value = int.parse(v);
+        double value = double.tryParse(v) ?? 0;
         if (koplingTurbinC.text.isEmpty) {
           totalC.text = "$value";
           rasioC.text = '0';
         } else {
-          totalC.text = "${value + int.parse(koplingTurbinC.text)}";
-          rasioC.text =
-              "${(value / int.parse(totalC.text)).toStringAsFixed(2)}";
+          double total = value + (double.tryParse(koplingTurbinC.text) ?? 0);
+          double bearingToCoupling = value;
+          double rasio = (bearingToCoupling / total);
+          log("GEN BEARING KOPLING : $value");
+          log("TOTAL : ${total}");
+          log("RASIO : ${rasio}");
+          totalC.text = "$total";
+          rasioC.text = "${rasio.toStringAsFixed(2)}";
         }
       } else {
-        totalC.text = "${int.parse(koplingTurbinC.text)}";
+        totalC.text = "${double.tryParse(koplingTurbinC.text)}";
         rasioC.text = '0';
       }
     }
@@ -418,17 +517,25 @@ class DataAddProvider extends BaseController with ChangeNotifier {
       rasioC.text = '0';
     } else {
       if (v.trim() != '') {
-        int value = int.parse(v);
+        double value = double.tryParse(v) ?? 0;
         if (genBearingKoplingC.text.isEmpty) {
           totalC.text = "$value";
           rasioC.text = '0';
         } else {
-          totalC.text = "${value + int.parse(genBearingKoplingC.text)}";
-          rasioC.text =
-              "${(int.parse(koplingTurbinC.text) / int.parse(totalC.text)).toStringAsFixed(2)}";
+          double total =
+              value + (double.tryParse(genBearingKoplingC.text) ?? 0);
+          double bearingToCoupling =
+              double.tryParse(genBearingKoplingC.text) ?? 0;
+          double rasio = (bearingToCoupling / total);
+          log("GEN BEARING KOPLING : ${genBearingKoplingC.text}");
+          log("TOTAL : ${total}");
+          log("RASIO : ${rasio}");
+          notifyListeners();
+          totalC.text = "$total";
+          rasioC.text = "${rasio.toStringAsFixed(2)}";
         }
       } else {
-        totalC.text = "${int.parse(genBearingKoplingC.text)}";
+        totalC.text = "${double.tryParse(genBearingKoplingC.text)}";
         rasioC.text = '0';
       }
     }
@@ -448,7 +555,7 @@ class DataAddProvider extends BaseController with ChangeNotifier {
           FilteringTextInputFormatter.digitsOnly
         ],
         labelText: "Gen. Bearing-Kopling",
-        onChange: onChangedShaft,
+        onChange: onChangedBearingToCoupling,
       ),
       Constant.xSizedBox16,
       CustomTextField.borderTextField(
@@ -515,17 +622,18 @@ class DataAddProvider extends BaseController with ChangeNotifier {
         rasioC.text = '0';
       } else {
         if (data.CouplingToTurbine?.trim() != '') {
-          int value = int.parse(data.CouplingToTurbine ?? '0');
+          double value = double.tryParse(data.CouplingToTurbine ?? '0') ?? 0;
           if (genBearingKoplingC.text.isEmpty) {
             totalC.text = "$value";
             rasioC.text = '0';
           } else {
-            totalC.text = "${value + int.parse(genBearingKoplingC.text)}";
+            totalC.text =
+                "${value + (double.tryParse(genBearingKoplingC.text) ?? 0)}";
             rasioC.text =
-                "${(int.parse(koplingTurbinC.text) / int.parse(totalC.text)).toStringAsFixed(2)}";
+                "${(double.tryParse(koplingTurbinC.text) ?? 0 / (double.tryParse(totalC.text) ?? 0)).toStringAsFixed(2)}";
           }
         } else {
-          totalC.text = "${int.parse(genBearingKoplingC.text)}";
+          totalC.text = "${double.tryParse(genBearingKoplingC.text)}";
           rasioC.text = '0';
         }
       }

@@ -22,7 +22,7 @@ class _SampleChartViewState extends State<SampleChartView> {
     return AspectRatio(
       aspectRatio: 1.10,
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 30),
+        padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 30),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -208,8 +208,6 @@ class _Chart extends StatelessWidget {
     final bdClutch = d.bdClutch;
     final bdTurbine = d.bdTurbine;
     final bdCrockedLine = d.bdCrockedLine;
-    // UPPER
-    final upper = d.upper;
 
     FlSpot getFlSpotUpper() {
       if (activeIndex == 1) return FlSpot(bdUpper[0], bdUpper[1]);

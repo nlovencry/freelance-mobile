@@ -46,11 +46,18 @@ abstract class BaseState<T extends StatefulWidget> extends State<T> {
     return ModalRoute.of(context)?.settings.arguments;
   }
 
+  bool _isLoading = false;
+  bool get isLoading => this._isLoading;
+  set isLoading(bool value) => this._isLoading = value;
+
   loading(bool show) {
-    if (show)
+    if (show) {
+      isLoading = true;
       EasyLoading.show(dismissOnTap: false);
-    else
+    } else {
+      isLoading = false;
       EasyLoading.dismiss();
+    }
   }
 
   bool _isProcessing = false;

@@ -11,6 +11,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../utils/utils.dart';
 import '../../auth/provider/auth_provider.dart';
+import '../../shaft/view/shaft_latest_view.dart';
 
 class Home1View extends StatefulWidget {
   const Home1View({super.key});
@@ -268,61 +269,68 @@ class _Home1ViewState extends BaseState<Home1View> {
                     return Column(
                       children: List.generate(
                         staticArray.length,
-                        (indexx) => Column(
-                          children: [
-                            CustomContainer.mainCard(
-                              isShadow: false,
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                    flex: 2,
-                                    child: Container(
-                                      height: 50,
-                                      width: 50,
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(40),
-                                          color: Colors.lightBlueAccent.shade200
-                                              .withOpacity(0.3),
-                                          image: DecorationImage(
-                                              image: AssetImage(
-                                                  staticImage[indexx]),
-                                              scale: 3)),
+                        (indexx) => InkWell(
+                          onTap: () {
+                            CusNav.nPush(context,
+                                ShaftLatestView(index: indexx == 1 ? 2 : 0));
+                          },
+                          child: Column(
+                            children: [
+                              CustomContainer.mainCard(
+                                isShadow: false,
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      flex: 2,
+                                      child: Container(
+                                        height: 50,
+                                        width: 50,
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(40),
+                                            color: Colors
+                                                .lightBlueAccent.shade200
+                                                .withOpacity(0.3),
+                                            image: DecorationImage(
+                                                image: AssetImage(
+                                                    staticImage[indexx]),
+                                                scale: 3)),
+                                      ),
                                     ),
-                                  ),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  Expanded(
-                                    flex: 8,
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          staticArray[indexx],
-                                          style: Constant.iPrimaryMedium8
-                                              .copyWith(fontSize: 16),
-                                        ),
-                                        Text("Cek laporan mengenai " +
-                                            staticArray[indexx]),
-                                      ],
+                                    SizedBox(
+                                      width: 10,
                                     ),
-                                  ),
-                                  Expanded(
-                                      flex: 1,
-                                      child: Icon(
-                                        Icons.arrow_forward_ios,
-                                        color: Colors.grey,
-                                        size: 20,
-                                      ))
-                                ],
+                                    Expanded(
+                                      flex: 8,
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            staticArray[indexx],
+                                            style: Constant.iPrimaryMedium8
+                                                .copyWith(fontSize: 16),
+                                          ),
+                                          Text("Cek laporan mengenai " +
+                                              staticArray[indexx]),
+                                        ],
+                                      ),
+                                    ),
+                                    Expanded(
+                                        flex: 1,
+                                        child: Icon(
+                                          Icons.arrow_forward_ios,
+                                          color: Colors.grey,
+                                          size: 20,
+                                        ))
+                                  ],
+                                ),
                               ),
-                            ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                          ],
+                              SizedBox(
+                                height: 20,
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     );

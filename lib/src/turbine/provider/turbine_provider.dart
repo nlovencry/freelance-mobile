@@ -63,58 +63,58 @@ class TurbineProvider extends BaseController with ChangeNotifier {
 
   Future<void> fetchTurbine({
     bool withLoading = false,
-    // required int page,
-    // String keyword = "",
+    required int page,
+    String keyword = "",
   }) async {
-    // if (isFetching) {
-    isFetching = true;
-    if (withLoading) loading(true);
-    // Map<String, String> param = {
-    //   'Page': '$page',
-    //   'Search': turbineSearchC.text,
-    //   'PerPage': "10",
-    // };
-    // if (next != null) param.addAll({'Next': next ?? ''});
-    log("PANGGIL");
-    final response = await get(
-      Constant.BASE_API_FULL + '/turbines',
-      // body: param,
-    );
+    if (!isFetching) {
+      isFetching = true;
+      if (withLoading) loading(true);
+      Map<String, String> param = {
+        'Page': '$page',
+        'Search': turbineSearchC.text,
+        'PerPage': "10",
+      };
+      if (next != null) param.addAll({'Next': next ?? ''});
+      log("PANGGIL");
+      final response = await get(
+        Constant.BASE_API_FULL + '/turbines',
+        body: param,
+      );
 
-    if (response.statusCode == 201 || response.statusCode == 200) {
-      turbineModel = TurbineModel();
-      final model = TurbineModel.fromJson(jsonDecode(response.body));
-      final newItems = model.Data ?? [];
-      turbineModel = model;
-      notifyListeners();
+      if (response.statusCode == 201 || response.statusCode == 200) {
+        turbineModel = TurbineModel();
+        final model = TurbineModel.fromJson(jsonDecode(response.body));
+        final newItems = model.Data ?? [];
+        // turbineModel = model;
+        // notifyListeners();
 
-      // final previouslyFetchedWordCount =
-      //     _pagingController.itemList?.length ?? 0;
-      pageSize = 10;
-      log("ITEMS LENGTH : ${newItems.length}");
-      // final isLastPage = newItems.length < pageSize;
+        final previouslyFetchedWordCount =
+            _pagingController.itemList?.length ?? 0;
+        pageSize = 10;
+        log("ITEMS LENGTH : ${newItems.length}");
+        final isLastPage = newItems.length < pageSize;
 
-      // if (isLastPage) {
-      //   next = null;
-      //   pagingController.appendLastPage(newItems as List<TurbineModelData>);
-      // } else {
-      //   final nextPageKey = page += 1;
-      //   if (model.Meta?.Next != null && model.Meta?.Next != '')
-      //     next = model.Meta?.Next ?? '';
-      //   pagingController.appendPage(
-      //       newItems as List<TurbineModelData>, nextPageKey);
-      // }
+        if (isLastPage) {
+          next = null;
+          pagingController.appendLastPage(newItems as List<TurbineModelData>);
+        } else {
+          final nextPageKey = page += 1;
+          if (model.Meta?.Next != null && model.Meta?.Next != '')
+            next = model.Meta?.Next ?? '';
+          pagingController.appendPage(
+              newItems as List<TurbineModelData>, nextPageKey);
+        }
 
-      // notifyListeners();
-      if (withLoading) loading(false);
-      isFetching = false;
-    } else {
-      final message = jsonDecode(response.body)["Message"];
-      loading(false);
-      isFetching = false;
-      throw Exception(message);
+        // notifyListeners();
+        if (withLoading) loading(false);
+        isFetching = false;
+      } else {
+        final message = jsonDecode(response.body)["Message"];
+        loading(false);
+        isFetching = false;
+        throw Exception(message);
+      }
     }
-    // }
   }
 
   Future<TurbineCreateModel> fetchTurbineDetail(int id) async {

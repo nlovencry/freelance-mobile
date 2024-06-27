@@ -1,0 +1,1 @@
+bool _isLoading = false;

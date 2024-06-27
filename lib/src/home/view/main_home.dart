@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:mata/common/component/custom_navigator.dart';
+import 'package:mata/src/data/view/data_add_view.dart';
 import 'package:mata/src/home/model/home_model.dart';
 import 'package:mata/src/home/view/home1_view.dart';
 import 'package:mata/src/home/view/home_view.dart';
@@ -8,10 +10,12 @@ import 'package:mata/src/report/view/report_view.dart';
 import 'package:mata/src/transaction/view/transaction_view.dart';
 import 'package:mata/src/work_order/view/work_order_view.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../common/helper/constant.dart';
 import '../../../utils/utils.dart';
+import '../../turbine/provider/turbine_provider.dart';
 import '../../turbine/view/turbine_view.dart';
 
 class MainHome extends StatefulWidget {
@@ -96,9 +100,19 @@ class _MainHomeState extends State<MainHome> {
           unselectedFontSize: 13,
           unselectedItemColor: Constant.textHintColor2,
           currentIndex: currentIndex,
-          onTap: (index) {
+          onTap: (index) async {
+            final turbineP = context.read<TurbineProvider>();
+            turbineP.turbineSearchC.clear();
             // context.read<PaketProvider>().clearFilter();
-            setState(() => currentIndex = index);
+            if (index == 1) {
+              setState(() => currentIndex = index);
+              await CusNav.nPush(context, DataAddView());
+              setState(() {
+                currentIndex = 0;
+              });
+            } else {
+              setState(() => currentIndex = index);
+            }
           },
           type: BottomNavigationBarType.fixed,
           selectedIconTheme: IconThemeData(color: Constant.primaryColor),

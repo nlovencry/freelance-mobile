@@ -95,6 +95,12 @@ class Constant {
     fontSize: 8,
     fontWeight: medium,
   );
+  static TextStyle iPrimaryMedium14 = TextStyle(
+    fontFamily: 'SF-Pro-Display',
+    color: primaryColor,
+    fontSize: 14,
+    fontWeight: medium,
+  );
 
   static TextStyle iBlackMedium8 = TextStyle(
     fontFamily: 'SF-Pro-Display',

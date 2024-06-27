@@ -1,4 +1,8 @@
 import 'dart:developer';
+import 'package:mata/common/component/custom_button.dart';
+import 'package:mata/common/component/custom_container.dart';
+import 'package:mata/common/component/custom_date_picker.dart';
+
 import '../../../common/component/custom_appbar.dart';
 import '../../../common/component/custom_textfield.dart';
 import 'package:flutter/material.dart';
@@ -61,6 +65,66 @@ class _RiwayatViewState extends BaseState<RiwayatView> {
             // });
           },
         );
+
+    Widget filterAllWidget() => StatefulBuilder(builder: (BuildContext context, StateSetter sheetState) {
+      return Column(
+        children: [
+          Text('Harga', style: Constant.iPrimaryMedium14),
+          SizedBox(height: 10),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                flex: 5,
+                child:CustomTextField.borderTextField(
+                  controller: turbineP.startDateC,
+                  labelText: "Start Date",
+                  hintText: "Start Date",
+                  required: true,
+                  readOnly: true,
+                  onTap: () async {
+                    await turbineP.setStartDate(
+                        await CustomDatePicker.pickDate(
+                            context, DateTime.now()));
+                    FocusManager.instance.primaryFocus?.unfocus();
+                  },
+                  suffixIcon: Icon(Icons.calendar_month),
+                  suffixIconColor: Constant.textHintColor,
+                )
+              ),
+              SizedBox(width: 10,),
+              Expanded(
+                flex: 5,
+                child: CustomTextField.borderTextField(
+                  controller: turbineP.endDateC,
+                  labelText: "End Date",
+                  hintText: "End Date",
+                  required: true,
+                  readOnly: true,
+                  onTap: () async {
+                    await turbineP.setEndDate(
+                        await CustomDatePicker.pickDate(
+                            context, DateTime.now()));
+                    FocusManager.instance.primaryFocus?.unfocus();
+                  },
+                  suffixIcon: Icon(Icons.calendar_month),
+                  suffixIconColor: Constant.textHintColor,
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: 40),
+          CustomButton.mainButton("View Result", () {
+            Navigator.pop(context);
+            pagingC.refresh();
+            turbineP.clearDate();
+            // handleTap(() async {
+            //   pagingC.refresh();
+            // });
+          }),
+        ],
+      );
+    });
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: CustomAppBar.appBar(
@@ -98,62 +162,42 @@ class _RiwayatViewState extends BaseState<RiwayatView> {
                           style: Constant.grayMedium.copyWith(
                               color: Colors.black,
                               fontWeight: FontWeight.w400)),
-                      Container(
-                        height: 30,
-                        width: 90,
-                        padding: EdgeInsets.all(2),
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            width: 1,
-                            color: Colors.grey.withOpacity(0.5),
-                          ),
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            PopupMenuButton<String>(
-                              position: PopupMenuPosition.under,
-                              child: Row(
-                                children: [
-                                  Text(
-                                    'Tanggal',
-                                    style: TextStyle(
-                                      color: Colors.grey,
-                                      fontSize: 12,
-                                      fontFamily: 'Open-Sans',
-                                      fontWeight: FontWeight.w400,
-                                    ),
-                                  ),
-                                  SizedBox(width: 5),
-                                  Icon(
-                                    Icons.keyboard_arrow_down,
-                                    size: 15,
-                                  )
-                                ],
-                              ),
-                              itemBuilder: (BuildContext context) =>
-                                  <PopupMenuEntry<String>>[
-                                PopupMenuItem<String>(
-                                  value: 'transaksi',
-                                  child: Text('Transaksi'),
-                                ),
-                                PopupMenuItem<String>(
-                                  value: 'informasi',
-                                  child: Text('Informasi'),
-                                ),
-                                PopupMenuItem<String>(
-                                  value: 'feed',
-                                  child: Text('Feed'),
-                                ),
-                                // Tambahkan PopupMenuItem sesuai kebutuhan
-                              ],
-                              onSelected: (String result) {
-                                // Tindakan yang akan diambil ketika opsi dipilih
-                                log('Selected: $result');
-                              },
+                      InkWell(
+                        onTap:
+                        () async {
+                          CustomContainer.showModalBottomScroll(context: context, child: filterAllWidget());
+                        },
+                        child: Container(
+                          height: 30,
+                          width: 90,
+                          padding: EdgeInsets.all(2),
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              width: 1,
+                              color: Colors.grey.withOpacity(0.5),
                             ),
-                          ],
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child:  Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                'Tanggal',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 12,
+                                  fontFamily: 'Open-Sans',
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                              SizedBox(width: 5),
+                              Icon(
+                                Icons.keyboard_arrow_down,
+                                size: 15,
+                              )
+                            ],
+                          ),
+
                         ),
                       ),
                     ],

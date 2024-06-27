@@ -1,17 +1,10 @@
-import 'dart:async';
 import 'dart:developer';
-
-import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:mata/common/component/custom_appbar.dart';
-import 'package:mata/common/component/custom_container.dart';
-import 'package:mata/common/component/custom_dropdown.dart';
-import 'package:mata/common/component/custom_textfield.dart';
-import 'package:mata/src/data/view/data_add_upper_view.dart';
+import '../../../common/component/custom_appbar.dart';
+import '../../../common/component/custom_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-
 import '../../../../common/base/base_state.dart';
 import '../../../../common/component/custom_loading_indicator.dart';
 import '../../../../common/helper/constant.dart';
@@ -46,8 +39,8 @@ class _RiwayatViewState extends BaseState<RiwayatView> {
     Widget search() => CustomTextField.borderTextField(
           controller: turbineP.turbineSearchC,
           required: false,
-          hintText: "Search",
-          hintColor: Constant.textHintColor,
+          hintText: "Cari Riwayat",
+          hintColor: Constant.textHintColor2,
           suffixIcon: Padding(
             padding: const EdgeInsets.all(12),
             child: Image.asset(
@@ -74,10 +67,7 @@ class _RiwayatViewState extends BaseState<RiwayatView> {
         context,
         "Riwayat",
         textStyle: TextStyle(
-          color: Colors.white,
-          fontWeight: FontWeight.w600,
-          fontSize: 16
-        ),
+            color: Colors.white, fontWeight: FontWeight.w600, fontSize: 16),
         titleSpacing: 20,
         isLeading: false,
         color: Constant.primaryColor,
@@ -97,15 +87,17 @@ class _RiwayatViewState extends BaseState<RiwayatView> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                // search(),
-                // Constant.xSizedBox16,
+                Constant.xSizedBox16,
+                search(),
+                Constant.xSizedBox16,
                 Container(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text("Filter",
                           style: Constant.grayMedium.copyWith(
-                              color: Colors.black, fontWeight: FontWeight.w400)),
+                              color: Colors.black,
+                              fontWeight: FontWeight.w400)),
                       Container(
                         height: 30,
                         width: 90,
@@ -133,12 +125,15 @@ class _RiwayatViewState extends BaseState<RiwayatView> {
                                       fontWeight: FontWeight.w400,
                                     ),
                                   ),
-                                  SizedBox(width: 5,),
-                                  Icon(Icons.keyboard_arrow_down, size: 15,)
+                                  SizedBox(width: 5),
+                                  Icon(
+                                    Icons.keyboard_arrow_down,
+                                    size: 15,
+                                  )
                                 ],
                               ),
                               itemBuilder: (BuildContext context) =>
-                              <PopupMenuEntry<String>>[
+                                  <PopupMenuEntry<String>>[
                                 PopupMenuItem<String>(
                                   value: 'transaksi',
                                   child: Text('Transaksi'),
@@ -161,17 +156,16 @@ class _RiwayatViewState extends BaseState<RiwayatView> {
                           ],
                         ),
                       ),
-
                     ],
                   ),
                 ),
-                Constant.xSizedBox16,
+                Constant.xSizedBox8,
                 Flexible(
                   child: PagedListView.separated(
                     shrinkWrap: true,
                     // itemCount: turbineData.length,
                     pagingController: pagingC,
-                    padding: EdgeInsets.fromLTRB(4, 18, 4, 20),
+                    padding: EdgeInsets.fromLTRB(0, 18, 0, 20),
                     separatorBuilder: (_, __) => Constant.xSizedBox16,
                     builderDelegate:
                         PagedChildBuilderDelegate<TurbineModelData>(
@@ -201,14 +195,15 @@ class _RiwayatViewState extends BaseState<RiwayatView> {
                             if (f != null) {
                               pagingC.refresh();
                             }
-
                             // turbineP.turbineModelData =
                             //     TurbineModelData();
                           },
                           child: Container(
                             padding: EdgeInsets.all(10),
                             decoration: BoxDecoration(
-                              border: Border.all(width: 1, color: Colors.grey.withOpacity(0.5)),
+                              border: Border.all(
+                                  width: 1,
+                                  color: Colors.grey.withOpacity(0.5)),
                               borderRadius: BorderRadius.circular(10),
                             ),
                             child: Column(
@@ -216,7 +211,8 @@ class _RiwayatViewState extends BaseState<RiwayatView> {
                               children: [
                                 Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
                                       '${DateFormat('HH : mm').format(DateFormat('yyyy-MM-dd HH:mm:ss').parse(item?.CreatedAt ?? '${DateTime.now()}'))}',
@@ -242,7 +238,8 @@ class _RiwayatViewState extends BaseState<RiwayatView> {
                                     ),
                                     SizedBox(width: 10),
                                     Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         Text(item?.TowerName ?? "-",
                                             style: Constant.blackBold),

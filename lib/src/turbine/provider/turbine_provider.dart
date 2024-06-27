@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:intl/intl.dart';
 import '../../../common/base/base_controller.dart';
 import '../../../common/helper/constant.dart';
 import '../model/turbine_create_model.dart';
@@ -32,6 +33,37 @@ class TurbineProvider extends BaseController with ChangeNotifier {
 
   set setPageSize(pageSize) {
     this.pageSize = pageSize;
+    notifyListeners();
+  }
+
+  String? _filterDateStartString;
+  String? get filterDateStartString => this._filterDateStartString;
+  set filterDateStartString(String? value) =>
+      this._filterDateStartString = value;
+
+  DateTime? _filterDateStart;
+
+  get filterDateStart => _filterDateStart;
+
+  setFilterDateStart(DateTime? date) {
+    _filterDateStart = date;
+    filterDateStartString =
+        DateFormat("dd MMMM yyyy").format(date ?? DateTime.now());
+    notifyListeners();
+  }
+
+  String? _filterDateEndString;
+  String? get filterDateEndString => this._filterDateEndString;
+  set filterDateEndString(String? value) => this._filterDateEndString = value;
+
+  DateTime? _filterDateEnd;
+
+  get filterDateEnd => _filterDateEnd;
+
+  setFilterDateEnd(DateTime? date) {
+    _filterDateEnd = date;
+    filterDateEndString =
+        DateFormat("dd MMMM yyyy").format(date ?? DateTime.now());
     notifyListeners();
   }
 

@@ -17,6 +17,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../common/helper/constant.dart';
 import '../../../utils/utils.dart';
+import '../../turbine/provider/turbine_provider.dart';
 import '../../turbine/view/riwayat_view.dart';
 
 class MainHome extends StatefulWidget {

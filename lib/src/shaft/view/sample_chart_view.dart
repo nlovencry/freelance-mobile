@@ -171,7 +171,7 @@ class _Chart extends StatelessWidget {
     if ((value - baselineY).abs() <= 0.1) {
       return FlLine(
         color: Color(0xff576778),
-        strokeWidth: 1,
+        strokeWidth: 2,
         // dashArray: [8, 4],
       );
     } else {
@@ -187,7 +187,7 @@ class _Chart extends StatelessWidget {
     if ((value - baselineX).abs() <= 0.1) {
       return FlLine(
         color: Color(0xff576778),
-        strokeWidth: 1,
+        strokeWidth: 2,
         // dashArray: [8, 4],
       );
     } else {
@@ -328,7 +328,8 @@ class _Chart extends StatelessWidget {
                 showTitles: true, getTitlesWidget: getBTitles, reservedSize: 0),
           ),
         ),
-        borderData: FlBorderData(show: false),
+        borderData: FlBorderData(
+            show: true, border: Border.all(color: Color(0xffE6E7E9B0))),
         gridData: FlGridData(
           show: true,
           drawHorizontalLine: true,
@@ -339,8 +340,8 @@ class _Chart extends StatelessWidget {
         minY: -5,
         maxY: 5,
         baselineY: baselineY,
-        minX: -15,
-        maxX: 15,
+        minX: -9,
+        maxX: 9,
         baselineX: baselineX,
       ),
       duration: Duration.zero,

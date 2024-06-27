@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mata/common/component/custom_appbar.dart';
 import 'package:mata/common/helper/constant.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileView extends StatefulWidget {
   const ProfileView({super.key});
@@ -10,6 +11,22 @@ class ProfileView extends StatefulWidget {
 }
 
 class _ProfileViewState extends State<ProfileView> {
+  String? name;
+  String? division;
+
+  @override
+  void initState() {
+    getData();
+    super.initState;
+  }
+
+  getData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    name = prefs.getString(Constant.kSetPrefName);
+    division = prefs.getString(Constant.kSetPrefRoles);
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,14 +64,14 @@ class _ProfileViewState extends State<ProfileView> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Andre Taulany",
+                          name ?? "Andre Taulany",
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: 14,
                               fontWeight: FontWeight.w500),
                         ),
                         Text(
-                          "Turbine Engineer",
+                          division ?? "Turbine Engineer",
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: 12,

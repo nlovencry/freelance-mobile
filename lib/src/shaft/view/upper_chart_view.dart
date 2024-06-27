@@ -21,7 +21,7 @@ class _UpperChartViewState extends State<UpperChartView> {
     return AspectRatio(
       aspectRatio: 1.10,
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 30),
+        padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 30),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -164,7 +164,7 @@ class _Chart extends StatelessWidget {
     if ((value - baselineY).abs() <= 0.1) {
       return FlLine(
         color: Color(0xff576778),
-        strokeWidth: 1,
+        strokeWidth: 2,
         // dashArray: [8, 4],
       );
     } else {
@@ -180,7 +180,7 @@ class _Chart extends StatelessWidget {
     if ((value - baselineX).abs() <= 0.1) {
       return FlLine(
         color: Color(0xff576778),
-        strokeWidth: 1,
+        strokeWidth: 2,
         // dashArray: [8, 4],
       );
     } else {

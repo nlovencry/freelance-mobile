@@ -21,6 +21,7 @@ class _ShaftLatestViewState extends State<ShaftLatestView>
     with TickerProviderStateMixin {
   int currentIndex = 0;
   late TabController tabController;
+  late TabController tabController1;
   @override
   void initState() {
     getData();
@@ -30,9 +31,15 @@ class _ShaftLatestViewState extends State<ShaftLatestView>
   getData() async {
     final p = context.read<DataAddProvider>();
     tabController = TabController(length: 3, vsync: this);
+    tabController1 = TabController(length: 3, vsync: this);
     tabController.index = widget.index;
+    tabController1.index = widget.index;
     tabController.addListener(() {
       log("INDEX ACTIVE : ${tabController.index}");
+      setState(() {});
+    });
+    tabController1.addListener(() {
+      log("INDEX ACTIVE : ${tabController1.index}");
       setState(() {});
     });
     await p.fetchTurbineLatest();
@@ -49,6 +56,19 @@ class _ShaftLatestViewState extends State<ShaftLatestView>
         .Data
         ?.DetailData
         ?.Upper;
+    final clutchData = context
+        .watch<DataAddProvider>()
+        .turbineLatestModel
+        .Data
+        ?.DetailData
+        ?.Clutch;
+    final turbineData = context
+        .watch<DataAddProvider>()
+        .turbineLatestModel
+        .Data
+        ?.DetailData
+        ?.Turbine;
+        
     Widget _buildTab(String tag) {
       return Tab(child: Text(tag, style: TextStyle(fontSize: 18)));
     }
@@ -68,6 +88,30 @@ class _ShaftLatestViewState extends State<ShaftLatestView>
             unselectedLabelStyle: TextStyle(fontWeight: FontWeight.w300),
             indicatorColor: Constant.primaryColor,
             tabs: [_buildTab("A-C"), _buildTab("B-D"), _buildTab("Upper")],
+          ),
+        ),
+      );
+    }
+
+    Widget toggleTab1() {
+      return Container(
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(50),
+            border: Border.all(color: Constant.primaryColor, width: 0.5)),
+        child: Center(
+          child: TabBar(
+            isScrollable: true,
+            controller: tabController1,
+            indicatorWeight: 4,
+            unselectedLabelColor: Constant.grayColor,
+            labelColor: Constant.primaryColor,
+            unselectedLabelStyle: TextStyle(fontWeight: FontWeight.w300),
+            indicatorColor: Constant.primaryColor,
+            tabs: [
+              _buildTab("Clutch"),
+              _buildTab("Turbine"),
+              _buildTab("Upper")
+            ],
           ),
         ),
       );
@@ -166,6 +210,204 @@ class _ShaftLatestViewState extends State<ShaftLatestView>
                 ],
               ),
             ),
+          ],
+        );
+
+    Widget clutchActive() => Table(
+          border: TableBorder.all(
+              color: Constant.borderSearchColor,
+              borderRadius: BorderRadius.circular(5)),
+          columnWidths: const <int, TableColumnWidth>{
+            0: FlexColumnWidth(),
+            1: FlexColumnWidth(),
+            2: FlexColumnWidth(),
+            3: FlexColumnWidth(),
+            4: FlexColumnWidth(),
+          },
+          defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+          children: [
+            TableRow(children: [
+              Text('\n\n', textAlign: TextAlign.center),
+              Text('\nA\n', textAlign: TextAlign.center),
+              Text('\nB\n', textAlign: TextAlign.center),
+              Text('\nC\n', textAlign: TextAlign.center),
+              Text('\nD\n', textAlign: TextAlign.center),
+            ]),
+            TableRow(children: [
+              Text('1', textAlign: TextAlign.center),
+              CustomTextField.tableTextField(
+                  readOnly: true,
+                  controller: TextEditingController()
+                    ..text = '${clutchData?.A?.the1 ?? 0}'),
+              CustomTextField.tableTextField(
+                  readOnly: true,
+                  controller: TextEditingController()
+                    ..text = '${clutchData?.B?.the1 ?? 0}'),
+              CustomTextField.tableTextField(
+                  readOnly: true,
+                  controller: TextEditingController()
+                    ..text = '${clutchData?.C?.the1 ?? 0}'),
+              CustomTextField.tableTextField(
+                  readOnly: true,
+                  controller: TextEditingController()
+                    ..text = '${clutchData?.D?.the1 ?? 0}'),
+            ]),
+            TableRow(children: [
+              Text('2', textAlign: TextAlign.center),
+              CustomTextField.tableTextField(
+                  readOnly: true,
+                  controller: TextEditingController()
+                    ..text = '${clutchData?.A?.the2 ?? 0}'),
+              CustomTextField.tableTextField(
+                  readOnly: true,
+                  controller: TextEditingController()
+                    ..text = '${clutchData?.B?.the2 ?? 0}'),
+              CustomTextField.tableTextField(
+                  readOnly: true,
+                  controller: TextEditingController()
+                    ..text = '${clutchData?.C?.the2 ?? 0}'),
+              CustomTextField.tableTextField(
+                  readOnly: true,
+                  controller: TextEditingController()
+                    ..text = '${clutchData?.D?.the2 ?? 0}'),
+            ]),
+            TableRow(children: [
+              Text('3', textAlign: TextAlign.center),
+              CustomTextField.tableTextField(
+                  readOnly: true,
+                  controller: TextEditingController()
+                    ..text = '${clutchData?.A?.the3 ?? 0}'),
+              CustomTextField.tableTextField(
+                  readOnly: true,
+                  controller: TextEditingController()
+                    ..text = '${clutchData?.B?.the3 ?? 0}'),
+              CustomTextField.tableTextField(
+                  readOnly: true,
+                  controller: TextEditingController()
+                    ..text = '${clutchData?.C?.the3 ?? 0}'),
+              CustomTextField.tableTextField(
+                  readOnly: true,
+                  controller: TextEditingController()
+                    ..text = '${clutchData?.D?.the3 ?? 0}'),
+            ]),
+            TableRow(children: [
+              Text('4', textAlign: TextAlign.center),
+              CustomTextField.tableTextField(
+                  readOnly: true,
+                  controller: TextEditingController()
+                    ..text = '${clutchData?.A?.the4 ?? 0}'),
+              CustomTextField.tableTextField(
+                  readOnly: true,
+                  controller: TextEditingController()
+                    ..text = '${clutchData?.B?.the4 ?? 0}'),
+              CustomTextField.tableTextField(
+                  readOnly: true,
+                  controller: TextEditingController()
+                    ..text = '${clutchData?.C?.the4 ?? 0}'),
+              CustomTextField.tableTextField(
+                  readOnly: true,
+                  controller: TextEditingController()
+                    ..text = '${clutchData?.D?.the4 ?? 0}'),
+            ]),
+          ],
+        );
+
+    Widget turbineActive() => Table(
+          border: TableBorder.all(
+              color: Constant.borderSearchColor,
+              borderRadius: BorderRadius.circular(5)),
+          columnWidths: const <int, TableColumnWidth>{
+            0: FlexColumnWidth(),
+            1: FlexColumnWidth(),
+            2: FlexColumnWidth(),
+            3: FlexColumnWidth(),
+            4: FlexColumnWidth(),
+          },
+          defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+          children: [
+            TableRow(children: [
+              Text('\n\n', textAlign: TextAlign.center),
+              Text('\nA\n', textAlign: TextAlign.center),
+              Text('\nB\n', textAlign: TextAlign.center),
+              Text('\nC\n', textAlign: TextAlign.center),
+              Text('\nD\n', textAlign: TextAlign.center),
+            ]),
+            TableRow(children: [
+              Text('1', textAlign: TextAlign.center),
+              CustomTextField.tableTextField(
+                  readOnly: true,
+                  controller: TextEditingController()
+                    ..text = '${turbineData?.A?.the1 ?? 0}'),
+              CustomTextField.tableTextField(
+                  readOnly: true,
+                  controller: TextEditingController()
+                    ..text = '${turbineData?.B?.the1 ?? 0}'),
+              CustomTextField.tableTextField(
+                  readOnly: true,
+                  controller: TextEditingController()
+                    ..text = '${turbineData?.C?.the1 ?? 0}'),
+              CustomTextField.tableTextField(
+                  readOnly: true,
+                  controller: TextEditingController()
+                    ..text = '${turbineData?.D?.the1 ?? 0}'),
+            ]),
+            TableRow(children: [
+              Text('2', textAlign: TextAlign.center),
+              CustomTextField.tableTextField(
+                  readOnly: true,
+                  controller: TextEditingController()
+                    ..text = '${turbineData?.A?.the2 ?? 0}'),
+              CustomTextField.tableTextField(
+                  readOnly: true,
+                  controller: TextEditingController()
+                    ..text = '${turbineData?.B?.the2 ?? 0}'),
+              CustomTextField.tableTextField(
+                  readOnly: true,
+                  controller: TextEditingController()
+                    ..text = '${turbineData?.C?.the2 ?? 0}'),
+              CustomTextField.tableTextField(
+                  readOnly: true,
+                  controller: TextEditingController()
+                    ..text = '${turbineData?.D?.the2 ?? 0}'),
+            ]),
+            TableRow(children: [
+              Text('3', textAlign: TextAlign.center),
+              CustomTextField.tableTextField(
+                  readOnly: true,
+                  controller: TextEditingController()
+                    ..text = '${turbineData?.A?.the3 ?? 0}'),
+              CustomTextField.tableTextField(
+                  readOnly: true,
+                  controller: TextEditingController()
+                    ..text = '${turbineData?.B?.the3 ?? 0}'),
+              CustomTextField.tableTextField(
+                  readOnly: true,
+                  controller: TextEditingController()
+                    ..text = '${turbineData?.C?.the3 ?? 0}'),
+              CustomTextField.tableTextField(
+                  readOnly: true,
+                  controller: TextEditingController()
+                    ..text = '${turbineData?.D?.the3 ?? 0}'),
+            ]),
+            TableRow(children: [
+              Text('4', textAlign: TextAlign.center),
+              CustomTextField.tableTextField(
+                  readOnly: true,
+                  controller: TextEditingController()
+                    ..text = '${turbineData?.A?.the4 ?? 0}'),
+              CustomTextField.tableTextField(
+                  readOnly: true,
+                  controller: TextEditingController()
+                    ..text = '${turbineData?.B?.the4 ?? 0}'),
+              CustomTextField.tableTextField(
+                  readOnly: true,
+                  controller: TextEditingController()
+                    ..text = '${turbineData?.C?.the4 ?? 0}'),
+              CustomTextField.tableTextField(
+                  readOnly: true,
+                  controller: TextEditingController()
+                    ..text = '${turbineData?.D?.the4 ?? 0}'),
+            ]),
           ],
         );
 
@@ -269,7 +511,8 @@ class _ShaftLatestViewState extends State<ShaftLatestView>
         );
 
     return Scaffold(
-      appBar: CustomAppBar.appBar(context, 'Shaft'),
+      appBar: CustomAppBar.appBar(
+          context, tabController.index == 2 ? 'Upper' : 'Shaft'),
       body: Padding(
         padding: const EdgeInsets.only(top: 16),
         child: ListView(
@@ -280,7 +523,7 @@ class _ShaftLatestViewState extends State<ShaftLatestView>
               child: Column(
                 children: [
                   Text(
-                    'Grafik Shaft',
+                    tabController.index == 2 ? 'Grafik Upper' : 'Grafik Shaft',
                     style: Constant.iBlackMedium16,
                   ),
                   Constant.xSizedBox8,
@@ -288,7 +531,9 @@ class _ShaftLatestViewState extends State<ShaftLatestView>
                     children: [
                       Expanded(
                           child: Text(
-                        'Tampilan grafik dari data shaft',
+                        tabController.index == 2
+                            ? 'Tampilan grafik dari data upper'
+                            : 'Tampilan grafik dari data shaft',
                         style:
                             TextStyle(fontSize: 12, color: Constant.grayColor),
                       )),
@@ -316,11 +561,23 @@ class _ShaftLatestViewState extends State<ShaftLatestView>
                   Text('Latest Data', style: Constant.iBlackMedium16),
                   Constant.xSizedBox8,
                   Text(
-                    'Latest data shaft yang telah di input',
+                    tabController1.index == 2
+                        ? 'Latest data upper yang telah di input'
+                        : tabController1.index == 1
+                            ? 'Latest data turbine yang telah di input'
+                            : 'Latest data clutch yang telah di input',
                     style: TextStyle(fontSize: 12, color: Constant.grayColor),
                   ),
                   Constant.xSizedBox16,
-                  upperActive(),
+                  toggleTab1(),
+                  Constant.xSizedBox16,
+                  Container(
+                    child: tabController1.index == 2
+                        ? upperActive()
+                        : tabController1.index == 1
+                            ? turbineActive()
+                            : clutchActive(),
+                  ),
                   Constant.xSizedBox16,
                   acBdActive(),
                 ],

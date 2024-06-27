@@ -28,12 +28,14 @@ class _Home1ViewState extends BaseState<Home1View> {
     'Upper',
     'Clutch',
     'Turbine',
+    'Siap Diantar'
     // 'Shaft',
     // 'Upper',
     // 'Clutch',
     // 'Turbine'
   ];
   static const List<String> staticImage = [
+    'assets/icons/ic-shaft.png',
     'assets/icons/ic-shaft.png',
     'assets/icons/ic-shaft.png',
     'assets/icons/ic-shaft.png',
@@ -271,8 +273,14 @@ class _Home1ViewState extends BaseState<Home1View> {
                         staticArray.length,
                         (indexx) => InkWell(
                           onTap: () {
-                            CusNav.nPush(context,
-                                ShaftLatestView(index: indexx == 1 ? 2 : 0));
+                            CusNav.nPush(
+                                context,
+                                ShaftLatestView(
+                                    index: indexx == 1
+                                        ? 2
+                                        : indexx == 3
+                                            ? 1
+                                            : 0));
                           },
                           child: Column(
                             children: [

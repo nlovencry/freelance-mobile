@@ -13,24 +13,16 @@ import 'package:flutter/material.dart';
 class AuthProvider extends BaseController with ChangeNotifier {
   TextEditingController nameC = TextEditingController();
   TextEditingController usernameC = TextEditingController();
-  TextEditingController Email = TextEditingController();
+  TextEditingController emailC = TextEditingController();
   TextEditingController passC = TextEditingController();
   TextEditingController passConfirmationC = TextEditingController();
-  TextEditingController NIKC = TextEditingController();
   TextEditingController namaLengkap = TextEditingController();
-  TextEditingController namaIbuKAndung = TextEditingController();
-  TextEditingController noTelp = TextEditingController();
-  TextEditingController tempatLahir = TextEditingController();
-  TextEditingController tanggalLahir = TextEditingController();
-  TextEditingController alamat = TextEditingController();
-  TextEditingController provinsi = TextEditingController();
-  TextEditingController kabupaten = TextEditingController();
-  TextEditingController kecamatan = TextEditingController();
-  TextEditingController kelurahan = TextEditingController();
-  TextEditingController bank = TextEditingController();
-  TextEditingController nomorRekening = TextEditingController();
-  TextEditingController atasNamaRekening = TextEditingController();
-  TextEditingController tanggalUmroh = TextEditingController();
+  TextEditingController selectedDevisionC = TextEditingController();
+
+  String? _selectedDevisionV;
+
+  String? get selectedDevisionV => this._selectedDevisionV;
+
   GlobalKey<FormState> loginKey = GlobalKey<FormState>();
 
   DivisionModelData? _selectedDivision;
@@ -138,10 +130,11 @@ class AuthProvider extends BaseController with ChangeNotifier {
       // 'device_id': fcmId ?? '-1',
     };
     final response =
-        await post(Constant.BASE_API_FULL + '/auth/login', body: param);
+        await post(Constant.BASE_API_FULL + '/auth/register', body: param);
 
     if (response.statusCode == 201 || response.statusCode == 200) {
       final model = BaseResponse.from(jsonDecode(response.body));
+      nameC.clear();
       usernameC.clear();
       passC.clear();
 

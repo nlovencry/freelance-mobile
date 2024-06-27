@@ -64,7 +64,7 @@ class CustomDropdown {
             onChanged: readOnly ? null : onChanged,
             onSaved: (val) => FocusManager.instance.primaryFocus?.unfocus(),
             icon: Padding(
-              padding: iconPadding ?? const EdgeInsets.fromLTRB(16, 0, 12, 64),
+              padding: iconPadding ?? const EdgeInsets.fromLTRB(16, 0, 12, 0),
               child: Icon(Icons.keyboard_arrow_down,
                   color: Constant.textHintColor2, size: 24),
             ),
@@ -84,7 +84,7 @@ class CustomDropdown {
               focusColor: Constant.primaryColor,
               prefix: SizedBox(width: 12),
               border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(5),
                 borderSide: BorderSide(
                   width: 0.5,
                   color: borderColor ?? Constant.borderSearchColor,
@@ -92,7 +92,7 @@ class CustomDropdown {
                 ),
               ),
               enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(5),
                 borderSide: BorderSide(
                   width: 0.5,
                   color: borderColor ?? Constant.borderSearchColor,
@@ -100,7 +100,7 @@ class CustomDropdown {
                 ),
               ),
               focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(5),
                 borderSide: BorderSide(
                   width: 1,
                   color: borderColor ?? Constant.primaryColor,

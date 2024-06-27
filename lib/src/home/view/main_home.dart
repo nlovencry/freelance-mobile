@@ -2,9 +2,11 @@ import 'dart:io';
 
 import 'package:mata/common/component/custom_navigator.dart';
 import 'package:mata/src/data/view/data_add_view.dart';
+import 'package:mata/src/data/view/data_add_view.dart';
 import 'package:mata/src/home/model/home_model.dart';
 import 'package:mata/src/home/view/home1_view.dart';
 import 'package:mata/src/home/view/home_view.dart';
+import 'package:mata/src/profil/view/profile_view.dart';
 import 'package:mata/src/report/view/report_view.dart';
 
 import 'package:mata/src/transaction/view/transaction_view.dart';
@@ -15,8 +17,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../common/helper/constant.dart';
 import '../../../utils/utils.dart';
-import '../../turbine/provider/turbine_provider.dart';
-import '../../turbine/view/turbine_view.dart';
+import '../../turbine/view/riwayat_view.dart';
 
 class MainHome extends StatefulWidget {
   final int? index;
@@ -93,9 +94,10 @@ class _MainHomeState extends State<MainHome> {
       return BottomAppBar(
         shape: CircularNotchedRectangle(),
         notchMargin: 5,
-        padding: EdgeInsets.only(top: 5),
+        // padding: EdgeInsets.only(top: 5),
         child: BottomNavigationBar(
-          backgroundColor: const Color.fromRGBO(255, 255, 255, 1),
+          // backgroundColor: const Color.fromRGBO(255, 255, 255, 1),
+          backgroundColor: Colors.white,
           selectedFontSize: 13,
           unselectedFontSize: 13,
           unselectedItemColor: Constant.textHintColor2,
@@ -213,9 +215,9 @@ class _MainHomeState extends State<MainHome> {
         },
         child: [
           Home1View(),
-          SizedBox(),
-          TurbineView(),
-          SizedBox(),
+          DataAddView(),
+          RiwayatView(),
+          ProfileView(),
           // ProfileView(jumpToJamaah, jumpToSubAgen)
         ][currentIndex],
       ),

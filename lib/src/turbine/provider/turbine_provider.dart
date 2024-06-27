@@ -44,6 +44,16 @@ class TurbineProvider extends BaseController with ChangeNotifier {
   }
 
   TextEditingController turbineSearchC = TextEditingController();
+  TextEditingController filterC = TextEditingController();
+
+  String? _filterV;
+
+  String? get filterV => this._filterV;
+
+  set filterV(String? value) {
+    this._filterV = value;
+    notifyListeners();
+  }
 
   PagingController<int, TurbineModelData> _pagingController =
       PagingController(firstPageKey: 1);

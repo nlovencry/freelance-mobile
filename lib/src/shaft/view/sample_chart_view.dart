@@ -77,7 +77,7 @@ class _Chart extends StatelessWidget {
 
   const _Chart(this.baselineX, this.baselineY, this.activeIndex) : super();
 
-  Widget getHorizontalTitles(value, TitleMeta meta) {
+  Widget getTTitles(value, TitleMeta meta) {
     TextStyle style;
     if ((value - baselineX).abs() <= 0.1) {
       style = const TextStyle(
@@ -98,7 +98,7 @@ class _Chart extends StatelessWidget {
     );
   }
 
-  Widget getHorizontalTitlesBottom(value, TitleMeta meta) {
+  Widget getBTitles(value, TitleMeta meta) {
     TextStyle style;
     if ((value - baselineX).abs() <= 0.1) {
       style = const TextStyle(
@@ -119,7 +119,7 @@ class _Chart extends StatelessWidget {
     );
   }
 
-  Widget getVerticalTitles(value, TitleMeta meta) {
+  Widget getLTitles(value, TitleMeta meta) {
     TextStyle style;
     if ((value - baselineY).abs() <= 0.1) {
       style = const TextStyle(
@@ -135,13 +135,17 @@ class _Chart extends StatelessWidget {
     }
 
     return Padding(
-      padding: const EdgeInsets.all(4.0),
-      child: Text(activeIndex == 0 ? 'A' : 'B', style: style),
+      padding: const EdgeInsets.only(right: 4),
+      child: Text(
+        activeIndex == 0 ? 'A' : 'B',
+        style: style,
+        textAlign: TextAlign.right,
+      ),
       // child: Text(meta.formattedValue, style: style),
     );
   }
 
-  Widget getVerticalTitlesRight(value, TitleMeta meta) {
+  Widget getRTitles(value, TitleMeta meta) {
     TextStyle style;
     if ((value - baselineY).abs() <= 0.1) {
       style = const TextStyle(
@@ -157,7 +161,7 @@ class _Chart extends StatelessWidget {
     }
 
     return Padding(
-      padding: const EdgeInsets.all(4.0),
+      padding: const EdgeInsets.only(left: 3),
       child: Text(activeIndex == 0 ? 'C' : 'D', style: style),
       // child: Text(meta.formattedValue, style: style),
     );
@@ -264,29 +268,38 @@ class _Chart extends StatelessWidget {
         ),
         lineBarsData: [
           LineChartBarData(
-            barWidth: 2,
-            spots: [getFlSpotClutch(), getCrockedLine()],
-            color: Colors.red,
-            dotData: FlDotData(show: false),
-          ),
-          LineChartBarData(
-            barWidth: 2,
-            spots: [
-              getFlSpotYellowTop(),
-              getFlSpotYellowBottom(),
-            ],
-            color: Color(0xffFABB00),
-            dotData: FlDotData(show: false),
-          ),
-          LineChartBarData(
-            barWidth: 2,
+            barWidth: 10,
             spots: [
               getFlSpotUpper(),
               getFlSpotClutch(),
               getFlSpotClutch(),
               getFlSpotTurbine(),
             ],
-            color: Colors.green,
+            color: Color(0xff9D9D9D),
+            dotData: FlDotData(
+              show: true,
+              getDotPainter: (p0, p1, p2, p3) {
+                return FlDotSquarePainter(
+                  size: 20,
+                  color: Color(0xff7B7B7B),
+                  strokeColor: Color(0xff97B7B7B),
+                );
+              },
+            ),
+          ),
+          LineChartBarData(
+            barWidth: 4,
+            spots: [
+              getFlSpotYellowTop(),
+              getFlSpotYellowBottom(),
+            ],
+            color: Color(0xffFBBB00),
+            dotData: FlDotData(show: false),
+          ),
+          LineChartBarData(
+            barWidth: 4,
+            spots: [getFlSpotClutch(), getCrockedLine()],
+            color: Colors.red,
             dotData: FlDotData(show: false),
           ),
         ],
@@ -295,28 +308,24 @@ class _Chart extends StatelessWidget {
           leftTitles: AxisTitles(
             sideTitles: SideTitles(
               showTitles: true,
-              getTitlesWidget: getVerticalTitles,
-              reservedSize: 36,
+              getTitlesWidget: getLTitles,
+              reservedSize: 16,
             ),
-          ),
-          topTitles: AxisTitles(
-            sideTitles: SideTitles(
-                showTitles: true,
-                getTitlesWidget: getHorizontalTitles,
-                reservedSize: 32),
           ),
           rightTitles: AxisTitles(
             sideTitles: SideTitles(
               showTitles: true,
-              getTitlesWidget: getVerticalTitlesRight,
-              reservedSize: 36,
+              getTitlesWidget: getRTitles,
+              reservedSize: 16,
             ),
+          ),
+          topTitles: AxisTitles(
+            sideTitles: SideTitles(
+                showTitles: true, getTitlesWidget: getTTitles, reservedSize: 0),
           ),
           bottomTitles: AxisTitles(
             sideTitles: SideTitles(
-                showTitles: true,
-                getTitlesWidget: getHorizontalTitlesBottom,
-                reservedSize: 32),
+                showTitles: true, getTitlesWidget: getBTitles, reservedSize: 0),
           ),
         ),
         borderData: FlBorderData(show: false),

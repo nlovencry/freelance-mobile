@@ -85,7 +85,7 @@ class _ShaftDetailViewState extends State<ShaftDetailView>
             labelColor: Constant.primaryColor,
             unselectedLabelStyle: TextStyle(fontWeight: FontWeight.w300),
             indicatorColor: Constant.primaryColor,
-            tabs: [_buildTab("A-C"), _buildTab("B-D"), _buildTab("Upper")],
+            tabs: [_buildTab("A-C"), _buildTab("B-D"), _buildTab("Resultan")],
           ),
         ),
       );
@@ -108,7 +108,7 @@ class _ShaftDetailViewState extends State<ShaftDetailView>
             tabs: [
               _buildTab("Clutch"),
               _buildTab("Turbine"),
-              _buildTab("Upper")
+              _buildTab("Resultan")
             ],
           ),
         ),
@@ -517,7 +517,7 @@ class _ShaftDetailViewState extends State<ShaftDetailView>
           shrinkWrap: true,
           children: [
             Text(
-              tabController.index == 2 ? 'Grafik Upper' : 'Grafik Shaft',
+              tabController.index == 2 ? 'Grafik Resultan' : 'Grafik Shaft',
               style: Constant.iBlackMedium16,
             ),
             Constant.xSizedBox8,

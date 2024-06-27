@@ -22,7 +22,7 @@ class _SampleChartViewState extends State<SampleChartView> {
     return AspectRatio(
       aspectRatio: 1.10,
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 30),
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 30),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -92,7 +92,7 @@ class _Chart extends StatelessWidget {
       );
     }
     return Padding(
-      padding: const EdgeInsets.all(4.0),
+      padding: const EdgeInsets.all(0),
       child: Text('', style: style),
       // child: Text(meta.formattedValue, style: style),
     );
@@ -113,7 +113,7 @@ class _Chart extends StatelessWidget {
       );
     }
     return Padding(
-      padding: const EdgeInsets.all(4.0),
+      padding: const EdgeInsets.all(0),
       child: Text('', style: style),
       // child: Text(meta.formattedValue, style: style),
     );
@@ -161,7 +161,7 @@ class _Chart extends StatelessWidget {
     }
 
     return Padding(
-      padding: const EdgeInsets.only(left: 3),
+      padding: const EdgeInsets.only(left: 3, right: 4),
       child: Text(activeIndex == 0 ? 'C' : 'D', style: style),
       // child: Text(meta.formattedValue, style: style),
     );
@@ -340,8 +340,8 @@ class _Chart extends StatelessWidget {
         minY: -5,
         maxY: 5,
         baselineY: baselineY,
-        minX: -9,
-        maxX: 9,
+        minX: -12,
+        maxX: 12,
         baselineX: baselineX,
       ),
       duration: Duration.zero,

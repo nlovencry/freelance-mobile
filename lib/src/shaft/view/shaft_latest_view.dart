@@ -68,7 +68,7 @@ class _ShaftLatestViewState extends State<ShaftLatestView>
         .Data
         ?.DetailData
         ?.Turbine;
-        
+
     Widget _buildTab(String tag) {
       return Tab(child: Text(tag, style: TextStyle(fontSize: 18)));
     }
@@ -87,7 +87,7 @@ class _ShaftLatestViewState extends State<ShaftLatestView>
             labelColor: Constant.primaryColor,
             unselectedLabelStyle: TextStyle(fontWeight: FontWeight.w300),
             indicatorColor: Constant.primaryColor,
-            tabs: [_buildTab("A-C"), _buildTab("B-D"), _buildTab("Upper")],
+            tabs: [_buildTab("A-C"), _buildTab("B-D"), _buildTab("Resultan")],
           ),
         ),
       );
@@ -110,7 +110,7 @@ class _ShaftLatestViewState extends State<ShaftLatestView>
             tabs: [
               _buildTab("Clutch"),
               _buildTab("Turbine"),
-              _buildTab("Upper")
+              _buildTab("Resultan")
             ],
           ),
         ),
@@ -523,7 +523,9 @@ class _ShaftLatestViewState extends State<ShaftLatestView>
               child: Column(
                 children: [
                   Text(
-                    tabController.index == 2 ? 'Grafik Upper' : 'Grafik Shaft',
+                    tabController.index == 2
+                        ? 'Grafik Resultan'
+                        : 'Grafik Shaft',
                     style: Constant.iBlackMedium16,
                   ),
                   Constant.xSizedBox8,

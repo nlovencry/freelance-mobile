@@ -66,65 +66,156 @@ class _RiwayatViewState extends BaseState<RiwayatView> {
           },
         );
 
-    Widget filterAllWidget() => StatefulBuilder(builder: (BuildContext context, StateSetter sheetState) {
-      return Column(
-        children: [
-          Text('Harga', style: Constant.iPrimaryMedium14),
-          SizedBox(height: 10),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    Widget filterAllWidget() => StatefulBuilder(
+            builder: (BuildContext context, StateSetter sheetState) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Expanded(
-                flex: 5,
-                child:CustomTextField.borderTextField(
-                  controller: turbineP.startDateC,
-                  labelText: "Start Date",
-                  hintText: "Start Date",
-                  required: true,
-                  readOnly: true,
-                  onTap: () async {
-                    await turbineP.setStartDate(
-                        await CustomDatePicker.pickDate(
-                            context, DateTime.now()));
-                    FocusManager.instance.primaryFocus?.unfocus();
-                  },
-                  suffixIcon: Icon(Icons.calendar_month),
-                  suffixIconColor: Constant.textHintColor,
-                )
-              ),
-              SizedBox(width: 10,),
-              Expanded(
-                flex: 5,
-                child: CustomTextField.borderTextField(
-                  controller: turbineP.endDateC,
-                  labelText: "End Date",
-                  hintText: "End Date",
-                  required: true,
-                  readOnly: true,
-                  onTap: () async {
-                    await turbineP.setEndDate(
-                        await CustomDatePicker.pickDate(
-                            context, DateTime.now()));
-                    FocusManager.instance.primaryFocus?.unfocus();
-                  },
-                  suffixIcon: Icon(Icons.calendar_month),
-                  suffixIconColor: Constant.textHintColor,
+              Text('Filter',
+                  style: Constant.iPrimaryMedium14
+                      .copyWith(fontSize: 18, fontWeight: FontWeight.w500)),
+              SizedBox(height: 24),
+              Container(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                            flex: 5,
+                            child: CustomTextField.borderTextField(
+                              controller: turbineP.startDateC,
+                              labelText: "Start Date",
+                              hintText: "Start Date",
+                              required: true,
+                              readOnly: true,
+                              onTap: () async {
+                                await turbineP.setStartDate(
+                                    await CustomDatePicker.pickDate(
+                                        context, DateTime.now()));
+                                FocusManager.instance.primaryFocus?.unfocus();
+                              },
+                              suffixIcon: Icon(Icons.calendar_month),
+                              suffixIconColor: Constant.textHintColor,
+                            )),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Expanded(
+                          flex: 5,
+                          child: CustomTextField.borderTextField(
+                            controller: turbineP.endDateC,
+                            labelText: "End Date",
+                            hintText: "End Date",
+                            required: true,
+                            readOnly: true,
+                            onTap: () async {
+                              await turbineP.setEndDate(
+                                  await CustomDatePicker.pickDate(
+                                      context, DateTime.now()));
+                              FocusManager.instance.primaryFocus?.unfocus();
+                            },
+                            suffixIcon: Icon(Icons.calendar_month),
+                            suffixIconColor: Constant.textHintColor,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Constant.xSizedBox16,
+                    Text('Sort Order'),
+                    Wrap(
+                      children: [
+                        FilterChip(
+                          selectedColor: Constant.primaryColor,
+                          backgroundColor: Colors.white,
+                          showCheckmark: false,
+                          labelStyle: TextStyle(
+                              color: turbineP.ascending
+                                  ? Colors.white
+                                  : Constant.primaryColor),
+                          side: BorderSide(color: Constant.primaryColor),
+                          label: Text('Ascending'),
+                          selected: turbineP.ascending,
+                          onSelected: (value) {
+                            context.read<TurbineProvider>().ascending = true;
+                            context.read<TurbineProvider>().descending = false;
+                            sheetState(() {});
+                          },
+                        ),
+                        Constant.xSizedBox16,
+                        FilterChip(
+                          selectedColor: Constant.primaryColor,
+                          backgroundColor: Colors.white,
+                          showCheckmark: false,
+                          labelStyle: TextStyle(
+                              color: turbineP.descending
+                                  ? Colors.white
+                                  : Constant.primaryColor),
+                          side: BorderSide(color: Constant.primaryColor),
+                          label: Text('Descending'),
+                          selected: turbineP.descending,
+                          onSelected: (value) {
+                            context.read<TurbineProvider>().descending = true;
+                            context.read<TurbineProvider>().ascending = false;
+                            sheetState(() {});
+                          },
+                        ),
+                      ],
+                    ),
+                    Constant.xSizedBox16,
+                    Text('Sort By'),
+                    Wrap(
+                      children: [
+                        FilterChip(
+                          selectedColor: Constant.primaryColor,
+                          backgroundColor: Colors.white,
+                          showCheckmark: false,
+                          labelStyle: TextStyle(
+                              color: turbineP.towerName
+                                  ? Colors.white
+                                  : Constant.primaryColor),
+                          side: BorderSide(color: Constant.primaryColor),
+                          label: Text('Tower Name'),
+                          selected: turbineP.towerName,
+                          onSelected: (value) {
+                            context.read<TurbineProvider>().towerName = true;
+                            context.read<TurbineProvider>().createdAt = false;
+                            sheetState(() {});
+                          },
+                        ),
+                        Constant.xSizedBox16,
+                        FilterChip(
+                          selectedColor: Constant.primaryColor,
+                          backgroundColor: Colors.white,
+                          showCheckmark: false,
+                          labelStyle: TextStyle(
+                              color: turbineP.createdAt
+                                  ? Colors.white
+                                  : Constant.primaryColor),
+                          side: BorderSide(color: Constant.primaryColor),
+                          label: Text('Created At'),
+                          selected: turbineP.createdAt,
+                          onSelected: (value) {
+                            context.read<TurbineProvider>().createdAt = true;
+                            context.read<TurbineProvider>().towerName = false;
+                            sheetState(() {});
+                          },
+                        ),
+                      ],
+                    ),
+                    Constant.xSizedBox16,
+                  ],
                 ),
               ),
+              CustomButton.mainButton("View Result", () {
+                Navigator.pop(context);
+                pagingC.refresh();
+                turbineP.clearDate();
+              }),
             ],
-          ),
-          SizedBox(height: 40),
-          CustomButton.mainButton("View Result", () {
-            Navigator.pop(context);
-            pagingC.refresh();
-            turbineP.clearDate();
-            // handleTap(() async {
-            //   pagingC.refresh();
-            // });
-          }),
-        ],
-      );
-    });
+          );
+        });
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: CustomAppBar.appBar(
@@ -163,13 +254,13 @@ class _RiwayatViewState extends BaseState<RiwayatView> {
                               color: Colors.black,
                               fontWeight: FontWeight.w400)),
                       InkWell(
-                        onTap:
-                        () async {
-                          CustomContainer.showModalBottomScroll(context: context, child: filterAllWidget());
+                        onTap: () async {
+                          CustomContainer.showModalBottomScroll(
+                              context: context, child: filterAllWidget());
                         },
                         child: Container(
                           height: 30,
-                          width: 90,
+                          width: 60,
                           padding: EdgeInsets.all(2),
                           decoration: BoxDecoration(
                             border: Border.all(
@@ -178,26 +269,14 @@ class _RiwayatViewState extends BaseState<RiwayatView> {
                             ),
                             borderRadius: BorderRadius.circular(20),
                           ),
-                          child:  Row(
+                          child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text(
-                                'Tanggal',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 12,
-                                  fontFamily: 'Open-Sans',
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              ),
-                              SizedBox(width: 5),
-                              Icon(
-                                Icons.keyboard_arrow_down,
-                                size: 15,
-                              )
+                              Icon(Icons.filter_alt_outlined, size: 20),
+                              SizedBox(width: 4),
+                              Icon(Icons.keyboard_arrow_down, size: 15)
                             ],
                           ),
-
                         ),
                       ),
                     ],

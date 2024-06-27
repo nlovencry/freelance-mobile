@@ -19,9 +19,9 @@ class _UpperChartViewState extends State<UpperChartView> {
   @override
   Widget build(BuildContext context) {
     return AspectRatio(
-      aspectRatio: 1.10,
+      aspectRatio: 1.0,
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 30),
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 30),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -74,7 +74,7 @@ class _Chart extends StatelessWidget {
 
   const _Chart(this.baselineX, this.baselineY) : super();
 
-  Widget getHorizontalTitles(value, TitleMeta meta) {
+  Widget getTTitles(value, TitleMeta meta) {
     TextStyle style;
     if ((value - baselineX).abs() <= 0.1) {
       style = const TextStyle(
@@ -89,13 +89,13 @@ class _Chart extends StatelessWidget {
       );
     }
     return Padding(
-      padding: const EdgeInsets.all(4.0),
+      padding: const EdgeInsets.all(0),
       child: Text('A', style: style),
       // child: Text(meta.formattedValue, style: style),
     );
   }
 
-  Widget getHorizontalTitlesBottom(value, TitleMeta meta) {
+  Widget getBTitles(value, TitleMeta meta) {
     TextStyle style;
     if ((value - baselineX).abs() <= 0.1) {
       style = const TextStyle(
@@ -110,13 +110,13 @@ class _Chart extends StatelessWidget {
       );
     }
     return Padding(
-      padding: const EdgeInsets.all(4.0),
+      padding: const EdgeInsets.all(0),
       child: Text('B', style: style),
       // child: Text(meta.formattedValue, style: style),
     );
   }
 
-  Widget getVerticalTitles(value, TitleMeta meta) {
+  Widget getLTitles(value, TitleMeta meta) {
     TextStyle style;
     if ((value - baselineY).abs() <= 0.1) {
       style = const TextStyle(
@@ -132,13 +132,13 @@ class _Chart extends StatelessWidget {
     }
 
     return Padding(
-      padding: const EdgeInsets.all(4.0),
+      padding: const EdgeInsets.only(right: 4),
       child: Text('C', style: style),
       // child: Text(meta.formattedValue, style: style),
     );
   }
 
-  Widget getVerticalTitlesRight(value, TitleMeta meta) {
+  Widget getRTitles(value, TitleMeta meta) {
     TextStyle style;
     if ((value - baselineY).abs() <= 0.1) {
       style = const TextStyle(
@@ -154,7 +154,7 @@ class _Chart extends StatelessWidget {
     }
 
     return Padding(
-      padding: const EdgeInsets.all(4.0),
+      padding: const EdgeInsets.only(left: 3, right: 4),
       child: Text('D', style: style),
       // child: Text(meta.formattedValue, style: style),
     );
@@ -222,7 +222,7 @@ class _Chart extends StatelessWidget {
         ),
         lineBarsData: [
           LineChartBarData(
-            barWidth: 2,
+            barWidth: 4,
             show: true,
             spots: [
               FlSpot(upper[0], upper[1]),
@@ -249,31 +249,32 @@ class _Chart extends StatelessWidget {
           leftTitles: AxisTitles(
             sideTitles: SideTitles(
               showTitles: true,
-              getTitlesWidget: getVerticalTitles,
-              reservedSize: 36,
+              getTitlesWidget: getLTitles,
+              reservedSize: 16,
             ),
           ),
           topTitles: AxisTitles(
             sideTitles: SideTitles(
                 showTitles: true,
-                getTitlesWidget: getHorizontalTitles,
-                reservedSize: 32),
+                getTitlesWidget: getTTitles,
+                reservedSize: 24),
           ),
           rightTitles: AxisTitles(
             sideTitles: SideTitles(
               showTitles: true,
-              getTitlesWidget: getVerticalTitlesRight,
-              reservedSize: 36,
+              getTitlesWidget: getRTitles,
+              reservedSize: 16,
             ),
           ),
           bottomTitles: AxisTitles(
             sideTitles: SideTitles(
                 showTitles: true,
-                getTitlesWidget: getHorizontalTitlesBottom,
-                reservedSize: 32),
+                getTitlesWidget: getBTitles,
+                reservedSize: 24),
           ),
         ),
-        borderData: FlBorderData(show: false),
+        borderData: FlBorderData(
+            show: true, border: Border.all(color: Color(0xffE6E7E9B0))),
         gridData: FlGridData(
           show: true,
           drawHorizontalLine: true,
@@ -281,11 +282,11 @@ class _Chart extends StatelessWidget {
           getDrawingHorizontalLine: getHorizontalVerticalLine,
           getDrawingVerticalLine: getVerticalVerticalLine,
         ),
-        minY: -10,
-        maxY: 10,
+        minY: upper[1] < 1 ? -1 : -upper[1] - 1,
+        maxY: upper[1] < 1 ? 1 : upper[1] + 1,
         baselineY: baselineY,
-        minX: -10,
-        maxX: 10,
+        minX: upper[0] < 1 ? -1 : -upper[0] - 1,
+        maxX: upper[0] < 1 ? 1 : upper[0] + 1,
         baselineX: baselineX,
       ),
       duration: Duration.zero,

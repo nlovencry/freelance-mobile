@@ -67,6 +67,23 @@ class TurbineProvider extends BaseController with ChangeNotifier {
     notifyListeners();
   }
 
+  bool _ascending = false;
+  bool get ascending => this._ascending;
+  set ascending(bool value) => this._ascending = value;
+  bool _descending = false;
+  bool get descending => this._descending;
+  set descending(bool value) => this._descending = value;
+
+  bool _towerName = false;
+  bool get towerName => this._towerName;
+
+  set towerName(bool value) => this._towerName = value;
+
+  bool _createdAt = false;
+  bool get createdAt => this._createdAt;
+
+  set createdAt(bool value) => this._createdAt = value;
+
   bool _isEdit = false;
   bool get isEdit => this._isEdit;
 
@@ -80,7 +97,6 @@ class TurbineProvider extends BaseController with ChangeNotifier {
   TextEditingController startDateC = TextEditingController();
   TextEditingController endDateC = TextEditingController();
 
-
   String? _filterV;
 
   String? get filterV => this._filterV;
@@ -92,24 +108,25 @@ class TurbineProvider extends BaseController with ChangeNotifier {
 
   DateTime? _startDate;
 
-  get startDate => _startDate;
+  DateTime? get startDate => _startDate;
 
   setStartDate(DateTime? date) {
     _startDate = date;
-    startDateC.text = DateFormat("yyyy-MM-dd")
-        .format(date ?? DateTime.now())
-        .toString();
+    if (date != null)
+      startDateC.text =
+          DateFormat("yyyy-MM-dd").format(date ?? DateTime.now()).toString();
     notifyListeners();
   }
+
   DateTime? _endDate;
 
-  get endDate => _endDate;
+  DateTime? get endDate => _endDate;
 
   setEndDate(DateTime? date) {
     _endDate = date;
-    endDateC.text = DateFormat("yyyy-MM-dd")
-        .format(date ?? DateTime.now())
-        .toString();
+    if (date != null)
+      endDateC.text =
+          DateFormat("yyyy-MM-dd").format(date ?? DateTime.now()).toString();
     notifyListeners();
   }
 
@@ -138,17 +155,33 @@ class TurbineProvider extends BaseController with ChangeNotifier {
       isFetching = true;
       if (withLoading) loading(true);
       String startDateSelected =
-      DateFormat("yyyy-MM-dd").format(startDate ?? DateTime.now());
+          DateFormat("yyyy-MM-dd").format(startDate ?? DateTime.now());
       String endDateSelected =
-      DateFormat("yyyy-MM-dd").format(endDate ?? DateTime.now());
+          DateFormat("yyyy-MM-dd").format(endDate ?? DateTime.now());
 
       Map<String, String> param = {
         'Page': '$page',
         'Search': turbineSearchC.text,
-        'PerPage': "10",
-        'StartDate' : startDateSelected,
-        'EndDate' : endDateSelected,
+        'PerPage': "10"
       };
+      if (startDate != null) param.addAll({'StartDate': startDateSelected});
+      if (endDate != null) param.addAll({'EndDate': endDateSelected});
+      if (ascending) {
+        param.remove('SortOrder');
+        param.addAll({'SortOrder': 'ASC'});
+      }
+      if (descending) {
+        param.remove('SortOrder');
+        param.addAll({'SortOrder': 'DESC'});
+      }
+      if (towerName) {
+        param.remove('SortBy');
+        param.addAll({'SortBy': 'TowerName'});
+      }
+      if (createdAt) {
+        param.remove('SortBy');
+        param.addAll({'SortBy': 'CreatedAt'});
+      }
       if (next != null) param.addAll({'Next': next ?? ''});
       log("PANGGIL");
       final response = await get(

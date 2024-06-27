@@ -105,6 +105,14 @@ class _MainHomeState extends State<MainHome> {
           currentIndex: currentIndex,
           onTap: (index) async {
             final turbineP = context.read<TurbineProvider>();
+            turbineP.setStartDate(null);
+            turbineP.startDateC.clear();
+            turbineP.setEndDate(null);
+            turbineP.endDateC.clear();
+            turbineP.ascending = false;
+            turbineP.descending = false;
+            turbineP.towerName = false;
+            turbineP.createdAt = false;
             turbineP.turbineSearchC.clear();
             // context.read<PaketProvider>().clearFilter();
             if (index == 1) {

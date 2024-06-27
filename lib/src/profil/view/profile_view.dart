@@ -14,6 +14,9 @@ class _ProfileViewState extends State<ProfileView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar.appBar(context, "Profile",
+          leading: SizedBox(),
+          titleSpacing: 24,
+          isLeading: false,
           textStyle: TextStyle(color: Colors.white),
           color: Constant.primaryColor,
           foregroundColor: Colors.white),
@@ -126,21 +129,22 @@ class _ProfileViewState extends State<ProfileView> {
                         ),
                       ),
                       Container(
-                        padding: EdgeInsets.all(3),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          border: Border.all(
-                            width: 1,
-                            color: Colors.grey.withOpacity(0.5),
-                          )
-                        ),
+                          padding: EdgeInsets.all(3),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                              border: Border.all(
+                                width: 1,
+                                color: Colors.grey.withOpacity(0.5),
+                              )),
                           child: Image.asset(
-                        'assets/icons/ic-edit.png',
-                        scale: 4,
-                      )),
+                            'assets/icons/ic-edit.png',
+                            scale: 4,
+                          )),
                     ],
                   ),
-                  SizedBox(height: 8,),
+                  SizedBox(
+                    height: 8,
+                  ),
                 ],
               ),
             ),
@@ -155,7 +159,6 @@ class _ProfileViewState extends State<ProfileView> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  
                   SizedBox(
                     height: 10,
                   ),
@@ -198,7 +201,9 @@ class _ProfileViewState extends State<ProfileView> {
                       ),
                     ],
                   ),
-                  SizedBox(height: 8,),
+                  SizedBox(
+                    height: 8,
+                  ),
                 ],
               ),
             ),
@@ -213,7 +218,6 @@ class _ProfileViewState extends State<ProfileView> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-
                   SizedBox(
                     height: 10,
                   ),
@@ -256,7 +260,9 @@ class _ProfileViewState extends State<ProfileView> {
                       ),
                     ],
                   ),
-                  SizedBox(height: 8,),
+                  SizedBox(
+                    height: 8,
+                  ),
                 ],
               ),
             ),
@@ -271,7 +277,6 @@ class _ProfileViewState extends State<ProfileView> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-
                   SizedBox(
                     height: 10,
                   ),
@@ -314,7 +319,9 @@ class _ProfileViewState extends State<ProfileView> {
                       ),
                     ],
                   ),
-                  SizedBox(height: 8,),
+                  SizedBox(
+                    height: 8,
+                  ),
                 ],
               ),
             ),

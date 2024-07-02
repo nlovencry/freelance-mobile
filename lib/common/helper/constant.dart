@@ -465,6 +465,10 @@ class Constant {
   static const String kSetPrefCanAssess = "can_assess";
   static const String kIsBreakPresence = "is_break_presence";
   static const String kSetPrefParamCreateTurbine = "param_create_turbine";
+  static const String kSetPrefConfigLat = "config_lat";
+  static const String kSetPrefConfigLon = "config_lon";
+  static const String kSetPrefConfigRadius = "radius";
+  static const String kSetPrefConfigRadiusType = "radius_type";
 
   static const String kCheckIn = "check_in";
   static const String kCheckOut = "check_out";

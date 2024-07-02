@@ -61,6 +61,7 @@ part 'common/routes.dart';
 void main() async {
   await WidgetsFlutterBinding.ensureInitialized();
 
+  await requestPermission(Permission.location);
   await requestPermission(Permission.storage);
   await requestPermission(Permission.accessMediaLocation);
   await requestPermission(Permission.manageExternalStorage);

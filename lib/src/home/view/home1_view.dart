@@ -57,6 +57,7 @@ class _Home1ViewState extends BaseState<Home1View> {
     name = prefs.getString(Constant.kSetPrefName);
     division = prefs.getString(Constant.kSetPrefRoles);
     setState(() {});
+    await context.read<AuthProvider>().getConfig();
   }
 
   @override
@@ -93,35 +94,7 @@ class _Home1ViewState extends BaseState<Home1View> {
                   ],
                 ),
                 InkWell(
-                    onTap: () async {
-                      await Utils.showYesNoDialog(
-                        context: context,
-                        title: "Konfirmasi",
-                        desc: "Apakah Anda Yakin Ingin Keluar?",
-                        yesCallback: () => handleTap(() async {
-                          Navigator.pop(context);
-                          try {
-                            final result =
-                                await context.read<AuthProvider>().logout();
-                            if (result.success == true) {
-                              Navigator.pushReplacementNamed(context, '/login');
-                            } else {
-                              Utils.showFailed(msg: result.message);
-                            }
-                          } catch (e) {
-                            Utils.showFailed(
-                                msg: e
-                                        .toString()
-                                        .toLowerCase()
-                                        .contains("doctype")
-                                    ? "Maaf, Terjadi Galat!"
-                                    : "$e");
-                          }
-                        }),
-                        noCallback: () => Navigator.pop(context),
-                      );
-                      // CusNav.nPush(context, UserManageView());
-                    },
+                    onTap: () async {},
                     child: Image.asset('assets/icons/ic-prof-home.png',
                         scale: 1.2)),
               ],

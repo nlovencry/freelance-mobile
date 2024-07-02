@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:mata/common/base/base_state.dart';
+import 'package:mata/common/helper/constant.dart';
+import 'package:mata/main.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../../utils/utils.dart';
 import '../provider/data_add_provider.dart';
 import '../../shaft/view/shaft_view.dart';
 import '../../../common/component/custom_appbar.dart';
 import '../../../common/component/custom_button.dart';
+import 'package:geolocator/geolocator.dart';
 
 class DataAddTurbineView extends StatefulWidget {
   const DataAddTurbineView({super.key});
@@ -51,22 +56,7 @@ class _DataAddTurbineViewState extends BaseState<DataAddTurbineView> {
                     desc: "Apakah Data Anda Sudah Benar?",
                     yesCallback: () => handleTap(() async {
                       Navigator.pop(context);
-                      try {
-                        final response = await p.createTurbines();
-                        if (response.Success == true) {
-                          Utils.showSuccess(msg: response.Message ?? "Sukses");
-                          await Future.delayed(Duration(seconds: 2));
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (c) => ShaftView()));
-                        } else {
-                          Utils.showFailed(msg: response.Message ?? "Error");
-                        }
-                      } catch (e) {
-                        Utils.showFailed(
-                            msg: e.toString().toLowerCase().contains("doctype")
-                                ? "Maaf, Terjadi Galat!"
-                                : "$e");
-                      }
+                      p.sendCreateTurbines(context);
                     }),
                     noCallback: () => Navigator.pop(context),
                   );

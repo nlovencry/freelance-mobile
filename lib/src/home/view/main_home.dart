@@ -116,7 +116,7 @@ class _MainHomeState extends State<MainHome> {
             turbineP.turbineSearchC.clear();
             // context.read<PaketProvider>().clearFilter();
             if (index == 1) {
-              setState(() => currentIndex = index);
+              currentIndex = index;
               await CusNav.nPush(context, DataAddView());
               setState(() {
                 currentIndex = 0;

@@ -2,7 +2,12 @@ import 'dart:convert';
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../../../main.dart';
+import '../../../utils/utils.dart';
+import '../../shaft/view/shaft_view.dart';
 import '../model/create_data_param.dart';
 import '../../tower/model/tower_model.dart';
 import '../../turbine/model/turbine_create_model.dart';
@@ -360,6 +365,78 @@ class DataAddProvider extends BaseController with ChangeNotifier {
     // UPPER
     log("UPPER : $upper");
     log("UPPER CROCKED : $upperCrockedLine");
+  }
+
+  Future<void> sendCreateTurbines(BuildContext context) async {
+    try {
+      if (await requestPermission(Permission.location)) {
+        if (await Geolocator.isLocationServiceEnabled()) {
+          final geo = await Geolocator.getCurrentPosition(
+                  desiredAccuracy: LocationAccuracy.high)
+              .timeout(
+            Duration(seconds: 5),
+            onTimeout: () async =>
+                Future.value((await Geolocator.getLastKnownPosition())),
+          );
+          SharedPreferences prefs = await SharedPreferences.getInstance();
+          double? lat = prefs.getDouble(Constant.kSetPrefConfigLat) ?? 0;
+          double? lon = prefs.getDouble(Constant.kSetPrefConfigLon) ?? 0;
+          double? radius = prefs.getDouble(Constant.kSetPrefConfigRadius) ?? 0;
+          double distance =
+              Geolocator.distanceBetween(geo.latitude, geo.longitude, lat, lon);
+
+          String? radiusType =
+              prefs.getString(Constant.kSetPrefConfigRadiusType) ?? 'kilometer';
+          if (radiusType == 'meter') {
+            distance = distance;
+          } else if (radiusType == 'kilometer') {
+            distance = distance / 1000;
+          }
+          log("DISTANCE : $distance");
+          log("LAT : ${geo.latitude}");
+          log("LON : ${geo.longitude}");
+          log("LAT API : ${lat}");
+          log("LON API : ${lon}");
+          if (geo.latitude != 0 && lat != 0) {
+            if (distance > radius) {
+              // if (distance < radius) {
+              final response = await createTurbines();
+              if (response.Success == true) {
+                Utils.showSuccess(msg: response.Message ?? "Sukses");
+                await Future.delayed(Duration(seconds: 2));
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (c) => ShaftView()));
+              } else {
+                Utils.showFailed(msg: response.Message ?? '');
+                throw response.Message ?? '';
+              }
+            } else {
+              Utils.showFailed(
+                  msg:
+                      'Anda berada di luar batas jangkauan ($radius $radiusType)');
+              throw 'Anda berada di luar batas jangkauan ($radius $radiusType)';
+            }
+          } else {
+            Utils.showFailed(msg: 'Gagal mendapatkan lokasi');
+            throw 'Gagal mendapatkan lokasi';
+          }
+        } else {
+          Utils.showFailed(msg: 'Harap Nyalakan GPS');
+          throw 'Izinkan Nyalakan GPS';
+        }
+      } else {
+        Utils.showFailed(msg: 'Harap Izinkan Akses Lokasi GPS');
+        throw 'Izinkan Akses Lokasi GPS';
+      }
+    } catch (e) {
+      Utils.showFailed(
+          msg: e.toString().toLowerCase().contains("doctype")
+              ? "Maaf, Terjadi Galat!"
+              : "$e");
+      throw e.toString().toLowerCase().contains("doctype")
+          ? "Maaf, Terjadi Galat!"
+          : "$e";
+    }
   }
 
   Future<TurbineCreateModel> createTurbines() async {

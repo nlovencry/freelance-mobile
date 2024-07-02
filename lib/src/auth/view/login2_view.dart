@@ -10,6 +10,7 @@ import 'package:mata/src/splash_view.dart';
 import 'package:mata/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Login2View extends StatefulWidget {
   const Login2View({super.key});
@@ -38,7 +39,9 @@ class _Login2ViewState extends State<Login2View> {
                   borderRadius: BorderRadius.circular(10),
                 ),
               ),
-              SizedBox(height: 2,),
+              SizedBox(
+                height: 2,
+              ),
               Container(
                 height: 25,
                 width: 150,
@@ -69,10 +72,9 @@ class _Login2ViewState extends State<Login2View> {
                   "Selamat datang, sebelum login pastikan kamu memasukan akun dengan benar.",
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    color: Colors.black54,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w300
-                  )),
+                      color: Colors.black54,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w300)),
               SizedBox(
                 height: 20,
               ),
@@ -80,14 +82,12 @@ class _Login2ViewState extends State<Login2View> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                      "Email",
+                  Text("Email",
                       textAlign: TextAlign.start,
                       style: TextStyle(
                         color: Colors.grey,
                         fontSize: 14,
                       )),
-
                   SizedBox(
                     height: 10,
                   ),
@@ -105,14 +105,12 @@ class _Login2ViewState extends State<Login2View> {
                   SizedBox(
                     height: 10,
                   ),
-                  Text(
-                      "Password",
+                  Text("Password",
                       textAlign: TextAlign.start,
                       style: TextStyle(
                         color: Colors.grey,
                         fontSize: 14,
                       )),
-
                   SizedBox(
                     height: 10,
                   ),
@@ -129,7 +127,8 @@ class _Login2ViewState extends State<Login2View> {
                     obscureText: authP.obscurePass,
                     onEditingComplete: () async {
                       try {
-                        final result = await context.read<AuthProvider>().login();
+                        final result =
+                            await context.read<AuthProvider>().login();
                         if (result.Success == true) {
                           Navigator.pushReplacementNamed(context, '/home',
                               arguments: "");
@@ -137,6 +136,9 @@ class _Login2ViewState extends State<Login2View> {
                           Utils.showFailed(msg: result.Message ?? "Error");
                         }
                       } catch (e) {
+                        SharedPreferences prefs =
+                            await SharedPreferences.getInstance();
+                        prefs.clear();
                         Utils.showFailed(
                             msg: e.toString().toLowerCase().contains("doctype")
                                 ? "Maaf, Terjadi Galat!"
@@ -146,14 +148,16 @@ class _Login2ViewState extends State<Login2View> {
                     suffixIcon: InkWell(
                       onTap: () => authP.toggleObscurePass(),
                       child: Icon(
-                        authP.obscurePass ? Icons.visibility_off_outlined : Icons.visibility,
+                        authP.obscurePass
+                            ? Icons.visibility_off_outlined
+                            : Icons.visibility,
                         color: Constant.primaryColor,
                       ),
                     ),
                   ),
                 ],
               ),
-              
+
               SizedBox(height: 30),
               CustomButton.mainButton("Masuk", () async {
                 try {
@@ -170,32 +174,32 @@ class _Login2ViewState extends State<Login2View> {
                           ? "Maaf, Terjadi Galat!"
                           : "$e");
                 }
-              }, borderRadius: BorderRadius.circular(10),
-        contentPadding: EdgeInsets.symmetric(vertical: 8),
-                textStyle: TextStyle(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 14
-                )
-
-        ),
+              },
+                  borderRadius: BorderRadius.circular(10),
+                  contentPadding: EdgeInsets.symmetric(vertical: 8),
+                  textStyle:
+                      TextStyle(fontWeight: FontWeight.w600, fontSize: 14)),
               SizedBox(height: 30),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text("Belum Punya akun?"),
-                  SizedBox(width: 5,),
+                  SizedBox(
+                    width: 5,
+                  ),
                   InkWell(
                     onTap: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => Register2View()));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Register2View()));
                     },
                     child: Text(
                       "Daftar",
-                      style:
-                      TextStyle(color: Colors.black, fontWeight: FontWeight.w600),
+                      style: TextStyle(
+                          color: Colors.black, fontWeight: FontWeight.w600),
                     ),
                   ),
-
                 ],
               ),
             ],

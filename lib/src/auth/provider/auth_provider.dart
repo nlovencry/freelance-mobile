@@ -7,6 +7,7 @@ import '../../../common/base/base_controller.dart';
 import '../../../common/base/base_response.dart';
 import '../../../common/helper/constant.dart';
 import '../../division/model/divison_model.dart';
+import '../model/config_model.dart';
 import '../model/login_model.dart';
 import 'package:flutter/material.dart';
 
@@ -101,13 +102,40 @@ class AuthProvider extends BaseController with ChangeNotifier {
     } else {
       final message = jsonDecode(response.body)["Message"];
       loading(false);
-      return LoginModel();
-      // throw Exception(message);
+      // return LoginModel();
+      throw Exception(message);
     }
     // } else {
     //   loading(false);
     //   throw 'Harap Lengkapi Form';
     // }
+  }
+
+  Future<void> getConfig() async {
+    loading(true);
+    final response =
+        await get(Constant.BASE_API_FULL + '/configs/root-location');
+
+    if (response.statusCode == 201 || response.statusCode == 200) {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      final model = ConfigModel.fromJson(jsonDecode(response.body));
+
+      // set to shared preferences
+      await prefs.setDouble(Constant.kSetPrefConfigLat, model.Data?.Lat ?? 0);
+      await prefs.setDouble(Constant.kSetPrefConfigLon, model.Data?.Long ?? 0);
+      await prefs.setDouble(Constant.kSetPrefConfigRadius,
+          (model.Data?.CoverageArea ?? 0).toDouble());
+      await prefs.setString(Constant.kSetPrefConfigRadiusType,
+          model.Data?.CoverageAreaType ?? '');
+
+      loading(false);
+      // return model;
+    } else {
+      final message = jsonDecode(response.body)["Message"];
+      loading(false);
+      // return LoginModel();
+      throw Exception(message);
+    }
   }
 
   Future<BaseResponse> register() async {
@@ -187,28 +215,28 @@ class AuthProvider extends BaseController with ChangeNotifier {
     }
   }
 
-  Future<BaseResponse> logout() async {
+  Future<void> logout() async {
     loading(true);
-    final response =
-        BaseResponse.from(await post(Constant.BASE_API_FULL + '/logout'));
+    // final response =
+    //     BaseResponse.from(await post(Constant.BASE_API_FULL + '/logout'));
 
-    if (response.success) {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
+    // if (response.success) {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
 
-      // set to shared preferences
-      await prefs.remove(Constant.kSetPrefToken);
-      await prefs.remove(Constant.kSetPrefId);
-      await prefs.remove(Constant.kSetPrefName);
-      await prefs.remove(Constant.kSetPrefRoles);
-      await prefs.clear();
+    // set to shared preferences
+    await prefs.remove(Constant.kSetPrefToken);
+    await prefs.remove(Constant.kSetPrefId);
+    await prefs.remove(Constant.kSetPrefName);
+    await prefs.remove(Constant.kSetPrefRoles);
+    await prefs.clear();
 
-      loading(false);
-      return response;
-    } else {
-      final message = response.message;
-      loading(false);
-      throw Exception(message);
-    }
+    loading(false);
+    // return response;
+    // } else {
+    //   final message = response.message;
+    //   loading(false);
+    //   throw Exception(message);
+    // }
   }
 
   Future<BaseResponse> postForgot() async {

@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:mata/common/base/base_state.dart';
 import 'package:mata/common/component/custom_appbar.dart';
 import 'package:mata/common/helper/constant.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../../utils/utils.dart';
+import '../../auth/provider/auth_provider.dart';
 
 class ProfileView extends StatefulWidget {
   const ProfileView({super.key});
@@ -10,7 +15,7 @@ class ProfileView extends StatefulWidget {
   State<ProfileView> createState() => _ProfileViewState();
 }
 
-class _ProfileViewState extends State<ProfileView> {
+class _ProfileViewState extends BaseState<ProfileView> {
   String? name;
   String? division;
 
@@ -286,60 +291,88 @@ class _ProfileViewState extends State<ProfileView> {
             SizedBox(
               height: 10,
             ),
-            Container(
-              // height: 50,
-              width: double.infinity,
-              color: Colors.white,
-              padding: EdgeInsets.all(10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Row(
-                    children: [
-                      SizedBox(
-                        width: 5,
-                      ),
-                      Image.asset(
-                        'assets/icons/ic-logout.png',
-                        scale: 3.5,
-                      ),
-                      SizedBox(
-                        width: 13,
-                      ),
-                      Expanded(
-                        flex: 6,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Keluar",
-                              style: TextStyle(
-                                  color: Colors.red,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500),
-                            ),
-                            SizedBox(
-                              height: 5,
-                            ),
-                            Text(
-                              "Keluar akun dengan aman",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w300),
-                            ),
-                          ],
+            InkWell(
+              onTap: () async {
+                await Utils.showYesNoDialog(
+                  context: context,
+                  title: "Konfirmasi",
+                  desc: "Apakah Anda Yakin Ingin Keluar?",
+                  yesCallback: () => handleTap(() async {
+                    Navigator.pop(context);
+                    try {
+                      // final result =
+                      await context.read<AuthProvider>().logout();
+                      // if (result.success == true) {
+                      Navigator.pushReplacementNamed(context, '/login');
+                      // } else {
+                      //   Utils.showFailed(msg: result.message);
+                      // }
+                    } catch (e) {
+                      Utils.showFailed(
+                          msg: e.toString().toLowerCase().contains("doctype")
+                              ? "Maaf, Terjadi Galat!"
+                              : "$e");
+                    }
+                  }),
+                  noCallback: () => Navigator.pop(context),
+                );
+                // CusNav.nPush(context, UserManageView());
+              },
+              child: Container(
+                // height: 50,
+                width: double.infinity,
+                color: Colors.white,
+                padding: EdgeInsets.all(10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: 5,
                         ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 8,
-                  ),
-                ],
+                        Image.asset(
+                          'assets/icons/ic-logout.png',
+                          scale: 3.5,
+                        ),
+                        SizedBox(
+                          width: 13,
+                        ),
+                        Expanded(
+                          flex: 6,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Keluar",
+                                style: TextStyle(
+                                    color: Colors.red,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500),
+                              ),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              Text(
+                                "Keluar akun dengan aman",
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w300),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 8,
+                    ),
+                  ],
+                ),
               ),
             ),
           ],

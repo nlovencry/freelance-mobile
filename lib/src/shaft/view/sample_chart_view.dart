@@ -213,6 +213,51 @@ class _Chart extends StatelessWidget {
     final bdTurbine = d.bdTurbine;
     final bdCrockedLine = d.bdCrockedLine;
 
+    double getPlusY() {
+      if (activeIndex == 1) return bdUpper[1];
+      return bdUpper[1];
+    }
+
+    double getMinY() {
+      if (activeIndex == 1) return bdTurbine[1];
+      return bdTurbine[1];
+    }
+
+    double getYBiggest() {
+      if (getPlusY() > (getMinY() * (-1))) return getPlusY();
+      return (getMinY() * (-1));
+    }
+
+    double getXBiggest() {
+      double biggest = 0;
+      double bdUpper0 = bdUpper[0] < 0 ? (bdUpper[0] * (-1)) : bdUpper[0];
+      double acUpper0 = acUpper[0] < 0 ? (acUpper[0] * (-1)) : acUpper[0];
+      double bdClutch0 = bdClutch[0] < 0 ? (bdClutch[0] * (-1)) : bdClutch[0];
+      double acClutch0 = acClutch[0] < 0 ? (acClutch[0] * (-1)) : acClutch[0];
+      double bdTurbine0 =
+          bdTurbine[0] < 0 ? (bdTurbine[0] * (-1)) : bdTurbine[0];
+      double acTurbine0 =
+          acTurbine[0] < 0 ? (acTurbine[0] * (-1)) : acTurbine[0];
+      if (activeIndex == 1) {
+        if (bdUpper0 <= bdClutch0) biggest = bdClutch0;
+        if (bdClutch0 <= bdTurbine0) biggest = bdTurbine0;
+      } else {
+        if (acUpper0 <= acClutch0) biggest = acClutch0;
+        if (acClutch0 <= acTurbine0) biggest = acTurbine0;
+      }
+      return biggest;
+    }
+
+    double getPlusX() {
+      if (activeIndex == 1) return bdUpper[1];
+      return bdUpper[0];
+    }
+
+    double getBottomY() {
+      if (activeIndex == 1) return bdTurbine[1];
+      return bdTurbine[0];
+    }
+
     FlSpot getFlSpotUpper() {
       if (activeIndex == 1) return FlSpot(bdUpper[0], bdUpper[1]);
       return FlSpot(acUpper[0], acUpper[1]);
@@ -296,12 +341,12 @@ class _Chart extends StatelessWidget {
             color: Color(0xffFBBB00),
             dotData: FlDotData(show: false),
           ),
-          LineChartBarData(
-            barWidth: 4,
-            spots: [getFlSpotClutch(), getCrockedLine()],
-            color: Colors.red,
-            dotData: FlDotData(show: false),
-          ),
+          // LineChartBarData(
+          //   barWidth: 4,
+          //   spots: [getFlSpotClutch(), getCrockedLine()],
+          //   color: Colors.red,
+          //   dotData: FlDotData(show: false),
+          // ),
         ],
         // betweenBarsData: [BetweenBarsData(fromIndex: 0, toIndex: 2)],
         titlesData: FlTitlesData(
@@ -337,11 +382,11 @@ class _Chart extends StatelessWidget {
           getDrawingHorizontalLine: getHorizontalVerticalLine,
           getDrawingVerticalLine: getVerticalVerticalLine,
         ),
-        minY: -5,
-        maxY: 5,
+        minY: (-(getYBiggest())) - 1,
+        maxY: getYBiggest() + 1,
         baselineY: baselineY,
-        minX: -12,
-        maxX: 12,
+        minX: (-(getXBiggest())) - 1,
+        maxX: (getXBiggest() + 1),
         baselineX: baselineX,
       ),
       duration: Duration.zero,

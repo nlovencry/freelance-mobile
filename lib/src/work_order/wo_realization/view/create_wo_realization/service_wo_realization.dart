@@ -1,6 +1,6 @@
-import 'package:mata/common/component/custom_navigator.dart';
-import 'package:mata/src/work_order/wo_realization/provider/wo_realization_provider.dart';
-import 'package:mata/src/work_order/wo_realization/view/create_wo_realization/labours_wo_realization.dart';
+import 'package:hy_tutorial/common/component/custom_navigator.dart';
+import 'package:hy_tutorial/src/work_order/wo_realization/provider/wo_realization_provider.dart';
+import 'package:hy_tutorial/src/work_order/wo_realization/view/create_wo_realization/labours_wo_realization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

@@ -184,6 +184,9 @@ class TurbineProvider extends BaseController with ChangeNotifier {
       }
       if (next != null) param.addAll({'Next': next ?? ''});
       log("PANGGIL");
+      if (_pagingController.itemList?.length != 0) {
+        await Future.delayed(Duration(seconds: 2));
+      }
       final response = await get(
         Constant.BASE_API_FULL + '/turbines',
         body: param,

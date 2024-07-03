@@ -1,7 +1,7 @@
 import 'dart:developer';
-import 'package:mata/common/component/custom_button.dart';
-import 'package:mata/common/component/custom_container.dart';
-import 'package:mata/common/component/custom_date_picker.dart';
+import 'package:hy_tutorial/common/component/custom_button.dart';
+import 'package:hy_tutorial/common/component/custom_container.dart';
+import 'package:hy_tutorial/common/component/custom_date_picker.dart';
 
 import '../../../common/component/custom_appbar.dart';
 import '../../../common/component/custom_textfield.dart';
@@ -26,9 +26,15 @@ class _RiwayatViewState extends BaseState<RiwayatView> {
   @override
   void initState() {
     final turbineP = context.read<TurbineProvider>();
-    turbineP.pagingController = PagingController(firstPageKey: 1)
-      ..addPageRequestListener(
-          (pageKey) => turbineP.fetchTurbine(page: pageKey));
+    if ((turbineP.pagingController.itemList ?? []).isEmpty) {
+      turbineP.pagingController = PagingController(firstPageKey: 1)
+        ..addPageRequestListener((pageKey) async {
+          await Future.delayed(Duration(seconds: 1));
+          turbineP.fetchTurbine(page: pageKey);
+        });
+    } else {
+      turbineP.pagingController.refresh();
+    }
     // turbineP.fetchTurbine(withLoading: true);
     super.initState();
   }

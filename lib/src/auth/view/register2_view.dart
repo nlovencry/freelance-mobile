@@ -1,14 +1,14 @@
-import 'package:mata/common/component/custom_button.dart';
-import 'package:mata/common/component/custom_container.dart';
-import 'package:mata/common/component/custom_dropdown.dart';
-import 'package:mata/common/component/custom_textField.dart';
-import 'package:mata/common/helper/constant.dart';
-import 'package:mata/src/auth/provider/auth_provider.dart';
-import 'package:mata/src/auth/view/login2_view.dart';
-import 'package:mata/src/home/view/home1_view.dart';
-import 'package:mata/src/home/view/main_home.dart';
-import 'package:mata/src/splash_view.dart';
-import 'package:mata/utils/utils.dart';
+import 'package:hy_tutorial/common/component/custom_button.dart';
+import 'package:hy_tutorial/common/component/custom_container.dart';
+import 'package:hy_tutorial/common/component/custom_dropdown.dart';
+import 'package:hy_tutorial/common/component/custom_textField.dart';
+import 'package:hy_tutorial/common/helper/constant.dart';
+import 'package:hy_tutorial/src/auth/provider/auth_provider.dart';
+import 'package:hy_tutorial/src/auth/view/login2_view.dart';
+import 'package:hy_tutorial/src/home/view/home1_view.dart';
+import 'package:hy_tutorial/src/home/view/main_home.dart';
+import 'package:hy_tutorial/src/splash_view.dart';
+import 'package:hy_tutorial/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -39,7 +39,9 @@ class _Register2ViewState extends State<Register2View> {
                   borderRadius: BorderRadius.circular(10),
                 ),
               ),
-              SizedBox(height: 2,),
+              SizedBox(
+                height: 2,
+              ),
               Container(
                 height: 25,
                 width: 150,
@@ -72,8 +74,7 @@ class _Register2ViewState extends State<Register2View> {
                   style: TextStyle(
                       color: Colors.black54,
                       fontSize: 14,
-                      fontWeight: FontWeight.w300
-                  )),
+                      fontWeight: FontWeight.w300)),
               SizedBox(
                 height: 20,
               ),
@@ -81,8 +82,7 @@ class _Register2ViewState extends State<Register2View> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                      "Nama",
+                  Text("Nama",
                       textAlign: TextAlign.start,
                       style: TextStyle(
                         color: Colors.grey,
@@ -106,8 +106,7 @@ class _Register2ViewState extends State<Register2View> {
                   SizedBox(
                     height: 10,
                   ),
-                  Text(
-                      "NIP",
+                  Text("NIP",
                       textAlign: TextAlign.start,
                       style: TextStyle(
                         color: Colors.grey,
@@ -125,8 +124,7 @@ class _Register2ViewState extends State<Register2View> {
                     selectedItem: authP.selectedDevisionV,
                     hintText: authP.selectedDivision?.Name ?? "Select",
                     list: [
-                      DropdownMenuItem(
-                          value: "EG", child: Text("Enginer")),
+                      DropdownMenuItem(value: "EG", child: Text("Enginer")),
                       DropdownMenuItem(
                           value: "PM", child: Text("Predictive Maintenance")),
                       DropdownMenuItem(value: "BD", child: Text("Breakdown")),
@@ -171,8 +169,7 @@ class _Register2ViewState extends State<Register2View> {
                   SizedBox(
                     height: 10,
                   ),
-                  Text(
-                      "Username",
+                  Text("Username",
                       textAlign: TextAlign.start,
                       style: TextStyle(
                         color: Colors.grey,
@@ -219,8 +216,7 @@ class _Register2ViewState extends State<Register2View> {
                   SizedBox(
                     height: 10,
                   ),
-                  Text(
-                      "Password",
+                  Text("Password",
                       textAlign: TextAlign.start,
                       style: TextStyle(
                         color: Colors.grey,
@@ -242,7 +238,8 @@ class _Register2ViewState extends State<Register2View> {
                     obscureText: authP.obscurePass,
                     onEditingComplete: () async {
                       try {
-                        final result = await context.read<AuthProvider>().login();
+                        final result =
+                            await context.read<AuthProvider>().login();
                         if (result.Success == true) {
                           Navigator.pushReplacementNamed(context, '/home',
                               arguments: "");
@@ -259,7 +256,9 @@ class _Register2ViewState extends State<Register2View> {
                     suffixIcon: InkWell(
                       onTap: () => authP.toggleObscurePass(),
                       child: Icon(
-                        authP.obscurePass ? Icons.visibility_off_outlined : Icons.visibility,
+                        authP.obscurePass
+                            ? Icons.visibility_off_outlined
+                            : Icons.visibility,
                         color: Constant.primaryColor,
                       ),
                     ),
@@ -286,30 +285,29 @@ class _Register2ViewState extends State<Register2View> {
               },
                   borderRadius: BorderRadius.circular(10),
                   contentPadding: EdgeInsets.symmetric(vertical: 8),
-                  textStyle: TextStyle(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 14
-                  )
-
-              ),
+                  textStyle:
+                      TextStyle(fontWeight: FontWeight.w600, fontSize: 14)),
               SizedBox(height: 30),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text("Sudah memiliki akun?"),
-                  SizedBox(width: 5,),
+                  SizedBox(
+                    width: 5,
+                  ),
                   InkWell(
                     onTap: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => Login2View()));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Login2View()));
                     },
                     child: Text(
                       "Masuk",
-                      style:
-                      TextStyle(color: Colors.black, fontWeight: FontWeight.w600),
+                      style: TextStyle(
+                          color: Colors.black, fontWeight: FontWeight.w600),
                     ),
                   ),
-
                 ],
               ),
             ],

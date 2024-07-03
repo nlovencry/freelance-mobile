@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mata/common/base/base_state.dart';
-import 'package:mata/common/helper/constant.dart';
-import 'package:mata/main.dart';
+import 'package:hy_tutorial/common/base/base_state.dart';
+import 'package:hy_tutorial/common/helper/constant.dart';
+import 'package:hy_tutorial/main.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';

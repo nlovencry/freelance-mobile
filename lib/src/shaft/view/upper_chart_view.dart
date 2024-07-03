@@ -1,6 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:mata/common/helper/constant.dart';
+import 'package:hy_tutorial/common/helper/constant.dart';
 import 'package:provider/provider.dart';
 
 import '../../data/provider/data_add_provider.dart';
@@ -111,7 +111,7 @@ class _Chart extends StatelessWidget {
     }
     return Padding(
       padding: const EdgeInsets.all(0),
-      child: Text('B', style: style),
+      child: Text('C', style: style),
       // child: Text(meta.formattedValue, style: style),
     );
   }
@@ -133,7 +133,7 @@ class _Chart extends StatelessWidget {
 
     return Padding(
       padding: const EdgeInsets.only(right: 4),
-      child: Text('C', style: style),
+      child: Text('B', style: style),
       // child: Text(meta.formattedValue, style: style),
     );
   }

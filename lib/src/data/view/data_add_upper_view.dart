@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mata/src/data/view/data_add_clutch_view.dart';
+import 'package:hy_tutorial/src/data/view/data_add_clutch_view.dart';
 import 'package:provider/provider.dart';
 import '../../../utils/utils.dart';
 import '../provider/data_add_provider.dart';

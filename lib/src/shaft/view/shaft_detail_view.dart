@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import '../../../common/component/custom_appbar.dart';
+import '../../../common/component/custom_container.dart';
 import '../../../common/helper/constant.dart';
 import 'sample_chart_view.dart';
 import "package:provider/provider.dart";
@@ -48,6 +49,13 @@ class _ShaftDetailViewState extends State<ShaftDetailView>
     final d = context.watch<DataAddProvider>();
     final shaft =
         context.watch<DataAddProvider>().turbineDetailModel.Data?.Shaft;
+    final status =
+        context.watch<DataAddProvider>().turbineCreateModel.Data?.Status;
+    final totalCrockedness = context
+        .watch<DataAddProvider>()
+        .turbineCreateModel
+        .Data
+        ?.TotalCrockedness;
     final upperData = context
         .watch<DataAddProvider>()
         .turbineDetailModel
@@ -536,6 +544,40 @@ class _ShaftDetailViewState extends State<ShaftDetailView>
                   style: TextStyle(color: Constant.textColorBlack),
                 ),
               ],
+            ),
+            Constant.xSizedBox16,
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 4),
+              child: CustomContainer.mainCard(
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: 50,
+                          height: 50,
+                          child: Image.asset(
+                            width: 50,
+                            height: 50,
+                            'assets/icons/ic-${status == true ? 'sad' : 'smile'}.png',
+                          ),
+                        ),
+                        Constant.xSizedBox16,
+                        Expanded(
+                          child: Text(
+                            'Total Kebengkokan ${(totalCrockedness ?? 0) >= 3 ? '3' : '${(totalCrockedness ?? 0).round()}'}/3',
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+              ),
             ),
             Constant.xSizedBox16,
             toggleTab(),

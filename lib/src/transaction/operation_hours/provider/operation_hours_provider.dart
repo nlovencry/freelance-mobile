@@ -2,8 +2,8 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:mata/common/base/base_controller.dart';
-import 'package:mata/common/helper/constant.dart';
+import 'package:hy_tutorial/common/base/base_controller.dart';
+import 'package:hy_tutorial/common/helper/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:intl/intl.dart';

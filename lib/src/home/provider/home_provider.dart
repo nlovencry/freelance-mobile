@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:mata/common/base/base_controller.dart';
-import 'package:mata/common/helper/constant.dart';
-import 'package:mata/src/home/model/home_model.dart';
+import 'package:hy_tutorial/common/base/base_controller.dart';
+import 'package:hy_tutorial/common/helper/constant.dart';
+import 'package:hy_tutorial/src/home/model/home_model.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

@@ -2,6 +2,9 @@ import 'dart:developer';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:hy_tutorial/common/component/custom_container.dart';
+import 'package:hy_tutorial/src/home/view/home1_view.dart';
+import 'package:hy_tutorial/src/home/view/main_home.dart';
 import '../../../common/component/custom_appbar.dart';
 import '../../../common/helper/constant.dart';
 import 'sample_chart_view.dart';
@@ -44,6 +47,13 @@ class _ShaftViewState extends State<ShaftView> with TickerProviderStateMixin {
     final d = context.watch<DataAddProvider>();
     final shaft =
         context.watch<DataAddProvider>().turbineCreateModel.Data?.Shaft;
+    final status =
+        context.watch<DataAddProvider>().turbineCreateModel.Data?.Status;
+    final totalCrockedness = context
+        .watch<DataAddProvider>()
+        .turbineCreateModel
+        .Data
+        ?.TotalCrockedness;
     final upperData = context
         .watch<DataAddProvider>()
         .turbineCreateModel
@@ -52,13 +62,13 @@ class _ShaftViewState extends State<ShaftView> with TickerProviderStateMixin {
         ?.Upper;
     final clutchData = context
         .watch<DataAddProvider>()
-        .turbineDetailModel
+        .turbineCreateModel
         .Data
         ?.DetailData
         ?.Clutch;
     final turbineData = context
         .watch<DataAddProvider>()
-        .turbineDetailModel
+        .turbineCreateModel
         .Data
         ?.DetailData
         ?.Clutch;
@@ -522,7 +532,18 @@ class _ShaftViewState extends State<ShaftView> with TickerProviderStateMixin {
 
     return Scaffold(
       appBar: CustomAppBar.appBar(
-          context, tabController.index == 2 ? 'Upper' : 'Shaft'),
+        context,
+        tabController.index == 2 ? 'Upper' : 'Shaft',
+        leading: InkWell(
+          onTap: () async {
+            Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (context) => MainHome()),
+                (route) => false);
+          },
+          child: Icon(Icons.arrow_back),
+        ),
+      ),
       body: Padding(
         padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
         child: ListView(
@@ -544,10 +565,44 @@ class _ShaftViewState extends State<ShaftView> with TickerProviderStateMixin {
                 )),
                 Constant.xSizedBox4,
                 Text(
-                  '${DateFormat('dd/MM/yyyy  |  HH : mm').format(DateFormat('yyyy-MM-dd HH:mm:ss').parse(d.turbineDetailModel.Data?.CreatedAt ?? '${DateTime.now()}'))}',
+                  '${DateFormat('dd/MM/yyyy  |  HH : mm').format(DateFormat('yyyy-MM-dd HH:mm:ss').parse(d.turbineCreateModel.Data?.CreatedAt ?? '${DateTime.now()}'))}',
                   style: TextStyle(color: Constant.textColorBlack),
                 ),
               ],
+            ),
+            Constant.xSizedBox16,
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 4),
+              child: CustomContainer.mainCard(
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: 50,
+                          height: 50,
+                          child: Image.asset(
+                            width: 50,
+                            height: 50,
+                            'assets/icons/ic-${status == true ? 'sad' : 'smile'}.png',
+                          ),
+                        ),
+                        Constant.xSizedBox16,
+                        Expanded(
+                          child: Text(
+                            'Total Kebengkokan ${(totalCrockedness ?? 0) >= 3 ? '3' : '${(totalCrockedness ?? 0).round()}'}/3',
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+              ),
             ),
             Constant.xSizedBox16,
             toggleTab(),

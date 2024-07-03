@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mata/src/data/view/data_add_upper_view.dart';
-import 'package:mata/utils/utils.dart';
+import 'package:hy_tutorial/src/data/view/data_add_upper_view.dart';
+import 'package:hy_tutorial/utils/utils.dart';
 import 'package:provider/provider.dart';
 import '../provider/data_add_provider.dart';
 import '../../shaft/view/shaft_view.dart';
@@ -38,6 +38,7 @@ class _DataAddViewState extends State<DataAddView> {
               child: ListView(
                 children: [
                   ...p.detailUnit(),
+                  ...p.boltDetailForm(),
                   ...p.shaftForm(),
                 ],
               ),

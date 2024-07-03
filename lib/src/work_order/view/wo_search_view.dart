@@ -1,4 +1,4 @@
-import 'package:mata/common/component/custom_appbar.dart';
+import 'package:hy_tutorial/common/component/custom_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

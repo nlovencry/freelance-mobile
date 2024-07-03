@@ -25,6 +25,11 @@ class DataAddProvider extends BaseController with ChangeNotifier {
   TextEditingController totalC = TextEditingController();
   TextEditingController rasioC = TextEditingController();
 
+  TextEditingController boltQtyC = TextEditingController();
+  TextEditingController currentTorqueC = TextEditingController();
+  TextEditingController maxTorqueC = TextEditingController();
+  TextEditingController differenceQtyC = TextEditingController();
+
   String? selectedDropdown;
   String? selectedTower;
 
@@ -382,6 +387,8 @@ class DataAddProvider extends BaseController with ChangeNotifier {
           double? lat = prefs.getDouble(Constant.kSetPrefConfigLat) ?? 0;
           double? lon = prefs.getDouble(Constant.kSetPrefConfigLon) ?? 0;
           double? radius = prefs.getDouble(Constant.kSetPrefConfigRadius) ?? 0;
+          bool? configStatus =
+              prefs.getBool(Constant.kSetPrefConfigStatus) ?? false;
           double distance =
               Geolocator.distanceBetween(geo.latitude, geo.longitude, lat, lon);
 
@@ -398,8 +405,7 @@ class DataAddProvider extends BaseController with ChangeNotifier {
           log("LAT API : ${lat}");
           log("LON API : ${lon}");
           if (geo.latitude != 0 && lat != 0) {
-            if (distance > radius) {
-              // if (distance < radius) {
+            if (distance <= radius || !configStatus) {
               final response = await createTurbines();
               if (response.Success == true) {
                 Utils.showSuccess(msg: response.Message ?? "Sukses");
@@ -658,6 +664,59 @@ class DataAddProvider extends BaseController with ChangeNotifier {
         readOnly: true,
         controller: rasioC,
         labelText: "Rasio",
+      ),
+      Constant.xSizedBox16,
+    ];
+  }
+
+  List<Widget> boltDetailForm() {
+    return [
+      Text("Detail Baut", style: Constant.blackBold20),
+      Constant.xSizedBox8,
+      Text("Masukan detail baut", style: Constant.grayMedium),
+      Constant.xSizedBox16,
+      CustomTextField.borderTextField(
+        required: false,
+        controller: boltQtyC,
+        textInputType: TextInputType.number,
+        inputFormatters: [
+          FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d?')),
+          FilteringTextInputFormatter.digitsOnly
+        ],
+        labelText: "Jumlah Baut",
+      ),
+      Constant.xSizedBox16,
+      CustomTextField.borderTextField(
+        required: false,
+        controller: currentTorqueC,
+        textInputType: TextInputType.number,
+        inputFormatters: [
+          FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d?')),
+          FilteringTextInputFormatter.digitsOnly
+        ],
+        labelText: "Torsi Terkini",
+      ),
+      Constant.xSizedBox16,
+      CustomTextField.borderTextField(
+        required: false,
+        controller: maxTorqueC,
+        textInputType: TextInputType.number,
+        inputFormatters: [
+          FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d?')),
+          FilteringTextInputFormatter.digitsOnly
+        ],
+        labelText: "Max Torsi",
+      ),
+      Constant.xSizedBox16,
+      CustomTextField.borderTextField(
+        required: false,
+        controller: differenceQtyC,
+        textInputType: TextInputType.number,
+        inputFormatters: [
+          FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d?')),
+          FilteringTextInputFormatter.digitsOnly
+        ],
+        labelText: "Jumlah Selisih",
       ),
       Constant.xSizedBox16,
     ];

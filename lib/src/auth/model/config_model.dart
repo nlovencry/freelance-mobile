@@ -7,26 +7,30 @@ class ConfigModelData {
   "Long": -8.160927807736735,
   "Lat": 112.44418490930914,
   "CoverageArea": 5,
-  "CoverageAreaType": "kilometer"
+  "CoverageAreaType": "kilometer",
+  "Status": true
 } 
 */
 
   double? Long;
   double? Lat;
-  double? CoverageArea;
+  int? CoverageArea;
   String? CoverageAreaType;
+  bool? Status;
 
   ConfigModelData({
     this.Long,
     this.Lat,
     this.CoverageArea,
     this.CoverageAreaType,
+    this.Status,
   });
   ConfigModelData.fromJson(Map<String, dynamic> json) {
     Long = json['Long']?.toDouble();
     Lat = json['Lat']?.toDouble();
-    CoverageArea = json['CoverageArea']?.toDouble();
+    CoverageArea = json['CoverageArea']?.toInt();
     CoverageAreaType = json['CoverageAreaType']?.toString();
+    Status = json['Status'];
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
@@ -34,6 +38,7 @@ class ConfigModelData {
     data['Lat'] = Lat;
     data['CoverageArea'] = CoverageArea;
     data['CoverageAreaType'] = CoverageAreaType;
+    data['Status'] = Status;
     return data;
   }
 }
@@ -43,12 +48,13 @@ class ConfigModel {
 {
   "Success": true,
   "StatusCode": 200,
-  "Message": "success get config location",
+  "Message": "berhasil mendapatkan konfigurasi lokasi",
   "Data": {
     "Long": -8.160927807736735,
     "Lat": 112.44418490930914,
     "CoverageArea": 5,
-    "CoverageAreaType": "kilometer"
+    "CoverageAreaType": "kilometer",
+    "Status": true
   }
 } 
 */

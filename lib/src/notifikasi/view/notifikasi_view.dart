@@ -1,5 +1,5 @@
-import 'package:mata/src/notifikasi/provider/notifikasi_provider.dart';
-import 'package:mata/src/notifikasi/view/notifikasi_detail_view.dart';
+import 'package:hy_tutorial/src/notifikasi/provider/notifikasi_provider.dart';
+import 'package:hy_tutorial/src/notifikasi/view/notifikasi_detail_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_toggle_tab/flutter_toggle_tab.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';

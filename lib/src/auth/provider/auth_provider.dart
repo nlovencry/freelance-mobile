@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
-import 'package:mata/src/auth/model/firebase_token_model.dart';
+import 'package:hy_tutorial/src/auth/model/firebase_token_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../common/base/base_controller.dart';
@@ -127,6 +127,8 @@ class AuthProvider extends BaseController with ChangeNotifier {
           (model.Data?.CoverageArea ?? 0).toDouble());
       await prefs.setString(Constant.kSetPrefConfigRadiusType,
           model.Data?.CoverageAreaType ?? '');
+      await prefs.setBool(
+          Constant.kSetPrefConfigRadiusType, model.Data?.Status ?? false);
 
       loading(false);
       // return model;

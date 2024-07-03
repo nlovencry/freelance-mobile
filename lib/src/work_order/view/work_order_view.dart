@@ -1,6 +1,6 @@
-import 'package:mata/common/component/custom_navigator.dart';
-import 'package:mata/src/work_order/wo_agreement/provider/wo_agreement_provider.dart';
-import 'package:mata/src/work_order/wo_realization/view/wo_realization_view.dart';
+import 'package:hy_tutorial/common/component/custom_navigator.dart';
+import 'package:hy_tutorial/src/work_order/wo_agreement/provider/wo_agreement_provider.dart';
+import 'package:hy_tutorial/src/work_order/wo_realization/view/wo_realization_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';

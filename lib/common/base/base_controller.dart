@@ -5,10 +5,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart';
 import 'package:http/http.dart' as http;
-import 'package:mata/common/component/custom_alert.dart';
-import 'package:mata/common/helper/constant.dart';
-import 'package:mata/main.dart';
-import 'package:mata/src/splash_view.dart';
+import 'package:hy_tutorial/common/component/custom_alert.dart';
+import 'package:hy_tutorial/common/helper/constant.dart';
+import 'package:hy_tutorial/main.dart';
+import 'package:hy_tutorial/src/splash_view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../utils/utils.dart';

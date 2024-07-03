@@ -1,5 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:mata/common/component/skeleton.dart';
+import 'package:hy_tutorial/common/component/skeleton.dart';
 import 'package:flutter/material.dart';
 
 import '../base/base_state.dart';

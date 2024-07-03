@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-// import 'package:mata/helper/constant.dart';
+// import 'package:hy_tutorial/helper/constant.dart';
 // import '../../helper/widgets.dart';
 
 class ImagePreview extends StatefulWidget {

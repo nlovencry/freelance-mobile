@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -27,30 +29,10 @@ class _SampleChartViewState extends State<SampleChartView> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Expanded(
-              child: Row(
-                children: [
-                  // slider
-                  // RotatedBox(
-                  //   quarterTurns: 1,
-                  //   child: Slider(
-                  //     value: baselineY,
-                  //     onChanged: (newValue) {
-                  //       setState(() {
-                  //         baselineY = newValue;
-                  //       });
-                  //     },
-                  //     min: -10,
-                  //     max: 10,
-                  //   ),
-                  // ),
-                  Expanded(
-                    child: _Chart(
-                      baselineX,
-                      (20 - (baselineY + 10)) - 10,
-                      widget.activeIndex,
-                    ),
-                  )
-                ],
+              child: _Chart(
+                baselineX,
+                (20 - (baselineY + 10)) - 10,
+                widget.activeIndex,
               ),
             ),
             // Slider(
@@ -248,6 +230,44 @@ class _Chart extends StatelessWidget {
       return biggest;
     }
 
+    double getMinX() {
+      // if (getXBiggest() < 3) return -1 * (5 - getXBiggest());
+      if (getXBiggest() < 5) return -1 * (getXBiggest());
+      if (getXBiggest() < 10) return -1 * (10 - getXBiggest());
+      return -1 * (20 - getXBiggest());
+    }
+
+    double getMaxX() {
+      // if (getXBiggest() < 3) return 5 - getXBiggest();
+      if (getXBiggest() < 5) return getXBiggest();
+      if (getXBiggest() < 10) return 10 - getXBiggest();
+      return 20 - getXBiggest();
+    }
+
+    double getMinnY() {
+      if (getYBiggest() < 5) return -1 * (getYBiggest() + 1);
+      if (getYBiggest() < 10) return -1 * (getYBiggest() + 1);
+      return -1 * (20 - getYBiggest());
+    }
+
+    double getMaxY() {
+      if (getYBiggest() < 5) return getYBiggest() + 1;
+      if (getYBiggest() < 10) return getYBiggest() + 1;
+      return 20 - getYBiggest();
+    }
+
+    double getBiggestXY() {
+      if (getMaxX() < getMaxY()) return getMaxY();
+      return getMaxX();
+    }
+
+    log("GET BIGGEST X : ${getXBiggest()}");
+    log("GET BIGGEST Y : ${getYBiggest()}");
+    log("GET MIN X : ${getMinX()}");
+    log("GET MAX X : ${getMaxX()}");
+    log("GET MIN Y : ${getMinnY()}");
+    log("GET MAX Y : ${getMaxY()}");
+    log("======================");
     double getPlusX() {
       if (activeIndex == 1) return bdUpper[1];
       return bdUpper[0];
@@ -382,11 +402,11 @@ class _Chart extends StatelessWidget {
           getDrawingHorizontalLine: getHorizontalVerticalLine,
           getDrawingVerticalLine: getVerticalVerticalLine,
         ),
-        minY: (-(getYBiggest())) - 1,
-        maxY: getYBiggest() + 1,
+        minY: getMinnY(),
+        maxY: getMaxY(),
         baselineY: baselineY,
-        minX: (-(getXBiggest())) - 1,
-        maxX: (getXBiggest() + 1),
+        minX: getMinX() - 10,
+        maxX: getMaxX() + 10,
         baselineX: baselineX,
       ),
       duration: Duration.zero,

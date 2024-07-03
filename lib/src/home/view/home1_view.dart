@@ -1,9 +1,9 @@
-import 'package:mata/common/base/base_state.dart';
-import 'package:mata/common/component/custom_container.dart';
-import 'package:mata/common/component/custom_navigator.dart';
-import 'package:mata/common/helper/constant.dart';
-import 'package:mata/src/data/view/data_add_view.dart';
-import 'package:mata/src/user/view/user_manage_view.dart';
+import 'package:hy_tutorial/common/base/base_state.dart';
+import 'package:hy_tutorial/common/component/custom_container.dart';
+import 'package:hy_tutorial/common/component/custom_navigator.dart';
+import 'package:hy_tutorial/common/helper/constant.dart';
+import 'package:hy_tutorial/src/data/view/data_add_view.dart';
+import 'package:hy_tutorial/src/user/view/user_manage_view.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -28,10 +28,10 @@ class _Home1ViewState extends BaseState<Home1View> {
     'Upper',
     'Clutch',
     'Turbine',
-    'Siap Diantar'
+    'Result'
     // 'Shaft',
     // 'Upper',
-    // 'Clutch',
+    // 'Clsutch',
     // 'Turbine'
   ];
   static const List<String> staticImage = [
@@ -344,14 +344,19 @@ class _Home1ViewState extends BaseState<Home1View> {
     }
 
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            headKonten(),
-            SizedBox(height: 5),
-            bodyKonten(),
-          ],
+      body: RefreshIndicator(
+        onRefresh: () async {
+          await context.read<AuthProvider>().getConfig();
+        },
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              headKonten(),
+              SizedBox(height: 5),
+              bodyKonten(),
+            ],
+          ),
         ),
       ),
     );

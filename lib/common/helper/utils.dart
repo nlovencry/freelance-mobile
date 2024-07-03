@@ -2,7 +2,7 @@
 // import 'dart:io';
 // import 'dart:typed_data';
 
-// import 'package:mata/helper/currencies.dart';
+// import 'package:hy_tutorial/helper/currencies.dart';
 // import 'package:flutter/material.dart';
 // import 'package:image_picker/image_picker.dart';
 

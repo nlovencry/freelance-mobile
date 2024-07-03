@@ -37,32 +37,37 @@ class _SplashViewState extends State<SplashView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.transparent,
+      backgroundColor: const Color.fromRGBO(0, 0, 0, 0),
       body: Container(
         width: double.infinity,
         height: double.infinity,
-        decoration: BoxDecoration(
-          color: Colors.white,
-        ),
+        color: Colors.white,
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            CircleAvatar(
-              backgroundColor: Colors.grey.shade300,
-              radius: 60,
+            Container(
+              width: 200,
+              height: 200,
+              child: Image.asset(
+                'assets/images/img_splashscreen.png',
+                width: 200,
+                height: 200,
+              ),
             ),
-            SizedBox(
-              height: 180,
-            ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                SizedBox(
-                    height: 70,
-                    child: Image.asset('assets/images/img_splashscreen.png')),
-                Constant.xSizedBox24,
-              ],
-            )
+            // SizedBox(height: 180),
+            // Column(
+            //   mainAxisAlignment: MainAxisAlignment.end,
+            //   children: [
+            //     Text("App Name: ${AppConfig.shared.appName}"),
+            //     Text("Base URL: ${AppConfig.shared.baseUrl}"),
+            //     Text("Flavor: ${AppConfig.shared.flavor}"),
+            //     Container(
+            //         color: const Color.fromARGB(255, 156, 154, 157),
+            //         width: 70,
+            //         height: 70),
+            //     Constant.xSizedBox24,
+            //   ],
+            // )
           ],
         ),
       ),

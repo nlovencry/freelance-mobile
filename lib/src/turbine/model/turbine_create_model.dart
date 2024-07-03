@@ -4,10 +4,10 @@
 class TurbineCreateModelDataDetailDataUpperD {
 /*
 {
-  "1": 55,
-  "2": 55,
-  "3": 55,
-  "4": 55
+  "1": 51,
+  "2": 52,
+  "3": 51,
+  "4": 52
 } 
 */
 
@@ -41,10 +41,10 @@ class TurbineCreateModelDataDetailDataUpperD {
 class TurbineCreateModelDataDetailDataUpperC {
 /*
 {
-  "1": 46,
-  "2": 45,
-  "3": 46,
-  "4": 46
+  "1": 51,
+  "2": 51,
+  "3": 51,
+  "4": 51
 } 
 */
 
@@ -78,10 +78,10 @@ class TurbineCreateModelDataDetailDataUpperC {
 class TurbineCreateModelDataDetailDataUpperB {
 /*
 {
-  "1": 48,
-  "2": 48,
-  "3": 48,
-  "4": 48
+  "1": 51,
+  "2": 52,
+  "3": 51,
+  "4": 52
 } 
 */
 
@@ -115,10 +115,10 @@ class TurbineCreateModelDataDetailDataUpperB {
 class TurbineCreateModelDataDetailDataUpperA {
 /*
 {
-  "1": 50,
-  "2": 50,
-  "3": 50,
-  "4": 50
+  "1": 48,
+  "2": 48,
+  "3": 48,
+  "4": 49
 } 
 */
 
@@ -153,28 +153,28 @@ class TurbineCreateModelDataDetailDataUpper {
 /*
 {
   "A": {
-    "1": 50,
-    "2": 50,
-    "3": 50,
-    "4": 50
-  },
-  "B": {
     "1": 48,
     "2": 48,
     "3": 48,
-    "4": 48
+    "4": 49
+  },
+  "B": {
+    "1": 51,
+    "2": 52,
+    "3": 51,
+    "4": 52
   },
   "C": {
-    "1": 46,
-    "2": 45,
-    "3": 46,
-    "4": 46
+    "1": 51,
+    "2": 51,
+    "3": 51,
+    "4": 51
   },
   "D": {
-    "1": 55,
-    "2": 55,
-    "3": 55,
-    "4": 55
+    "1": 51,
+    "2": 52,
+    "3": 51,
+    "4": 52
   }
 } 
 */
@@ -225,16 +225,16 @@ class TurbineCreateModelDataDetailDataUpper {
 class TurbineCreateModelDataDetailDataTurbineD {
 /*
 {
-  "1": 40.5,
-  "2": 40.5,
-  "3": 40.5,
-  "4": 41
+  "1": 51,
+  "2": 51,
+  "3": 52,
+  "4": 51
 } 
 */
 
-  double? the1;
-  double? the2;
-  double? the3;
+  int? the1;
+  int? the2;
+  int? the3;
   int? the4;
 
   TurbineCreateModelDataDetailDataTurbineD({
@@ -244,9 +244,9 @@ class TurbineCreateModelDataDetailDataTurbineD {
     this.the4,
   });
   TurbineCreateModelDataDetailDataTurbineD.fromJson(Map<String, dynamic> json) {
-    the1 = json['1']?.toDouble();
-    the2 = json['2']?.toDouble();
-    the3 = json['3']?.toDouble();
+    the1 = json['1']?.toInt();
+    the2 = json['2']?.toInt();
+    the3 = json['3']?.toInt();
     the4 = json['4']?.toInt();
   }
   Map<String, dynamic> toJson() {
@@ -262,10 +262,10 @@ class TurbineCreateModelDataDetailDataTurbineD {
 class TurbineCreateModelDataDetailDataTurbineC {
 /*
 {
-  "1": 48,
-  "2": 48,
-  "3": 48,
-  "4": 48
+  "1": 50,
+  "2": 50,
+  "3": 50,
+  "4": 50
 } 
 */
 
@@ -299,17 +299,17 @@ class TurbineCreateModelDataDetailDataTurbineC {
 class TurbineCreateModelDataDetailDataTurbineB {
 /*
 {
-  "1": 42,
-  "2": 42,
-  "3": 42,
-  "4": 42.5
+  "1": 51,
+  "2": 51,
+  "3": 51,
+  "4": 51
 } 
 */
 
   int? the1;
   int? the2;
   int? the3;
-  double? the4;
+  int? the4;
 
   TurbineCreateModelDataDetailDataTurbineB({
     this.the1,
@@ -321,7 +321,7 @@ class TurbineCreateModelDataDetailDataTurbineB {
     the1 = json['1']?.toInt();
     the2 = json['2']?.toInt();
     the3 = json['3']?.toInt();
-    the4 = json['4']?.toDouble();
+    the4 = json['4']?.toInt();
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
@@ -336,10 +336,10 @@ class TurbineCreateModelDataDetailDataTurbineB {
 class TurbineCreateModelDataDetailDataTurbineA {
 /*
 {
-  "1": 50,
-  "2": 50,
-  "3": 50,
-  "4": 50
+  "1": 43,
+  "2": 43,
+  "3": 43,
+  "4": 41
 } 
 */
 
@@ -374,28 +374,28 @@ class TurbineCreateModelDataDetailDataTurbine {
 /*
 {
   "A": {
+    "1": 43,
+    "2": 43,
+    "3": 43,
+    "4": 41
+  },
+  "B": {
+    "1": 51,
+    "2": 51,
+    "3": 51,
+    "4": 51
+  },
+  "C": {
     "1": 50,
     "2": 50,
     "3": 50,
     "4": 50
   },
-  "B": {
-    "1": 42,
-    "2": 42,
-    "3": 42,
-    "4": 42.5
-  },
-  "C": {
-    "1": 48,
-    "2": 48,
-    "3": 48,
-    "4": 48
-  },
   "D": {
-    "1": 40.5,
-    "2": 40.5,
-    "3": 40.5,
-    "4": 41
+    "1": 51,
+    "2": 51,
+    "3": 52,
+    "4": 51
   }
 } 
 */
@@ -446,7 +446,7 @@ class TurbineCreateModelDataDetailDataTurbine {
 class TurbineCreateModelDataDetailDataClutchD {
 /*
 {
-  "1": 51,
+  "1": 52,
   "2": 51,
   "3": 51,
   "4": 51
@@ -483,10 +483,10 @@ class TurbineCreateModelDataDetailDataClutchD {
 class TurbineCreateModelDataDetailDataClutchC {
 /*
 {
-  "1": 46,
-  "2": 46,
-  "3": 46,
-  "4": 46
+  "1": 51,
+  "2": 51,
+  "3": 51,
+  "4": 51
 } 
 */
 
@@ -520,10 +520,10 @@ class TurbineCreateModelDataDetailDataClutchC {
 class TurbineCreateModelDataDetailDataClutchB {
 /*
 {
-  "1": 46,
-  "2": 46,
-  "3": 46,
-  "4": 46
+  "1": 48,
+  "2": 48,
+  "3": 48,
+  "4": 48
 } 
 */
 
@@ -557,10 +557,10 @@ class TurbineCreateModelDataDetailDataClutchB {
 class TurbineCreateModelDataDetailDataClutchA {
 /*
 {
-  "1": 50,
-  "2": 50,
-  "3": 50,
-  "4": 50
+  "1": 52,
+  "2": 51,
+  "3": 51,
+  "4": 51
 } 
 */
 
@@ -595,25 +595,25 @@ class TurbineCreateModelDataDetailDataClutch {
 /*
 {
   "A": {
-    "1": 50,
-    "2": 50,
-    "3": 50,
-    "4": 50
+    "1": 52,
+    "2": 51,
+    "3": 51,
+    "4": 51
   },
   "B": {
-    "1": 46,
-    "2": 46,
-    "3": 46,
-    "4": 46
+    "1": 48,
+    "2": 48,
+    "3": 48,
+    "4": 48
   },
   "C": {
-    "1": 46,
-    "2": 46,
-    "3": 46,
-    "4": 46
+    "1": 51,
+    "2": 51,
+    "3": 51,
+    "4": 51
   },
   "D": {
-    "1": 51,
+    "1": 52,
     "2": 51,
     "3": 51,
     "4": 51
@@ -669,25 +669,25 @@ class TurbineCreateModelDataDetailData {
 {
   "Clutch": {
     "A": {
-      "1": 50,
-      "2": 50,
-      "3": 50,
-      "4": 50
+      "1": 52,
+      "2": 51,
+      "3": 51,
+      "4": 51
     },
     "B": {
-      "1": 46,
-      "2": 46,
-      "3": 46,
-      "4": 46
+      "1": 48,
+      "2": 48,
+      "3": 48,
+      "4": 48
     },
     "C": {
-      "1": 46,
-      "2": 46,
-      "3": 46,
-      "4": 46
+      "1": 51,
+      "2": 51,
+      "3": 51,
+      "4": 51
     },
     "D": {
-      "1": 51,
+      "1": 52,
       "2": 51,
       "3": 51,
       "4": 51
@@ -695,54 +695,54 @@ class TurbineCreateModelDataDetailData {
   },
   "Turbine": {
     "A": {
+      "1": 43,
+      "2": 43,
+      "3": 43,
+      "4": 41
+    },
+    "B": {
+      "1": 51,
+      "2": 51,
+      "3": 51,
+      "4": 51
+    },
+    "C": {
       "1": 50,
       "2": 50,
       "3": 50,
       "4": 50
     },
-    "B": {
-      "1": 42,
-      "2": 42,
-      "3": 42,
-      "4": 42.5
-    },
-    "C": {
-      "1": 48,
-      "2": 48,
-      "3": 48,
-      "4": 48
-    },
     "D": {
-      "1": 40.5,
-      "2": 40.5,
-      "3": 40.5,
-      "4": 41
+      "1": 51,
+      "2": 51,
+      "3": 52,
+      "4": 51
     }
   },
   "Upper": {
     "A": {
-      "1": 50,
-      "2": 50,
-      "3": 50,
-      "4": 50
-    },
-    "B": {
       "1": 48,
       "2": 48,
       "3": 48,
-      "4": 48
+      "4": 49
+    },
+    "B": {
+      "1": 51,
+      "2": 52,
+      "3": 51,
+      "4": 52
     },
     "C": {
-      "1": 46,
-      "2": 45,
-      "3": 46,
-      "4": 46
+      "1": 51,
+      "2": 51,
+      "3": 51,
+      "4": 51
     },
     "D": {
-      "1": 55,
-      "2": 55,
-      "3": 55,
-      "4": 55
+      "1": 51,
+      "2": 52,
+      "3": 51,
+      "4": 52
     }
   }
 } 
@@ -786,9 +786,9 @@ class TurbineCreateModelDataDetailData {
 class TurbineCreateModelDataChartBD {
 /*
 {
-  "Clutch": "-2.000000|0",
-  "Turbine": "-8.500000|424.000000",
-  "Upper": "0|440.000000"
+  "Clutch": "3.250000|0",
+  "Turbine": "0.250000|7000.000000",
+  "Upper": "0|5000.000000"
 } 
 */
 
@@ -818,9 +818,9 @@ class TurbineCreateModelDataChartBD {
 class TurbineCreateModelDataChartAC {
 /*
 {
-  "Clutch": "0.000000|0",
-  "Turbine": "2.250000|424.000000",
-  "Upper": "0|440.000000"
+  "Clutch": "-3.000000|0",
+  "Turbine": "4.750000|7000.000000",
+  "Upper": "0|5000.000000"
 } 
 */
 
@@ -851,16 +851,16 @@ class TurbineCreateModelDataChart {
 /*
 {
   "AC": {
-    "Clutch": "0.000000|0",
-    "Turbine": "2.250000|424.000000",
-    "Upper": "0|440.000000"
+    "Clutch": "-3.000000|0",
+    "Turbine": "4.750000|7000.000000",
+    "Upper": "0|5000.000000"
   },
   "BD": {
-    "Clutch": "-2.000000|0",
-    "Turbine": "-8.500000|424.000000",
-    "Upper": "0|440.000000"
+    "Clutch": "3.250000|0",
+    "Turbine": "0.250000|7000.000000",
+    "Upper": "0|5000.000000"
   },
-  "Upper": "0.802517|5.422861"
+  "Upper": "24.792101|9.896267"
 } 
 */
 
@@ -898,10 +898,10 @@ class TurbineCreateModelDataChart {
 class TurbineCreateModelDataShaft {
 /*
 {
-  "GenBearingToCoupling": 440,
-  "CouplingToTurbine": 424,
-  "Total": 864,
-  "Ratio": 0.5092592592592593
+  "GenBearingToCoupling": 5000,
+  "CouplingToTurbine": 7000,
+  "Total": 12000,
+  "Ratio": 0.4166666666666667
 } 
 */
 
@@ -935,49 +935,49 @@ class TurbineCreateModelDataShaft {
 class TurbineCreateModelData {
 /*
 {
-  "Id": "01J0S8N8MN5PJFNY1VBE43E358",
-  "TowerName": "PLTA Kebumen - 0H823Z9",
+  "Id": "01J1WSYW0G5VRCRB599NA6P1A5",
+  "TowerName": "PLTA Lodoyo - 1",
   "Shaft": {
-    "GenBearingToCoupling": 440,
-    "CouplingToTurbine": 424,
-    "Total": 864,
-    "Ratio": 0.5092592592592593
+    "GenBearingToCoupling": 5000,
+    "CouplingToTurbine": 7000,
+    "Total": 12000,
+    "Ratio": 0.4166666666666667
   },
   "Chart": {
     "AC": {
-      "Clutch": "0.000000|0",
-      "Turbine": "2.250000|424.000000",
-      "Upper": "0|440.000000"
+      "Clutch": "-3.000000|0",
+      "Turbine": "4.750000|7000.000000",
+      "Upper": "0|5000.000000"
     },
     "BD": {
-      "Clutch": "-2.000000|0",
-      "Turbine": "-8.500000|424.000000",
-      "Upper": "0|440.000000"
+      "Clutch": "3.250000|0",
+      "Turbine": "0.250000|7000.000000",
+      "Upper": "0|5000.000000"
     },
-    "Upper": "0.802517|5.422861"
+    "Upper": "24.792101|9.896267"
   },
   "DetailData": {
     "Clutch": {
       "A": {
-        "1": 50,
-        "2": 50,
-        "3": 50,
-        "4": 50
+        "1": 52,
+        "2": 51,
+        "3": 51,
+        "4": 51
       },
       "B": {
-        "1": 46,
-        "2": 46,
-        "3": 46,
-        "4": 46
+        "1": 48,
+        "2": 48,
+        "3": 48,
+        "4": 48
       },
       "C": {
-        "1": 46,
-        "2": 46,
-        "3": 46,
-        "4": 46
+        "1": 51,
+        "2": 51,
+        "3": 51,
+        "4": 51
       },
       "D": {
-        "1": 51,
+        "1": 52,
         "2": 51,
         "3": 51,
         "4": 51
@@ -985,62 +985,63 @@ class TurbineCreateModelData {
     },
     "Turbine": {
       "A": {
+        "1": 43,
+        "2": 43,
+        "3": 43,
+        "4": 41
+      },
+      "B": {
+        "1": 51,
+        "2": 51,
+        "3": 51,
+        "4": 51
+      },
+      "C": {
         "1": 50,
         "2": 50,
         "3": 50,
         "4": 50
       },
-      "B": {
-        "1": 42,
-        "2": 42,
-        "3": 42,
-        "4": 42.5
-      },
-      "C": {
-        "1": 48,
-        "2": 48,
-        "3": 48,
-        "4": 48
-      },
       "D": {
-        "1": 40.5,
-        "2": 40.5,
-        "3": 40.5,
-        "4": 41
+        "1": 51,
+        "2": 51,
+        "3": 52,
+        "4": 51
       }
     },
     "Upper": {
       "A": {
-        "1": 50,
-        "2": 50,
-        "3": 50,
-        "4": 50
-      },
-      "B": {
         "1": 48,
         "2": 48,
         "3": 48,
-        "4": 48
+        "4": 49
+      },
+      "B": {
+        "1": 51,
+        "2": 52,
+        "3": 51,
+        "4": 52
       },
       "C": {
-        "1": 46,
-        "2": 45,
-        "3": 46,
-        "4": 46
+        "1": 51,
+        "2": 51,
+        "3": 51,
+        "4": 51
       },
       "D": {
-        "1": 55,
-        "2": 55,
-        "3": 55,
-        "4": 55
+        "1": 51,
+        "2": 52,
+        "3": 51,
+        "4": 52
       }
     }
   },
-  "ACCrockedness": 0.8025173611111114,
-  "BDCrockedness": 5.422860939643349,
-  "TotalCrockedness": 2.4950708007498426,
-  "CreatedAt": "2024-06-20 05:07:44",
-  "CreatedBy": "aditya fullname"
+  "ACCrockedness": 24.792100694444446,
+  "BDCrockedness": 9.896267361111112,
+  "TotalCrockedness": 5.889683188046328,
+  "CreatedAt": "2024-07-04 00:23:30",
+  "CreatedBy": "aditya fullname",
+  "Status": false
 } 
 */
 
@@ -1054,6 +1055,7 @@ class TurbineCreateModelData {
   double? TotalCrockedness;
   String? CreatedAt;
   String? CreatedBy;
+  bool? Status;
 
   TurbineCreateModelData({
     this.Id,
@@ -1066,6 +1068,7 @@ class TurbineCreateModelData {
     this.TotalCrockedness,
     this.CreatedAt,
     this.CreatedBy,
+    this.Status,
   });
   TurbineCreateModelData.fromJson(Map<String, dynamic> json) {
     Id = json['Id']?.toString();
@@ -1084,6 +1087,7 @@ class TurbineCreateModelData {
     TotalCrockedness = json['TotalCrockedness']?.toDouble();
     CreatedAt = json['CreatedAt']?.toString();
     CreatedBy = json['CreatedBy']?.toString();
+    Status = json['Status'];
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
@@ -1103,6 +1107,7 @@ class TurbineCreateModelData {
     data['TotalCrockedness'] = TotalCrockedness;
     data['CreatedAt'] = CreatedAt;
     data['CreatedBy'] = CreatedBy;
+    data['Status'] = Status;
     return data;
   }
 }
@@ -1114,49 +1119,49 @@ class TurbineCreateModel {
   "StatusCode": 200,
   "Message": "berhasil menambahkan data turbine baru",
   "Data": {
-    "Id": "01J0S8N8MN5PJFNY1VBE43E358",
-    "TowerName": "PLTA Kebumen - 0H823Z9",
+    "Id": "01J1WSYW0G5VRCRB599NA6P1A5",
+    "TowerName": "PLTA Lodoyo - 1",
     "Shaft": {
-      "GenBearingToCoupling": 440,
-      "CouplingToTurbine": 424,
-      "Total": 864,
-      "Ratio": 0.5092592592592593
+      "GenBearingToCoupling": 5000,
+      "CouplingToTurbine": 7000,
+      "Total": 12000,
+      "Ratio": 0.4166666666666667
     },
     "Chart": {
       "AC": {
-        "Clutch": "0.000000|0",
-        "Turbine": "2.250000|424.000000",
-        "Upper": "0|440.000000"
+        "Clutch": "-3.000000|0",
+        "Turbine": "4.750000|7000.000000",
+        "Upper": "0|5000.000000"
       },
       "BD": {
-        "Clutch": "-2.000000|0",
-        "Turbine": "-8.500000|424.000000",
-        "Upper": "0|440.000000"
+        "Clutch": "3.250000|0",
+        "Turbine": "0.250000|7000.000000",
+        "Upper": "0|5000.000000"
       },
-      "Upper": "0.802517|5.422861"
+      "Upper": "24.792101|9.896267"
     },
     "DetailData": {
       "Clutch": {
         "A": {
-          "1": 50,
-          "2": 50,
-          "3": 50,
-          "4": 50
+          "1": 52,
+          "2": 51,
+          "3": 51,
+          "4": 51
         },
         "B": {
-          "1": 46,
-          "2": 46,
-          "3": 46,
-          "4": 46
+          "1": 48,
+          "2": 48,
+          "3": 48,
+          "4": 48
         },
         "C": {
-          "1": 46,
-          "2": 46,
-          "3": 46,
-          "4": 46
+          "1": 51,
+          "2": 51,
+          "3": 51,
+          "4": 51
         },
         "D": {
-          "1": 51,
+          "1": 52,
           "2": 51,
           "3": 51,
           "4": 51
@@ -1164,62 +1169,63 @@ class TurbineCreateModel {
       },
       "Turbine": {
         "A": {
+          "1": 43,
+          "2": 43,
+          "3": 43,
+          "4": 41
+        },
+        "B": {
+          "1": 51,
+          "2": 51,
+          "3": 51,
+          "4": 51
+        },
+        "C": {
           "1": 50,
           "2": 50,
           "3": 50,
           "4": 50
         },
-        "B": {
-          "1": 42,
-          "2": 42,
-          "3": 42,
-          "4": 42.5
-        },
-        "C": {
-          "1": 48,
-          "2": 48,
-          "3": 48,
-          "4": 48
-        },
         "D": {
-          "1": 40.5,
-          "2": 40.5,
-          "3": 40.5,
-          "4": 41
+          "1": 51,
+          "2": 51,
+          "3": 52,
+          "4": 51
         }
       },
       "Upper": {
         "A": {
-          "1": 50,
-          "2": 50,
-          "3": 50,
-          "4": 50
-        },
-        "B": {
           "1": 48,
           "2": 48,
           "3": 48,
-          "4": 48
+          "4": 49
+        },
+        "B": {
+          "1": 51,
+          "2": 52,
+          "3": 51,
+          "4": 52
         },
         "C": {
-          "1": 46,
-          "2": 45,
-          "3": 46,
-          "4": 46
+          "1": 51,
+          "2": 51,
+          "3": 51,
+          "4": 51
         },
         "D": {
-          "1": 55,
-          "2": 55,
-          "3": 55,
-          "4": 55
+          "1": 51,
+          "2": 52,
+          "3": 51,
+          "4": 52
         }
       }
     },
-    "ACCrockedness": 0.8025173611111114,
-    "BDCrockedness": 5.422860939643349,
-    "TotalCrockedness": 2.4950708007498426,
-    "CreatedAt": "2024-06-20 05:07:44",
-    "CreatedBy": "aditya fullname"
+    "ACCrockedness": 24.792100694444446,
+    "BDCrockedness": 9.896267361111112,
+    "TotalCrockedness": 5.889683188046328,
+    "CreatedAt": "2024-07-04 00:23:30",
+    "CreatedBy": "aditya fullname",
+    "Status": false
   }
 } 
 */

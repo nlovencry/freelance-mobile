@@ -17,7 +17,7 @@ class Constant {
   static const String DOMAIN2 = "103.59.94.19";
   static const String BASE_API_FULL = "http://${DOMAIN}";
   static const String BASE_API_FULL2 = "http://${DOMAIN2}";
-  static const String APP_NAME = "MATA";
+  static const String APP_NAME = "HY TUTORIAL";
 
   /// COlORS
   ///
@@ -469,6 +469,7 @@ class Constant {
   static const String kSetPrefConfigLon = "config_lon";
   static const String kSetPrefConfigRadius = "radius";
   static const String kSetPrefConfigRadiusType = "radius_type";
+  static const String kSetPrefConfigStatus = "config_status";
 
   static const String kCheckIn = "check_in";
   static const String kCheckOut = "check_out";

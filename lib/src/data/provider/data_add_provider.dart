@@ -58,6 +58,10 @@ class DataAddProvider extends BaseController with ChangeNotifier {
     koplingTurbinC.clear();
     totalC.clear();
     rasioC.clear();
+    boltQtyC.clear();
+    currentTorqueC.clear();
+    maxTorqueC.clear();
+    differenceQtyC.clear();
     wDataUpperRow.clear();
     wDataClutchRow.clear();
     wDataTurbineRow.clear();
@@ -383,6 +387,12 @@ class DataAddProvider extends BaseController with ChangeNotifier {
             onTimeout: () async =>
                 Future.value((await Geolocator.getLastKnownPosition())),
           );
+          if (geo.isMocked) {
+            Utils.showFailed(
+                msg:
+                    'Anda menggunakan fake GPS, harap matikan terlebih dahulu');
+            throw 'Anda menggunakan fake GPS, harap matikan terlebih dahulu';
+          }
           SharedPreferences prefs = await SharedPreferences.getInstance();
           double? lat = prefs.getDouble(Constant.kSetPrefConfigLat) ?? 0;
           double? lon = prefs.getDouble(Constant.kSetPrefConfigLon) ?? 0;
@@ -405,7 +415,7 @@ class DataAddProvider extends BaseController with ChangeNotifier {
           log("LAT API : ${lat}");
           log("LON API : ${lon}");
           if (geo.latitude != 0 && lat != 0) {
-            if (distance <= radius || !configStatus) {
+            if (distance <= radius || configStatus == true) {
               final response = await createTurbines();
               if (response.Success == true) {
                 Utils.showSuccess(msg: response.Message ?? "Sukses");
@@ -500,7 +510,7 @@ class DataAddProvider extends BaseController with ChangeNotifier {
       createDataParam = CreateDataParam();
       final model = TurbineCreateModel.fromJson(jsonDecode(response.body));
       turbineCreateModel = model;
-      // notifyListeners();
+      notifyListeners();
       setDataChart();
       loading(false);
       return model;

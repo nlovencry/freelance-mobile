@@ -159,11 +159,10 @@ class TurbineProvider extends BaseController with ChangeNotifier {
       String endDateSelected =
           DateFormat("yyyy-MM-dd").format(endDate ?? DateTime.now());
 
-      Map<String, String> param = {
-        'Page': '$page',
-        'Search': turbineSearchC.text,
-        'PerPage': "10"
-      };
+      String url = Constant.BASE_API_FULL + '/turbines';
+      Map<String, String> param = {};
+      if (turbineSearchC.text.isNotEmpty)
+        param.addAll({'Search': turbineSearchC.text});
       if (startDate != null) param.addAll({'StartDate': startDateSelected});
       if (endDate != null) param.addAll({'EndDate': endDateSelected});
       if (ascending) {
@@ -185,10 +184,10 @@ class TurbineProvider extends BaseController with ChangeNotifier {
       if (next != null) param.addAll({'Next': next ?? ''});
       log("PANGGIL");
       if (_pagingController.itemList?.length != 0) {
-        await Future.delayed(Duration(seconds: 2));
+        await Future.delayed(Duration(seconds: 1));
       }
       final response = await get(
-        Constant.BASE_API_FULL + '/turbines',
+        url,
         body: param,
       );
 

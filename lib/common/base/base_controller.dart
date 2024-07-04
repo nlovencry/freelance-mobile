@@ -65,15 +65,25 @@ class BaseController<S extends BaseState> {
     log("==== PARAMETERS ====");
     log("URL : $url");
     log("BODY : $body");
-    log("HEADERS : ${h}");
-    if (body != null) url = url + '?';
-    // String param = Uri(queryParameters: body).query;
-    // final uri = Uri.parse('$url?$param');
-    // final bodyUri = Uri.https(Constant.DOMAIN, '$url', body);
+    // log("HEADERS : ${h}");
 
-    Response response = await http.get(Uri.parse(url), headers: h).timeout(
-        Duration(seconds: 30),
-        onTimeout: () => http.Response("Timeout", 504));
+    String param = Uri(queryParameters: body).query;
+    log("PARAM : ${param}");
+
+    final uri = Uri.parse('$url?$param');
+    log("URI PATH : ${uri.path}");
+
+    Response response = await http
+        .get(
+            Uri.parse(Constant.BASE_API_FULL +
+                uri.path +
+                '${body != null ? '?' : ''}' +
+                param),
+            headers: h)
+        .timeout(
+          Duration(seconds: 30),
+          onTimeout: () => http.Response("Timeout", 504),
+        );
     log("RESPONSE GET $url : ${response.body}");
     log("====================");
 
@@ -135,7 +145,7 @@ class BaseController<S extends BaseState> {
       log("==== PARAMETERS ====");
       log("URL : $url");
       log("BODY : $body");
-      log("HEADERS : ${h}");
+      // log("HEADERS : ${h}");
       final uri = Uri.parse(url);
       // final bodyUri = Uri.https(uri.authority, uri.path, body);
       Response response = await http

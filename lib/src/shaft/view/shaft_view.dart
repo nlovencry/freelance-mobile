@@ -581,16 +581,22 @@ class _ShaftViewState extends State<ShaftView> with TickerProviderStateMixin {
                         SizedBox(
                           width: 50,
                           height: 50,
-                          child: Image.asset(
-                            width: 50,
-                            height: 50,
-                            'assets/icons/ic-${status == true ? 'sad' : 'smile'}.png',
-                          ),
+                          child: status == true
+                              ? Image.asset(
+                                  width: 50,
+                                  height: 50,
+                                  'assets/icons/ic-smile.png',
+                                )
+                              : Image.asset(
+                                  width: 50,
+                                  height: 50,
+                                  'assets/icons/ic-sad.png',
+                                ),
                         ),
                         Constant.xSizedBox16,
                         Expanded(
                           child: Text(
-                            'Total Kebengkokan ${(totalCrockedness ?? 0) >= 3 ? '3' : '${(totalCrockedness ?? 0).round()}'}/3',
+                            'Total Run Out ${(totalCrockedness ?? 0) >= 3 ? '3' : '${(totalCrockedness ?? 0).round()}'}/3',
                             textAlign: TextAlign.left,
                             style: TextStyle(
                               fontWeight: FontWeight.bold,

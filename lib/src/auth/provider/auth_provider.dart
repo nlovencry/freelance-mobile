@@ -128,7 +128,7 @@ class AuthProvider extends BaseController with ChangeNotifier {
       await prefs.setString(Constant.kSetPrefConfigRadiusType,
           model.Data?.CoverageAreaType ?? '');
       await prefs.setBool(
-          Constant.kSetPrefConfigRadiusType, model.Data?.Status ?? false);
+          Constant.kSetPrefConfigStatus, model.Data?.Status ?? false);
 
       loading(false);
       // return model;

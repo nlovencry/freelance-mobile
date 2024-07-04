@@ -29,10 +29,10 @@ class _RiwayatViewState extends BaseState<RiwayatView> {
     if ((turbineP.pagingController.itemList ?? []).isEmpty) {
       turbineP.pagingController = PagingController(firstPageKey: 1)
         ..addPageRequestListener((pageKey) async {
-          await Future.delayed(Duration(seconds: 1));
           turbineP.fetchTurbine(page: pageKey);
         });
     } else {
+      turbineP.next = null;
       turbineP.pagingController.refresh();
     }
     // turbineP.fetchTurbine(withLoading: true);
@@ -67,6 +67,7 @@ class _RiwayatViewState extends BaseState<RiwayatView> {
             //   await context
             //       .read<TurbineProvider>()
             //       .fetchTurbine(withLoading: true);
+            turbineP.next = null;
             pagingC.refresh();
             // });
           },
@@ -216,6 +217,7 @@ class _RiwayatViewState extends BaseState<RiwayatView> {
               ),
               CustomButton.mainButton("View Result", () {
                 Navigator.pop(context);
+                turbineP.next = null;
                 pagingC.refresh();
                 turbineP.clearDate();
               }),
@@ -243,7 +245,10 @@ class _RiwayatViewState extends BaseState<RiwayatView> {
             // onRefresh: () async => await context
             //     .read<TurbineProvider>()
             //     .fetchTurbine(withLoading: true),
-            onRefresh: () async => pagingC.refresh(),
+            onRefresh: () async {
+              turbineP.next = null;
+              pagingC.refresh();
+            },
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
@@ -320,8 +325,11 @@ class _RiwayatViewState extends BaseState<RiwayatView> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                        ShaftDetailView(id: item.Id ?? '')));
+                                        ShaftDetailView(id: item.Id ?? ''
+                                            // id: '01J1WP5S5TSKQC11P160SPA9GX',
+                                            )));
                             if (f != null) {
+                              turbineP.next = null;
                               pagingC.refresh();
                             }
                             // turbineP.turbineModelData =

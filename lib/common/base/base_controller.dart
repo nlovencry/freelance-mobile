@@ -8,9 +8,11 @@ import 'package:http/http.dart' as http;
 import 'package:hy_tutorial/common/component/custom_alert.dart';
 import 'package:hy_tutorial/common/helper/constant.dart';
 import 'package:hy_tutorial/main.dart';
+import 'package:hy_tutorial/src/auth/provider/auth_provider.dart';
 import 'package:hy_tutorial/src/splash_view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:provider/provider.dart';
 import '../../utils/utils.dart';
 import '../helper/xenolog.dart';
 import 'base_state.dart';
@@ -101,8 +103,16 @@ class BaseController<S extends BaseState> {
     // if (kDebugMode) {    // XenoLog("GET").save(log2, alwaysLog: true);
 
     // }
-
-    if (response.body.contains("Unauthorized")) {
+    Utils.dismissLoading();
+    if (response.body.contains("Timeout")) {
+      BuildContext? context = NavigationService.navigatorKey.currentContext;
+      if (context != null) {
+        CustomAlert.showSnackBar(context, 'Timeout', true);
+        throw 'Timeout';
+      }
+    }
+    if (response.body.contains("Unauthorized") ||
+        response.body.contains("missing authorization header")) {
       _preferences!.clear();
       BuildContext? context = NavigationService.navigatorKey.currentContext;
       if (context != null) {
@@ -110,12 +120,22 @@ class BaseController<S extends BaseState> {
         Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
       }
     }
-    if (response.body.contains("invalid token")) {
-      _preferences!.clear();
+    if (response.body.contains("refresh token tidak valid") ||
+        response.body.contains("refresh token kedaluarsa")) {
       BuildContext? context = NavigationService.navigatorKey.currentContext;
+      _preferences!.clear();
       if (context != null) {
         CustomAlert.showSnackBar(context, 'Harap Login Ulang', true);
         Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+      }
+    }
+    if (response.body.contains("invalid token") ||
+        response.body.contains("expired token")) {
+      BuildContext? context = NavigationService.navigatorKey.currentContext;
+      if (context != null) {
+        await context.read<AuthProvider>().refreshToken();
+        await get(url, body: body);
+        Utils.dismissLoading();
       }
     }
     if (response.body.contains("Gateway time") ||
@@ -171,8 +191,16 @@ class BaseController<S extends BaseState> {
       // if (kDebugMode) {
       // XenoLog("POST").save(log2, alwaysLog: true);
       // }
-
-      if (response.body.contains("Unauthorized")) {
+      Utils.dismissLoading();
+      if (response.body.contains("Timeout")) {
+        BuildContext? context = NavigationService.navigatorKey.currentContext;
+        if (context != null) {
+          CustomAlert.showSnackBar(context, 'Timeout', true);
+          throw 'Timeout';
+        }
+      }
+      if (response.body.contains("Unauthorized") ||
+          response.body.contains("missing authorization header")) {
         _preferences!.clear();
         BuildContext? context = NavigationService.navigatorKey.currentContext;
         if (context != null) {
@@ -180,12 +208,22 @@ class BaseController<S extends BaseState> {
           Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
         }
       }
-      if (response.body.contains("invalid token")) {
-        _preferences!.clear();
+      if (response.body.contains("refresh token tidak valid") ||
+          response.body.contains("refresh token kedaluarsa")) {
         BuildContext? context = NavigationService.navigatorKey.currentContext;
+        _preferences!.clear();
         if (context != null) {
           CustomAlert.showSnackBar(context, 'Harap Login Ulang', true);
           Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+        }
+      }
+      if (response.body.contains("invalid token") ||
+          response.body.contains("expired token")) {
+        BuildContext? context = NavigationService.navigatorKey.currentContext;
+        if (context != null) {
+          await context.read<AuthProvider>().refreshToken();
+          await post(url, body: body);
+          Utils.dismissLoading();
         }
       }
       if (response.body.contains("Gateway time") ||
@@ -229,8 +267,16 @@ class BaseController<S extends BaseState> {
       // if (kDebugMode) {
       // XenoLog("POST").save(log2, alwaysLog: true);
       // }
-
-      if (response.body.contains("Unauthorized")) {
+      Utils.dismissLoading();
+      if (response.body.contains("Timeout")) {
+        BuildContext? context = NavigationService.navigatorKey.currentContext;
+        if (context != null) {
+          CustomAlert.showSnackBar(context, 'Timeout', true);
+          throw 'Timeout';
+        }
+      }
+      if (response.body.contains("Unauthorized") ||
+          response.body.contains("missing authorization header")) {
         _preferences!.clear();
         BuildContext? context = NavigationService.navigatorKey.currentContext;
         if (context != null) {
@@ -238,12 +284,22 @@ class BaseController<S extends BaseState> {
           Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
         }
       }
-      if (response.body.contains("invalid token")) {
-        _preferences!.clear();
+      if (response.body.contains("refresh token tidak valid") ||
+          response.body.contains("refresh token kedaluarsa")) {
         BuildContext? context = NavigationService.navigatorKey.currentContext;
+        _preferences!.clear();
         if (context != null) {
           CustomAlert.showSnackBar(context, 'Harap Login Ulang', true);
           Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+        }
+      }
+      if (response.body.contains("invalid token") ||
+          response.body.contains("expired token")) {
+        BuildContext? context = NavigationService.navigatorKey.currentContext;
+        if (context != null) {
+          await context.read<AuthProvider>().refreshToken();
+          await post(url, body: body, files: files);
+          Utils.dismissLoading();
         }
       }
       if (response.body.contains("Gateway time") ||
@@ -296,8 +352,16 @@ class BaseController<S extends BaseState> {
       // if (kDebugMode) {
       // XenoLog("POST").save(log2, alwaysLog: true);
       // }
-
-      if (response.body.contains("Unauthorized")) {
+      Utils.dismissLoading();
+      if (response.body.contains("Timeout")) {
+        BuildContext? context = NavigationService.navigatorKey.currentContext;
+        if (context != null) {
+          CustomAlert.showSnackBar(context, 'Timeout', true);
+          throw 'Timeout';
+        }
+      }
+      if (response.body.contains("Unauthorized") ||
+          response.body.contains("missing authorization header")) {
         _preferences!.clear();
         BuildContext? context = NavigationService.navigatorKey.currentContext;
         if (context != null) {
@@ -305,12 +369,22 @@ class BaseController<S extends BaseState> {
           Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
         }
       }
-      if (response.body.contains("invalid token")) {
-        _preferences!.clear();
+      if (response.body.contains("refresh token tidak valid") ||
+          response.body.contains("refresh token kedaluarsa")) {
         BuildContext? context = NavigationService.navigatorKey.currentContext;
+        _preferences!.clear();
         if (context != null) {
           CustomAlert.showSnackBar(context, 'Harap Login Ulang', true);
           Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+        }
+      }
+      if (response.body.contains("invalid token") ||
+          response.body.contains("expired token")) {
+        BuildContext? context = NavigationService.navigatorKey.currentContext;
+        if (context != null) {
+          await context.read<AuthProvider>().refreshToken();
+          await put(url, body: body);
+          Utils.dismissLoading();
         }
       }
       if (response.body.contains("Gateway time") ||
@@ -354,8 +428,16 @@ class BaseController<S extends BaseState> {
       // if (kDebugMode) {
       // XenoLog("POST").save(log2, alwaysLog: true);
       // }
-
-      if (response.body.contains("Unauthorized")) {
+      Utils.dismissLoading();
+      if (response.body.contains("Timeout")) {
+        BuildContext? context = NavigationService.navigatorKey.currentContext;
+        if (context != null) {
+          CustomAlert.showSnackBar(context, 'Timeout', true);
+          throw 'Timeout';
+        }
+      }
+      if (response.body.contains("Unauthorized") ||
+          response.body.contains("missing authorization header")) {
         _preferences!.clear();
         BuildContext? context = NavigationService.navigatorKey.currentContext;
         if (context != null) {
@@ -363,12 +445,22 @@ class BaseController<S extends BaseState> {
           Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
         }
       }
-      if (response.body.contains("invalid token")) {
-        _preferences!.clear();
+      if (response.body.contains("refresh token tidak valid") ||
+          response.body.contains("refresh token kedaluarsa")) {
         BuildContext? context = NavigationService.navigatorKey.currentContext;
+        _preferences!.clear();
         if (context != null) {
           CustomAlert.showSnackBar(context, 'Harap Login Ulang', true);
           Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+        }
+      }
+      if (response.body.contains("invalid token") ||
+          response.body.contains("expired token")) {
+        BuildContext? context = NavigationService.navigatorKey.currentContext;
+        if (context != null) {
+          await context.read<AuthProvider>().refreshToken();
+          await post(url, body: body, files: files);
+          Utils.dismissLoading();
         }
       }
       if (response.body.contains("Gateway time") ||
@@ -382,7 +474,7 @@ class BaseController<S extends BaseState> {
     }
   }
 
-  Future delete(String url, {Map? headers, Map<String, String?>? query}) async {
+  Future delete(String url, {Map? headers, Map<String, String?>? body}) async {
     Map<String, String> h = Map<String, String>();
     h.putIfAbsent('Connection', () => 'Keep-Alive');
     h.putIfAbsent('accept', () => 'application/json');
@@ -391,7 +483,7 @@ class BaseController<S extends BaseState> {
     if (headers != null) h.addAll(headers as Map<String, String>);
 
     final uri = Uri.parse(url);
-    final bodyUri = Uri.https(uri.authority, uri.path, query);
+    final bodyUri = Uri.https(uri.authority, uri.path, body);
 
     log("==== PARAMETERS ====");
     log("URL : $url");
@@ -407,7 +499,7 @@ class BaseController<S extends BaseState> {
             '\r\n' +
         "URL : $url"
             '\r\n' +
-        "BODY : $query"
+        "BODY : $body"
             '\r\n' +
         "RESPONSE DELETE $url : ${response.body}"
             '\r\n' +
@@ -416,21 +508,39 @@ class BaseController<S extends BaseState> {
     // if (kDebugMode) {
     // XenoLog("DELETE").save(log2, alwaysLog: true);
     // }
-
-    if (response.body.contains("Unauthorized")) {
-      _preferences!.clear();
+    Utils.dismissLoading();
+    if (response.body.contains("Timeout")) {
+      BuildContext? context = NavigationService.navigatorKey.currentContext;
+      if (context != null) {
+        CustomAlert.showSnackBar(context, 'Timeout', true);
+        throw 'Timeout';
+      }
+    }
+    if (response.body.contains("Unauthorized") ||
+        response.body.contains("missing authorization header")) {
+      // _preferences!.clear();
       BuildContext? context = NavigationService.navigatorKey.currentContext;
       if (context != null) {
         CustomAlert.showSnackBar(context, 'Harap Login Ulang', true);
         Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
       }
     }
-    if (response.body.contains("invalid token")) {
-      _preferences!.clear();
+    if (response.body.contains("refresh token tidak valid") ||
+        response.body.contains("refresh token kedaluarsa")) {
       BuildContext? context = NavigationService.navigatorKey.currentContext;
+      _preferences!.clear();
       if (context != null) {
         CustomAlert.showSnackBar(context, 'Harap Login Ulang', true);
         Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+      }
+    }
+    if (response.body.contains("invalid token") ||
+        response.body.contains("expired token")) {
+      BuildContext? context = NavigationService.navigatorKey.currentContext;
+      if (context != null) {
+        await context.read<AuthProvider>().refreshToken();
+        await delete(url, body: body);
+        Utils.dismissLoading();
       }
     }
     if (response.body.contains("Gateway time") ||

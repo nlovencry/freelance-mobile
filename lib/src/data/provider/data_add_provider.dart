@@ -84,7 +84,8 @@ class DataAddProvider extends BaseController with ChangeNotifier {
     } else {
       final message = jsonDecode(response.body)["Message"];
       loading(false);
-      throw Exception(message);
+      return TowerModel();
+      // throw Exception(message);
     }
   }
 
@@ -107,7 +108,8 @@ class DataAddProvider extends BaseController with ChangeNotifier {
     } else {
       final message = jsonDecode(response.body)["Message"];
       loading(false);
-      throw Exception(message);
+      return TurbineCreateModel();
+      // throw Exception(message);
     }
   }
 
@@ -130,7 +132,8 @@ class DataAddProvider extends BaseController with ChangeNotifier {
     } else {
       final message = jsonDecode(response.body)["Message"];
       loading(false);
-      throw Exception(message);
+      return TurbineCreateModel();
+      // throw Exception(message);
     }
   }
 
@@ -517,7 +520,8 @@ class DataAddProvider extends BaseController with ChangeNotifier {
     } else {
       final message = jsonDecode(response.body)["Message"];
       loading(false);
-      throw Exception(message);
+      return TurbineCreateModel();
+      // throw Exception(message);
     }
   }
 

@@ -257,8 +257,6 @@ class MyApp extends StatelessWidget {
                 create: (context) => AssetDowntimeProvider()),
             ChangeNotifierProvider<OperationHoursProvider>(
                 create: (context) => OperationHoursProvider()),
-            // ChangeNotifierProvider<ProfileProvider>(
-            //     create: (context) => ProfileProvider()),
             ChangeNotifierProvider<ChangePasswordProvider>(
                 create: (context) => ChangePasswordProvider()),
             ChangeNotifierProvider<WorkOrderProvider>(
@@ -273,34 +271,10 @@ class MyApp extends StatelessWidget {
                 create: (context) => AssetPerformanceProvider()),
             ChangeNotifierProvider<BAProvider>(
                 create: (context) => BAProvider()),
-            // ChangeNotifierProvider<SubAgenProvider>(
-            //     create: (context) => SubAgenProvider()),
-            // ChangeNotifierProvider<JamaahProvider>(
-            //     create: (context) => JamaahProvider()),
-            // ChangeNotifierProvider<PaketProvider>(
-            //     create: (context) => PaketProvider()),
-            // ChangeNotifierProvider<DetailJamaahProvider>(
-            //     create: (context) => DetailJamaahProvider()),
-            // ChangeNotifierProvider<DetailSubAgenProvider>(
-            //     create: (context) => DetailSubAgenProvider()),
-            // ChangeNotifierProvider<JamaahRombonganProvider>(
-            //     create: (context) => JamaahRombonganProvider()),
             ChangeNotifierProvider<RegionProvider>(
                 create: (context) => RegionProvider()),
             ChangeNotifierProvider<NotifikasiProvider>(
                 create: (context) => NotifikasiProvider()),
-            // ChangeNotifierProvider<NotifikasiDetailProvider>(
-            //     create: (context) => NotifikasiDetailProvider()),
-            // ChangeNotifierProvider<KomisiProvider>(
-            //     create: (context) => KomisiProvider()),
-            // ChangeNotifierProvider<TarikKomisiProvider>(
-            //     create: (context) => TarikKomisiProvider()),
-            // ChangeNotifierProvider<RiwayatPenarikanKomisiProvider>(
-            //     create: (context) => RiwayatPenarikanKomisiProvider()),
-            // ChangeNotifierProvider<RiwayatTabunganProvider>(
-            //     create: (context) => RiwayatTabunganProvider()),
-            // ChangeNotifierProvider<DetailPenarikanKomisiProvider>(
-            //     create: (context) => DetailPenarikanKomisiProvider()),
           ],
           child: MaterialApp(
             title: 'HY TUTORIAL',

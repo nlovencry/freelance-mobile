@@ -32,8 +32,12 @@ class _RiwayatViewState extends BaseState<RiwayatView> {
           turbineP.fetchTurbine(page: pageKey);
         });
     } else {
+      turbineP.pagingController.dispose();
       turbineP.next = null;
-      turbineP.pagingController.refresh();
+      turbineP.pagingController = PagingController(firstPageKey: 1)
+        ..addPageRequestListener((pageKey) async {
+          turbineP.fetchTurbine(page: pageKey);
+        });
     }
     // turbineP.fetchTurbine(withLoading: true);
     super.initState();
@@ -324,10 +328,11 @@ class _RiwayatViewState extends BaseState<RiwayatView> {
                             final f = await Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) =>
-                                        ShaftDetailView(id: item.Id ?? ''
-                                            // id: '01J1WP5S5TSKQC11P160SPA9GX',
-                                            )));
+                                    builder: (context) => ShaftDetailView(
+                                          // id: item.Id ?? ''
+                                          id: '01J1YT2GYVWPNJX777WM9S76DC',
+                                          // id: '01J06H7N5A16M6FGP600A6MH0F',
+                                        )));
                             if (f != null) {
                               turbineP.next = null;
                               pagingC.refresh();

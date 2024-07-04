@@ -1,8 +1,10 @@
+import 'dart:developer';
+
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:hy_tutorial/common/helper/constant.dart';
 import 'package:provider/provider.dart';
-
+import 'package:powers/powers.dart';
 import '../../data/provider/data_add_provider.dart';
 
 class UpperChartView extends StatefulWidget {
@@ -43,11 +45,14 @@ class _UpperChartViewState extends State<UpperChartView> {
                   //   ),
                   // ),
                   Expanded(
+                    // child: RotatedBox(
+                    // quarterTurns: 1,
                     child: _Chart(
                       baselineX,
                       (20 - (baselineY + 10)) - 10,
                     ),
-                  )
+                  ),
+                  // )
                 ],
               ),
             ),
@@ -89,8 +94,8 @@ class _Chart extends StatelessWidget {
       );
     }
     return Padding(
-      padding: const EdgeInsets.all(0),
-      child: Text('A', style: style),
+      padding: const EdgeInsets.only(bottom: 4),
+      child: Text('B', style: style),
       // child: Text(meta.formattedValue, style: style),
     );
   }
@@ -110,8 +115,8 @@ class _Chart extends StatelessWidget {
       );
     }
     return Padding(
-      padding: const EdgeInsets.all(0),
-      child: Text('C', style: style),
+      padding: const EdgeInsets.only(bottom: 5),
+      child: Text('D', style: style),
       // child: Text(meta.formattedValue, style: style),
     );
   }
@@ -132,8 +137,8 @@ class _Chart extends StatelessWidget {
     }
 
     return Padding(
-      padding: const EdgeInsets.only(right: 4),
-      child: Text('B', style: style),
+      padding: const EdgeInsets.only(right: 0),
+      child: Text('C', style: style),
       // child: Text(meta.formattedValue, style: style),
     );
   }
@@ -154,8 +159,8 @@ class _Chart extends StatelessWidget {
     }
 
     return Padding(
-      padding: const EdgeInsets.only(left: 3, right: 4),
-      child: Text('D', style: style),
+      padding: const EdgeInsets.only(left: 0, right: 0),
+      child: Text('A', style: style),
       // child: Text(meta.formattedValue, style: style),
     );
   }
@@ -198,6 +203,44 @@ class _Chart extends StatelessWidget {
     // UPPER
     final upper = d.upper;
     final upperCrockedLine = d.upperCrockedLine;
+
+    double getBiggestXY() {
+      double upper0 = upper[0];
+      double upper1 = upper[1];
+      double result = 0;
+      if (upper0 < 1) upper0 * (-1);
+      if (upper1 < 1) upper1 * (-1);
+      if (upper0 <= upper1)
+        result = upper1;
+      else
+        result = upper0;
+      return upper0;
+    }
+
+    double getBiggestScale(double value) {
+      double val = value;
+      if (value < 1) {
+        val = val * (-1);
+      }
+      if (val > 0 && val <= 5) val = val;
+      if (val > 5 && val <= 10)
+        val = val * 10;
+      else if (val > 10 && val <= 100)
+        val = val * 50;
+      else if (val > 100 && val <= 1000)
+        val = val * 500;
+      else if (val > 1000 && val <= 10000)
+        val = val * 5000;
+      else if (val > 10000 && val <= 100000)
+        val = val * 50000;
+      else if (val > 100000 && val <= 1000000)
+        val = val * 500000;
+      else if (val > 1000000 && val <= 10000000) val = val * 5000000;
+      return val + 1;
+    }
+
+    log("GET BIGGEST XY ${getBiggestXY()}");
+    log("GET BIGGEST SCALE ${getBiggestScale(getBiggestXY())}");
 
     return LineChart(
       LineChartData(
@@ -250,20 +293,20 @@ class _Chart extends StatelessWidget {
             sideTitles: SideTitles(
               showTitles: true,
               getTitlesWidget: getLTitles,
-              reservedSize: 16,
+              reservedSize: 24,
             ),
           ),
           topTitles: AxisTitles(
             sideTitles: SideTitles(
                 showTitles: true,
                 getTitlesWidget: getTTitles,
-                reservedSize: 24),
+                reservedSize: 28),
           ),
           rightTitles: AxisTitles(
             sideTitles: SideTitles(
               showTitles: true,
               getTitlesWidget: getRTitles,
-              reservedSize: 16,
+              reservedSize: 24,
             ),
           ),
           bottomTitles: AxisTitles(
@@ -282,12 +325,16 @@ class _Chart extends StatelessWidget {
           getDrawingHorizontalLine: getHorizontalVerticalLine,
           getDrawingVerticalLine: getVerticalVerticalLine,
         ),
-        minY: upper[1] < 1 ? -1 : -upper[1] - 1,
-        maxY: upper[1] < 1 ? 1 : upper[1] + 1,
-        baselineY: baselineY,
-        minX: upper[0] < 1 ? -1 : -upper[0] - 1,
-        maxX: upper[0] < 1 ? 1 : upper[0] + 1,
+        // minY: -10,
+        // maxY: 10,
+        // minX: -10,
+        // maxX: 10,
+        minY: -getBiggestScale(getBiggestXY()) - 0.5,
+        maxY: getBiggestScale(getBiggestXY()) + 0.5,
+        minX: -getBiggestScale(getBiggestXY()) - 0.5,
+        maxX: getBiggestScale(getBiggestXY()) + 0.5,
         baselineX: baselineX,
+        baselineY: baselineY,
       ),
       duration: Duration.zero,
     );

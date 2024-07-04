@@ -11,6 +11,8 @@ import '../model/config_model.dart';
 import '../model/login_model.dart';
 import 'package:flutter/material.dart';
 
+import '../model/refresh_token_model.dart';
+
 class AuthProvider extends BaseController with ChangeNotifier {
   TextEditingController nameC = TextEditingController();
   TextEditingController usernameC = TextEditingController();
@@ -181,19 +183,26 @@ class AuthProvider extends BaseController with ChangeNotifier {
     // }
   }
 
-  Future<BaseResponse> refreshToken() async {
+  RefreshTokenModel _refreshTokenModel = RefreshTokenModel();
+  RefreshTokenModel get refreshTokenModel => this._refreshTokenModel;
+  set refreshTokenModel(RefreshTokenModel value) =>
+      this._refreshTokenModel = value;
+
+  Future<void> refreshToken() async {
     loading(true);
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? refreshToken = prefs.getString(Constant.kSetPrefRefreshToken);
     Map<String, String> param = {'RefreshToken': refreshToken ?? ''};
-    final response = await post(
-        Constant.BASE_API_FULL + '/firebase/update-token',
-        body: param);
+    final response =
+        await post(Constant.BASE_API_FULL + '/auth/refresh-token', body: param);
 
     if (response.statusCode == 201 || response.statusCode == 200) {
-      final model = BaseResponse.from(jsonDecode(response.body));
+      refreshTokenModel = RefreshTokenModel.fromJson(jsonDecode(response.body));
+      await prefs.setString(
+          Constant.kSetPrefToken, refreshTokenModel.Data?.Token ?? '');
+      await prefs.setString(Constant.kSetPrefRefreshToken,
+          refreshTokenModel.Data?.RefreshToken ?? '');
       loading(false);
-      return model;
     } else {
       final message = jsonDecode(response.body)["Message"];
       loading(false);

@@ -1478,6 +1478,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.7.4"
+  powers:
+    dependency: "direct main"
+    description:
+      name: powers
+      sha256: "389ba222d4264655ecd3ffa461921bc707a07e4597b98831d21dd516eed6f496"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0+2"
   process:
     dependency: transitive
     description:

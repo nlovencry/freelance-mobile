@@ -222,7 +222,7 @@ class TurbineProvider extends BaseController with ChangeNotifier {
         final message = jsonDecode(response.body)["Message"];
         loading(false);
         isFetching = false;
-        throw Exception(message);
+        // throw Exception(message);
       }
     }
   }
@@ -243,7 +243,8 @@ class TurbineProvider extends BaseController with ChangeNotifier {
     } else {
       final message = jsonDecode(response.body)["Message"];
       loading(false);
-      throw Exception(message);
+      return TurbineCreateModel();
+      // throw Exception(message);
     }
   }
 
@@ -258,7 +259,8 @@ class TurbineProvider extends BaseController with ChangeNotifier {
     } else {
       final message = jsonDecode(response.body)["Message"];
       loading(false);
-      throw Exception(message);
+      return TurbineCreateModel();
+      // throw Exception(message);
     }
   }
 }

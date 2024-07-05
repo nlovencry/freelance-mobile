@@ -7,6 +7,5 @@ Map<String, WidgetBuilder> get _routes => <String, WidgetBuilder>{
       // '/forgot': (context) => ForgotView(),
       '/token': (context) => TokenView(),
       '/confirm': (context) => ConfirmationView(),
-      '/transaction': (context) => TransactionView(),
       '/assetMeter': (context) => ConfirmationView(),
     };

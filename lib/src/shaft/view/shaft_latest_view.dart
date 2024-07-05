@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import '../../../common/component/custom_appbar.dart';
+import '../../../common/component/custom_container.dart';
 import '../../../common/helper/constant.dart';
 import 'sample_chart_view.dart';
 import "package:provider/provider.dart";
@@ -50,6 +51,13 @@ class _ShaftLatestViewState extends State<ShaftLatestView>
     final d = context.watch<DataAddProvider>();
     final shaft =
         context.watch<DataAddProvider>().turbineLatestModel.Data?.Shaft;
+    final status =
+        context.watch<DataAddProvider>().turbineLatestModel.Data?.Status;
+    final totalCrockedness = context
+        .watch<DataAddProvider>()
+        .turbineLatestModel
+        .Data
+        ?.TotalCrockedness;
     final upperData = context
         .watch<DataAddProvider>()
         .turbineLatestModel
@@ -67,7 +75,7 @@ class _ShaftLatestViewState extends State<ShaftLatestView>
         .turbineLatestModel
         .Data
         ?.DetailData
-        ?.Turbine;
+        ?.Clutch;
 
     Widget _buildTab(String tag) {
       return Tab(child: Text(tag, style: TextStyle(fontSize: 18)));
@@ -514,77 +522,101 @@ class _ShaftLatestViewState extends State<ShaftLatestView>
       appBar: CustomAppBar.appBar(
           context, tabController.index == 2 ? 'Upper' : 'Shaft'),
       body: Padding(
-        padding: const EdgeInsets.only(top: 16),
+        padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
         child: ListView(
           shrinkWrap: true,
           children: [
+            Text(
+              tabController.index == 2 ? 'Grafik Resultan' : 'Grafik Shaft',
+              style: Constant.iBlackMedium16,
+            ),
+            Constant.xSizedBox8,
+            Row(
+              children: [
+                Expanded(
+                    child: Text(
+                  tabController.index == 2
+                      ? 'Tampilan grafik dari data upper'
+                      : 'Tampilan grafik dari data shaft',
+                  style: TextStyle(fontSize: 12, color: Constant.grayColor),
+                )),
+                Constant.xSizedBox4,
+                Text(
+                  '${DateFormat('dd/MM/yyyy  |  HH : mm').format(DateFormat('yyyy-MM-dd HH:mm:ss').parse(d.turbineLatestModel.Data?.CreatedAt ?? '${DateTime.now()}'))}',
+                  style: TextStyle(color: Constant.textColorBlack),
+                ),
+              ],
+            ),
+            Constant.xSizedBox16,
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Column(
-                children: [
-                  Text(
-                    tabController.index == 2
-                        ? 'Grafik Resultan'
-                        : 'Grafik Shaft',
-                    style: Constant.iBlackMedium16,
-                  ),
-                  Constant.xSizedBox8,
-                  Row(
-                    children: [
-                      Expanded(
+              padding: const EdgeInsets.symmetric(horizontal: 4),
+              child: CustomContainer.mainCard(
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: 50,
+                          height: 50,
+                          child: status == true
+                              ? Image.asset(
+                                  width: 50,
+                                  height: 50,
+                                  'assets/icons/ic-smile.png',
+                                )
+                              : Image.asset(
+                                  width: 50,
+                                  height: 50,
+                                  'assets/icons/ic-sad.png',
+                                ),
+                        ),
+                        Constant.xSizedBox16,
+                        Expanded(
                           child: Text(
-                        tabController.index == 2
-                            ? 'Tampilan grafik dari data upper'
-                            : 'Tampilan grafik dari data shaft',
-                        style:
-                            TextStyle(fontSize: 12, color: Constant.grayColor),
-                      )),
-                      Constant.xSizedBox4,
-                      Text(
-                        '${DateFormat('dd/MM/yyyy  |  HH : mm').format(DateFormat('yyyy-MM-dd HH:mm:ss').parse(d.turbineLatestModel.Data?.CreatedAt ?? '${DateTime.now()}'))}',
-                        style: TextStyle(color: Constant.textColorBlack),
-                      ),
-                    ],
-                  ),
-                  Constant.xSizedBox16,
-                  toggleTab(),
-                ],
+                            'Total Run Out : ${(totalCrockedness ?? 0) >= 3 ? '3' : '${(totalCrockedness ?? 0)}'}',
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
+                      ],
+                    )
+                  ],
+                ),
               ),
             ),
+            Constant.xSizedBox16,
+            toggleTab(),
             Container(
                 child: tabController.index == 2
                     ? UpperChartView()
-                    : SampleChartView(activeIndex: tabController.index)),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Column(
-                children: [
-                  Constant.xSizedBox16,
-                  Text('Latest Data', style: Constant.iBlackMedium16),
-                  Constant.xSizedBox8,
-                  Text(
-                    tabController1.index == 2
-                        ? 'Latest data upper yang telah di input'
-                        : tabController1.index == 1
-                            ? 'Latest data turbine yang telah di input'
-                            : 'Latest data clutch yang telah di input',
-                    style: TextStyle(fontSize: 12, color: Constant.grayColor),
-                  ),
-                  Constant.xSizedBox16,
-                  toggleTab1(),
-                  Constant.xSizedBox16,
-                  Container(
-                    child: tabController1.index == 2
-                        ? upperActive()
-                        : tabController1.index == 1
-                            ? turbineActive()
-                            : clutchActive(),
-                  ),
-                  Constant.xSizedBox16,
-                  acBdActive(),
-                ],
-              ),
+                    : SampleChartView(
+                        activeIndex: tabController.index, typePage: 'latest')),
+            Constant.xSizedBox16,
+            Text('Detail Data', style: Constant.iBlackMedium16),
+            Constant.xSizedBox8,
+            Text(
+              tabController1.index == 2
+                  ? 'Detail data upper yang telah di input'
+                  : tabController1.index == 1
+                      ? 'Detail data turbine yang telah di input'
+                      : 'Detail data clutch yang telah di input',
+              style: TextStyle(fontSize: 12, color: Constant.grayColor),
             ),
+            Constant.xSizedBox16,
+            toggleTab1(),
+            Constant.xSizedBox16,
+            Container(
+              child: tabController1.index == 2
+                  ? upperActive()
+                  : tabController1.index == 1
+                      ? turbineActive()
+                      : clutchActive(),
+            ),
+            Constant.xSizedBox16,
+            acBdActive(),
             Constant.xSizedBox18,
           ],
         ),

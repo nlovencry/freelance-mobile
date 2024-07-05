@@ -1,18 +1,7 @@
 import 'package:hy_tutorial/src/auth/view/login2_view.dart';
 import 'package:hy_tutorial/src/data/provider/data_add_provider.dart';
-import 'package:hy_tutorial/src/report/asset_performance/provider/asset_performance_provider.dart';
-import 'package:hy_tutorial/src/report/download_ba/provider/ba_provider.dart';
-import 'package:hy_tutorial/src/report/provider/report_provider.dart';
 import 'package:hy_tutorial/src/tower/provider/tower_provider.dart';
-import 'package:hy_tutorial/src/transaction/asset_downtime/provider/asset_downtime_provider.dart';
-import 'package:hy_tutorial/src/transaction/asset_meter/provider/asset_meter_provider.dart';
-import 'package:hy_tutorial/src/transaction/operation_hours/provider/operation_hours_provider.dart';
-import 'package:hy_tutorial/src/transaction/provider/transaction_provider.dart';
-import 'package:hy_tutorial/src/transaction/view/transaction_view.dart';
 import 'package:hy_tutorial/src/turbine/provider/turbine_provider.dart';
-import 'package:hy_tutorial/src/work_order/provider/work_order_provider.dart';
-import 'package:hy_tutorial/src/work_order/wo_agreement/provider/wo_agreement_provider.dart';
-import 'package:hy_tutorial/src/work_order/wo_realization/provider/wo_realization_provider.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'dart:developer';
@@ -23,9 +12,6 @@ import 'package:hy_tutorial/src/auth/provider/change_password_provider.dart';
 import 'package:hy_tutorial/src/auth/view/login_view.dart';
 import 'package:hy_tutorial/src/home/provider/home_provider.dart';
 import 'package:hy_tutorial/src/home/view/main_home.dart';
-
-import 'package:hy_tutorial/src/notifikasi/provider/notifikasi_provider.dart';
-import 'package:hy_tutorial/src/region/provider/region_provider.dart';
 import 'package:hy_tutorial/src/splash_view.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
@@ -46,8 +32,6 @@ import 'package:google_maps_flutter_platform_interface/google_maps_flutter_platf
 import 'common/library/firebase_manager.dart';
 import 'src/auth/view/confirmation_view.dart';
 import 'src/auth/view/token_view.dart';
-
-import 'src/user/provider/user_provider.dart';
 import 'utils/nav_observer.dart';
 import 'utils/utils.dart';
 import 'firebase_options.dart';
@@ -237,8 +221,6 @@ class MyApp extends StatelessWidget {
       builder: (context, orientation, deviceType) {
         return MultiProvider(
           providers: [
-            ChangeNotifierProvider<UserProvider>(
-                create: (context) => UserProvider()),
             ChangeNotifierProvider<DataAddProvider>(
                 create: (context) => DataAddProvider()),
             ChangeNotifierProvider<TowerProvider>(
@@ -249,32 +231,6 @@ class MyApp extends StatelessWidget {
                 create: (context) => AuthProvider()),
             ChangeNotifierProvider<HomeProvider>(
                 create: (context) => HomeProvider()),
-            ChangeNotifierProvider<TransactionProvider>(
-                create: (context) => TransactionProvider()),
-            ChangeNotifierProvider<AssetMeterProvider>(
-                create: (context) => AssetMeterProvider()),
-            ChangeNotifierProvider<AssetDowntimeProvider>(
-                create: (context) => AssetDowntimeProvider()),
-            ChangeNotifierProvider<OperationHoursProvider>(
-                create: (context) => OperationHoursProvider()),
-            ChangeNotifierProvider<ChangePasswordProvider>(
-                create: (context) => ChangePasswordProvider()),
-            ChangeNotifierProvider<WorkOrderProvider>(
-                create: (context) => WorkOrderProvider()),
-            ChangeNotifierProvider<WOAgreementProvider>(
-                create: (context) => WOAgreementProvider()),
-            ChangeNotifierProvider<WORealizationProvider>(
-                create: (context) => WORealizationProvider()),
-            ChangeNotifierProvider<ReportProvider>(
-                create: (context) => ReportProvider()),
-            ChangeNotifierProvider<AssetPerformanceProvider>(
-                create: (context) => AssetPerformanceProvider()),
-            ChangeNotifierProvider<BAProvider>(
-                create: (context) => BAProvider()),
-            ChangeNotifierProvider<RegionProvider>(
-                create: (context) => RegionProvider()),
-            ChangeNotifierProvider<NotifikasiProvider>(
-                create: (context) => NotifikasiProvider()),
           ],
           child: MaterialApp(
             title: 'HY TUTORIAL',

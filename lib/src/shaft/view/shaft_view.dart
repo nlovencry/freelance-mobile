@@ -596,7 +596,7 @@ class _ShaftViewState extends State<ShaftView> with TickerProviderStateMixin {
                         Constant.xSizedBox16,
                         Expanded(
                           child: Text(
-                            'Total Run Out ${(totalCrockedness ?? 0) >= 3 ? '3' : '${(totalCrockedness ?? 0).round()}'}/3',
+                            'Total Run Out : ${(totalCrockedness ?? 0) >= 3 ? '3' : '${(totalCrockedness ?? 0)}'}',
                             textAlign: TextAlign.left,
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
@@ -615,7 +615,8 @@ class _ShaftViewState extends State<ShaftView> with TickerProviderStateMixin {
             Container(
                 child: tabController.index == 2
                     ? UpperChartView()
-                    : SampleChartView(activeIndex: tabController.index)),
+                    : SampleChartView(
+                        activeIndex: tabController.index, typePage: 'create')),
             Constant.xSizedBox16,
             Text('Detail Data', style: Constant.iBlackMedium16),
             Constant.xSizedBox8,

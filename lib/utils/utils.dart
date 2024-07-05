@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:hy_tutorial/src/notifikasi/provider/notifikasi_provider.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart' as Material;
 import 'package:flutter/material.dart';
@@ -657,8 +656,6 @@ class Utils {
     String noText = "Cancel",
   }) {
     String note = "";
-    final node = context.read<NotifikasiProvider>().noteN;
-    final controller = context.read<NotifikasiProvider>().noteC;
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
       actionsPadding: EdgeInsets.fromLTRB(20, 4, 20, 20),
@@ -679,11 +676,11 @@ class Utils {
           ),
           Constant.xSizedBox16,
           CustomTextField.borderTextArea(
-              controller: controller,
+              controller: TextEditingController(),
               hintText: "Note",
               textInputType: TextInputType.text,
               textCapitalization: TextCapitalization.words,
-              focusNode: node,
+              focusNode: FocusNode(),
               required: true,
               readOnly: false,
               padding: EdgeInsets.zero),

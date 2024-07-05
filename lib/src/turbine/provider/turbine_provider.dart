@@ -2,10 +2,13 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
 import 'package:flutter/cupertino.dart';
+import 'package:hy_tutorial/utils/utils.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:intl/intl.dart';
 import '../../../common/base/base_controller.dart';
+import '../../../common/component/custom_alert.dart';
 import '../../../common/helper/constant.dart';
+import '../../../main.dart';
 import '../model/turbine_create_model.dart';
 import '../model/turbine_detail_model.dart';
 import '../model/turbine_model.dart';
@@ -146,84 +149,112 @@ class TurbineProvider extends BaseController with ChangeNotifier {
   TurbineModel get turbineModel => this._turbineModel;
   set turbineModel(TurbineModel value) => this._turbineModel = value;
 
+  Future<void> getTurbine() async {
+    pagingController = PagingController(firstPageKey: 1)
+      ..addPageRequestListener((pageKey) async {
+        log("GET TURBINE");
+        await fetchTurbine(page: pageKey).onError((error, stackTrace) {
+          if (error.toString().contains('expired token')) {
+            log("ERROR EXPIRED TOKEN");
+            next = null;
+            pagingController.refresh();
+          } else {
+            BuildContext? context =
+                NavigationService.navigatorKey.currentContext;
+            if (context != null)
+              CustomAlert.showSnackBar(
+                  context, 'Gagal Mendapatkan Data Turbine', true);
+          }
+        });
+      });
+  }
+
   Future<void> fetchTurbine({
     bool withLoading = false,
     required int page,
     String keyword = "",
   }) async {
-    if (!isFetching) {
-      isFetching = true;
-      if (withLoading) loading(true);
-      String startDateSelected =
-          DateFormat("yyyy-MM-dd").format(startDate ?? DateTime.now());
-      String endDateSelected =
-          DateFormat("yyyy-MM-dd").format(endDate ?? DateTime.now());
+    try {
+      if (!isFetching) {
+        isFetching = true;
+        if (withLoading) loading(true);
+        String startDateSelected =
+            DateFormat("yyyy-MM-dd").format(startDate ?? DateTime.now());
+        String endDateSelected =
+            DateFormat("yyyy-MM-dd").format(endDate ?? DateTime.now());
 
-      String url = Constant.BASE_API_FULL + '/turbines';
-      Map<String, String> param = {};
-      if (turbineSearchC.text.isNotEmpty)
-        param.addAll({'Search': turbineSearchC.text});
-      if (startDate != null) param.addAll({'StartDate': startDateSelected});
-      if (endDate != null) param.addAll({'EndDate': endDateSelected});
-      if (ascending) {
-        param.remove('SortOrder');
-        param.addAll({'SortOrder': 'ASC'});
-      }
-      if (descending) {
-        param.remove('SortOrder');
-        param.addAll({'SortOrder': 'DESC'});
-      }
-      if (towerName) {
-        param.remove('SortBy');
-        param.addAll({'SortBy': 'TowerName'});
-      }
-      if (createdAt) {
-        param.remove('SortBy');
-        param.addAll({'SortBy': 'CreatedAt'});
-      }
-      if (next != null) param.addAll({'Next': next ?? ''});
-      log("PANGGIL");
-      if (_pagingController.itemList?.length != 0) {
-        await Future.delayed(Duration(seconds: 1));
-      }
-      final response = await get(
-        url,
-        body: param,
-      );
-
-      if (response.statusCode == 201 || response.statusCode == 200) {
-        turbineModel = TurbineModel();
-        final model = TurbineModel.fromJson(jsonDecode(response.body));
-        final newItems = model.Data ?? [];
-        // turbineModel = model;
-        // notifyListeners();
-
-        final previouslyFetchedWordCount =
-            _pagingController.itemList?.length ?? 0;
-        pageSize = 10;
-        log("ITEMS LENGTH : ${newItems.length}");
-        final isLastPage = newItems.length < pageSize;
-
-        if (isLastPage) {
-          next = null;
-          pagingController.appendLastPage(newItems as List<TurbineModelData>);
-        } else {
-          final nextPageKey = page += 1;
-          if (model.Meta?.Next != null && model.Meta?.Next != '')
-            next = model.Meta?.Next ?? '';
-          pagingController.appendPage(
-              newItems as List<TurbineModelData>, nextPageKey);
+        String url = Constant.BASE_API_FULL + '/turbines';
+        Map<String, String> param = {};
+        if (turbineSearchC.text.isNotEmpty)
+          param.addAll({'Search': turbineSearchC.text});
+        if (startDate != null) param.addAll({'StartDate': startDateSelected});
+        if (endDate != null) param.addAll({'EndDate': endDateSelected});
+        if (ascending) {
+          param.remove('SortOrder');
+          param.addAll({'SortOrder': 'ASC'});
         }
+        if (descending) {
+          param.remove('SortOrder');
+          param.addAll({'SortOrder': 'DESC'});
+        }
+        if (towerName) {
+          param.remove('SortBy');
+          param.addAll({'SortBy': 'TowerName'});
+        }
+        if (createdAt) {
+          param.remove('SortBy');
+          param.addAll({'SortBy': 'CreatedAt'});
+        }
+        if (next != null) param.addAll({'Next': next ?? ''});
+        log("PANGGIL");
+        if (_pagingController.itemList?.length != 0) {
+          await Future.delayed(Duration(seconds: 1));
+        }
+        final response = await get(
+          url,
+          body: param,
+        );
 
-        // notifyListeners();
-        if (withLoading) loading(false);
-        isFetching = false;
-      } else {
-        final message = jsonDecode(response.body)["Message"];
-        loading(false);
-        isFetching = false;
-        // throw Exception(message);
+        if (response.statusCode == 201 || response.statusCode == 200) {
+          turbineModel = TurbineModel();
+          final model = TurbineModel.fromJson(jsonDecode(response.body));
+          final newItems = model.Data ?? [];
+          // turbineModel = model;
+          // notifyListeners();
+
+          final previouslyFetchedWordCount =
+              _pagingController.itemList?.length ?? 0;
+          pageSize = 10;
+          log("ITEMS LENGTH : ${newItems.length}");
+          final isLastPage = newItems.length < pageSize;
+
+          if (isLastPage) {
+            next = null;
+            pagingController.appendLastPage(newItems as List<TurbineModelData>);
+          } else {
+            final nextPageKey = page += 1;
+            if (model.Meta?.Next != null && model.Meta?.Next != '')
+              next = model.Meta?.Next ?? '';
+            pagingController.appendPage(
+                newItems as List<TurbineModelData>, nextPageKey);
+          }
+
+          // notifyListeners();
+          if (withLoading) loading(false);
+          isFetching = false;
+        } else {
+          log("MASUK ELSE");
+          loading(false);
+          isFetching = false;
+          final message = jsonDecode(response.body)["Message"];
+          throw Exception(message);
+        }
       }
+    } catch (e) {
+      log("MASUK ELSE CATCH $e");
+      loading(false);
+      isFetching = false;
+      throw Exception(e.toString());
     }
   }
 

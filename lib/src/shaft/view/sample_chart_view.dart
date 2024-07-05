@@ -8,8 +8,10 @@ import '../../../common/helper/constant.dart';
 import '../../data/provider/data_add_provider.dart';
 
 class SampleChartView extends StatefulWidget {
+  final String typePage;
   final int activeIndex;
-  SampleChartView({super.key, required this.activeIndex});
+  SampleChartView(
+      {super.key, required this.activeIndex, required this.typePage});
 
   @override
   State<SampleChartView> createState() => _SampleChartViewState();
@@ -32,6 +34,7 @@ class _SampleChartViewState extends State<SampleChartView> {
               child: _Chart(
                 baselineX,
                 (20 - (baselineY + 10)) - 10,
+                widget.typePage,
                 widget.activeIndex,
               ),
             ),
@@ -55,9 +58,11 @@ class _SampleChartViewState extends State<SampleChartView> {
 class _Chart extends StatelessWidget {
   final double baselineX;
   final double baselineY;
+  final String typePage;
   final int activeIndex;
 
-  const _Chart(this.baselineX, this.baselineY, this.activeIndex) : super();
+  const _Chart(this.baselineX, this.baselineY, this.typePage, this.activeIndex)
+      : super();
 
   Widget getTTitles(value, TitleMeta meta) {
     TextStyle style;
@@ -152,7 +157,7 @@ class _Chart extends StatelessWidget {
   FlLine getHorizontalVerticalLine(double value) {
     if ((value - baselineY).abs() <= 0.1) {
       return FlLine(
-        color: Color(0xff576778),
+        color: Color(0xff576778).withOpacity(0.2),
         strokeWidth: 2,
         // dashArray: [8, 4],
       );
@@ -168,7 +173,7 @@ class _Chart extends StatelessWidget {
   FlLine getVerticalVerticalLine(double value) {
     if ((value - baselineX).abs() <= 0.1) {
       return FlLine(
-        color: Color(0xff576778),
+        color: Color(0xff576778).withOpacity(0.2),
         strokeWidth: 2,
         // dashArray: [8, 4],
       );
@@ -261,13 +266,36 @@ class _Chart extends StatelessWidget {
       return getMaxX();
     }
 
-    log("GET BIGGEST X : ${getXBiggest()}");
-    log("GET BIGGEST Y : ${getYBiggest()}");
-    log("GET MIN X : ${getMinX()}");
-    log("GET MAX X : ${getMaxX()}");
-    log("GET MIN Y : ${getMinnY()}");
-    log("GET MAX Y : ${getMaxY()}");
-    log("======================");
+    int getScale() {
+      if (typePage == 'create') {
+        final shaftData = d.turbineCreateModel.Data?.Shaft;
+        int? biggest = shaftData?.GenBearingToCoupling;
+        if ((biggest ?? 0) < (shaftData?.CouplingToTurbine ?? 0))
+          biggest = shaftData?.CouplingToTurbine ?? 0;
+        return biggest ?? 0;
+      } else if (typePage == 'detail') {
+        final shaftData = d.turbineDetailModel.Data?.Shaft;
+        int? biggest = shaftData?.GenBearingToCoupling;
+        if ((biggest ?? 0) < (shaftData?.CouplingToTurbine ?? 0))
+          biggest = shaftData?.CouplingToTurbine ?? 0;
+        return biggest ?? 0;
+      } else if (typePage == 'latest') {
+        final shaftData = d.turbineLatestModel.Data?.Shaft;
+        int? biggest = shaftData?.GenBearingToCoupling;
+        if ((biggest ?? 0) < (shaftData?.CouplingToTurbine ?? 0))
+          biggest = shaftData?.CouplingToTurbine ?? 0;
+        return biggest ?? 0;
+      }
+      return 0;
+    }
+
+    // log("GET BIGGEST X : ${getXBiggest()}");
+    // log("GET BIGGEST Y : ${getYBiggest()}");
+    // log("GET MIN X : ${getMinX()}");
+    // log("GET MAX X : ${getMaxX()}");
+    // log("GET MIN Y : ${getMinnY()}");
+    // log("GET MAX Y : ${getMaxY()}");
+    // log("======================");
     double getPlusX() {
       if (activeIndex == 1) return bdUpper[1];
       return bdUpper[0];
@@ -333,7 +361,7 @@ class _Chart extends StatelessWidget {
         ),
         lineBarsData: [
           LineChartBarData(
-            barWidth: 10,
+            barWidth: 5,
             spots: [
               getFlSpotUpper(),
               getFlSpotClutch(),
@@ -345,7 +373,7 @@ class _Chart extends StatelessWidget {
               show: true,
               getDotPainter: (p0, p1, p2, p3) {
                 return FlDotSquarePainter(
-                  size: 20,
+                  size: 10,
                   color: Color(0xff7B7B7B),
                   strokeColor: Color(0xff97B7B7B),
                 );
@@ -353,7 +381,7 @@ class _Chart extends StatelessWidget {
             ),
           ),
           LineChartBarData(
-            barWidth: 4,
+            barWidth: 2,
             spots: [
               getFlSpotYellowTop(),
               getFlSpotYellowBottom(),
@@ -402,12 +430,20 @@ class _Chart extends StatelessWidget {
           getDrawingHorizontalLine: getHorizontalVerticalLine,
           getDrawingVerticalLine: getVerticalVerticalLine,
         ),
-        minY: getMinnY(),
-        maxY: getMaxY(),
-        baselineY: baselineY,
-        minX: getMinX() - 10,
-        maxX: getMaxX() + 10,
+        // minY: getMinnY(),
+        // maxY: getMaxY(),
+        // minX: getMinX() - 10,
+        // maxX: getMaxX() + 10,
+        minY: -getYBiggest() * 1.1,
+        maxY: getYBiggest() * 1.1,
+        minX: -d.getDividerBiggest10().toDouble(),
+        maxX: d.getDividerBiggest10().toDouble(),
+        // minX: -d.getDividerBiggest().toDouble(),
+        // maxX: d.getDividerBiggest().toDouble(),
+        // minX: -10,
+        // maxX: 10,
         baselineX: baselineX,
+        baselineY: baselineY,
       ),
       duration: Duration.zero,
     );

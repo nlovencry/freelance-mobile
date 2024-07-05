@@ -134,7 +134,7 @@ class BaseController<S extends BaseState> {
       BuildContext? context = NavigationService.navigatorKey.currentContext;
       if (context != null) {
         await context.read<AuthProvider>().refreshToken();
-        await get(url, body: body);
+        if (url != 'http://103.59.94.19/turbines') await get(url, body: body);
         Utils.dismissLoading();
       }
     }

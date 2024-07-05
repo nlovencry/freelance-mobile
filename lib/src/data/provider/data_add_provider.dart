@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:powers/powers.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../main.dart';
 import '../../../utils/utils.dart';
@@ -147,11 +148,17 @@ class DataAddProvider extends BaseController with ChangeNotifier {
   set createDataParam(CreateDataParam? value) => this._createDataParam = value;
 
   // AC
+  List<double> acClutchTemp = [];
+  List<double> acTurbineTemp = [];
+  List<double> acUpperTemp = [];
   List<double> acClutch = [];
   List<double> acTurbine = [];
   List<double> acUpper = [];
   double acCrockedLine = 0.0;
   // BD
+  List<double> bdClutchTemp = [];
+  List<double> bdTurbineTemp = [];
+  List<double> bdUpperTemp = [];
   List<double> bdClutch = [];
   List<double> bdTurbine = [];
   List<double> bdUpper = [];
@@ -161,12 +168,155 @@ class DataAddProvider extends BaseController with ChangeNotifier {
   double upperCrockedLine = 0.0;
 
   double divideUntilTwoDigits(double val) {
-    if (val > 10 && val < 100) return val / 10;
-    if (val > 100 && val < 1000) return val / 100;
-    if (val > 1000 && val < 10000) return val / 1000;
-    if (val > 10000 && val < 100000) return val / 10000;
-    if (val > 100000 && val < 1000000) return val / 100000;
-    return val;
+    double num = val;
+    double realVal = val;
+    if (val < 1) num = val * (-1);
+    if (num > 10 && num < 100) return num / 10;
+    if (num > 100 && num < 1000) return num / 100;
+    if (num > 1000 && num < 10000) return num / 1000;
+    if (num > 10000 && num < 100000) return num / 10000;
+    if (num > 100000 && num < 1000000) return num / 100000;
+    if (realVal < 1) return -num;
+    return num;
+  }
+
+  num getDivideBiggestAC() {
+    List<double> list = [];
+    list.addAll(acUpperTemp.map((e) {
+      if (e < 1) return e * (-1);
+      return e;
+    }).toList());
+    list.addAll(acClutchTemp.map((e) {
+      if (e < 1) return e * (-1);
+      return e;
+    }).toList());
+    list.addAll(acTurbineTemp.map((e) {
+      if (e < 1) return e * (-1);
+      return e;
+    }).toList());
+    list.removeAt(1);
+    list.removeAt(4);
+    list.sort();
+    list = list.reversed.toList();
+    // log("LIST AC : $list");
+    num divider = 0;
+    double list0 = list[0] < 1 ? list[0] * (-1) : list[0];
+    // if (list0 > 10)
+    divider = getDivideBiggestAcRecursive(0, list0);
+    // divider = 10.pow(num.parse('${list0.round().toString().length - 1}'));
+    log("BIGGEST AC : $divider");
+    return divider;
+  }
+
+  num getDivideBiggestAcRecursive(num val, num biggestX) {
+    if (val > biggestX) {
+      log("RECURSIVE AC X : $val");
+      return val;
+    }
+    return getDivideBiggestAcRecursive(val += 5, biggestX);
+  }
+
+  num getDivideBiggestACX() {
+    List<double> list = [];
+    list.addAll(acUpperTemp.map((e) {
+      if (e < 1) return e * (-1);
+      return e;
+    }).toList());
+    list.addAll(acClutchTemp.map((e) {
+      if (e < 1) return e * (-1);
+      return e;
+    }).toList());
+    list.addAll(acTurbineTemp.map((e) {
+      if (e < 1) return e * (-1);
+      return e;
+    }).toList());
+    list.removeAt(1);
+    list.removeAt(4);
+    list.sort();
+    list = list.reversed.toList();
+    double list0 = list[0] < 1 ? list[0] * (-1) : list[0];
+    log("BIGGEST ACX : $list0");
+    return list0;
+  }
+
+  num getDivideBiggestBD() {
+    List<double> list = [];
+    list.addAll(bdUpperTemp.map((e) {
+      if (e < 1) return e * (-1);
+      return e;
+    }).toList());
+    list.addAll(bdClutchTemp.map((e) {
+      if (e < 1) return e * (-1);
+      return e;
+    }).toList());
+    list.addAll(bdTurbineTemp.map((e) {
+      if (e < 1) return e * (-1);
+      return e;
+    }).toList());
+    list.removeAt(1);
+    list.removeAt(4);
+    list.sort();
+    list = list.reversed.toList();
+    // log("LIST BD : $list");
+    num divider = 0;
+    double list0 = list[0] < 1 ? list[0] * (-1) : list[0];
+    // if (list0 > 10)
+    divider = getDivideBiggestBdRecursive(0, list0);
+    // divider = 10.pow(num.parse('${list0.round().toString().length - 1}'));
+    log("BIGGEST BD : $divider");
+    return divider;
+  }
+
+  num getDivideBiggestBdRecursive(num val, num biggestX) {
+    if (val > biggestX) {
+      log("RECURSIVE BD X : $val");
+      return val;
+    }
+    return getDivideBiggestBdRecursive(val += 5, biggestX);
+  }
+
+  num getDivideBiggestBDX() {
+    List<double> list = [];
+    list.addAll(bdUpperTemp.map((e) {
+      if (e < 1) return e * (-1);
+      return e;
+    }).toList());
+    list.addAll(bdClutchTemp.map((e) {
+      if (e < 1) return e * (-1);
+      return e;
+    }).toList());
+    list.addAll(bdTurbineTemp.map((e) {
+      if (e < 1) return e * (-1);
+      return e;
+    }).toList());
+    list.removeAt(1);
+    list.removeAt(4);
+    list.sort();
+    list = list.reversed.toList();
+    double list0 = list[0] < 1 ? list[0] * (-1) : list[0];
+    log("BIGGEST BDX : $list0");
+    return list0;
+  }
+
+  double getYBiggest() {
+    double biggest = acUpper[1];
+    if (biggest < bdTurbine[1]) biggest = bdTurbine[1];
+    return biggest;
+  }
+
+  num getDividerBiggest() {
+    num biggest = getDivideBiggestACX().round();
+    if (biggest < getDivideBiggestBDX().round())
+      biggest = getDivideBiggestBDX().round();
+    log("BIGGEST DIVIDER : ${biggest}");
+    return biggest / (10.pow(biggest.toString().length - 1) * 0.9);
+  }
+
+  num getDividerBiggest10() {
+    num biggest = getDivideBiggestAC();
+    if (biggest < getDivideBiggestBD()) biggest = getDivideBiggestBD();
+    log("BIGGEST DIVIDER : $biggest");
+    return biggest;
   }
 
   setDataChart() {
@@ -178,49 +328,73 @@ class DataAddProvider extends BaseController with ChangeNotifier {
     final upperData = turbineCreateModel.Data?.Chart?.Upper;
     final upperCrockness = turbineCreateModel.Data?.TotalCrockedness;
     if (acData != null && acData.Upper != null)
-      acUpper = acData.Upper!
+      acUpperTemp = acData.Upper!
           .split('|')
-          .map((e) => divideUntilTwoDigits(double.tryParse(e) ?? 0))
+          .map((e) => (double.tryParse(e) ?? 0))
           .toList();
     if (acData != null && acData.Clutch != null)
-      acClutch = acData.Clutch!
+      acClutchTemp = acData.Clutch!
           .split('|')
-          .map((e) => divideUntilTwoDigits(double.tryParse(e) ?? 0))
+          .map((e) => (double.tryParse(e) ?? 0))
           .toList();
     if (acData != null && acData.Turbine != null) {
-      acTurbine = acData.Turbine!.split('|').map((e) {
-        double num = divideUntilTwoDigits(double.tryParse(e) ?? 0);
-        if (num > 0) return num;
-        return num;
-      }).toList();
-      acTurbine[1] = -acTurbine[1];
+      acTurbineTemp = acData.Turbine!
+          .split('|')
+          .map((e) => (double.tryParse(e) ?? 0))
+          .toList();
+      acTurbineTemp[1] = -acTurbineTemp[1];
     }
+    // log("AC UPPER TEMP : $acUpperTemp");
+    acUpper = [
+      acUpperTemp[0] /*/getDivideBiggestAC()*/,
+      acUpperTemp[1],
+    ];
+    acClutch = [
+      acClutchTemp[0] /*/getDivideBiggestAC()*/,
+      acClutchTemp[1] /*/getDivideBiggestAC()*/,
+    ];
+    acTurbine = [
+      acTurbineTemp[0] /*/getDivideBiggestAC()*/,
+      acTurbineTemp[1],
+    ];
+
     // BD
     if (bdData != null && bdData.Upper != null)
-      bdUpper = bdData.Upper!
+      bdUpperTemp = bdData.Upper!
           .split('|')
-          .map((e) => divideUntilTwoDigits(double.tryParse(e) ?? 0))
+          .map((e) => (double.tryParse(e) ?? 0))
           .toList();
     if (bdData != null && bdData.Clutch != null)
-      bdClutch = bdData.Clutch!
+      bdClutchTemp = bdData.Clutch!
           .split('|')
-          .map((e) => divideUntilTwoDigits(double.tryParse(e) ?? 0))
+          .map((e) => (double.tryParse(e) ?? 0))
           .toList();
     if (bdData != null && bdData.Turbine != null) {
-      bdTurbine = bdData.Turbine!.split('|').map((e) {
-        double num = divideUntilTwoDigits(double.tryParse(e) ?? 0);
-        if (num > 0) return num;
-        return num;
-      }).toList();
+      bdTurbineTemp = bdData.Turbine!
+          .split('|')
+          .map((e) => (double.tryParse(e) ?? 0))
+          .toList();
 
-      bdTurbine[1] = -bdTurbine[1];
+      bdTurbineTemp[1] = -bdTurbineTemp[1];
     }
+
+    bdUpper = [
+      bdUpperTemp[0] /*/getDivideBiggestBD()*/,
+      bdUpperTemp[1],
+    ];
+    bdClutch = [
+      bdClutchTemp[0] /*/getDivideBiggestBD()*/,
+      bdClutchTemp[1] /*/getDivideBiggestBD()*/,
+    ];
+    bdTurbine = [
+      bdTurbineTemp[0] /*/getDivideBiggestBD()*/,
+      bdTurbineTemp[1],
+    ];
     if (upperData != null)
       upper = upperData
           .split('|')
           .map((e) => divideUntilTwoDigits(double.tryParse(e) ?? 0))
           .toList();
-
     acCrockedLine = divideUntilTwoDigits(acCrockness ?? 0);
     bdCrockedLine = divideUntilTwoDigits(bdCrockness ?? 0);
     upperCrockedLine = divideUntilTwoDigits(upperCrockness ?? 0);
@@ -248,43 +422,85 @@ class DataAddProvider extends BaseController with ChangeNotifier {
     final upperData = turbineDetailModel.Data?.Chart?.Upper;
     final upperCrockness = turbineDetailModel.Data?.TotalCrockedness;
     if (acData != null && acData.Upper != null)
-      acUpper = acData.Upper!
+      acUpperTemp = acData.Upper!
           .split('|')
-          .map((e) => divideUntilTwoDigits(double.tryParse(e) ?? 0))
+          .map((e) => (double.tryParse(e) ?? 0))
           .toList();
     if (acData != null && acData.Clutch != null)
-      acClutch = acData.Clutch!
+      acClutchTemp = acData.Clutch!
           .split('|')
-          .map((e) => divideUntilTwoDigits(double.tryParse(e) ?? 0))
+          .map((e) => (double.tryParse(e) ?? 0))
           .toList();
     if (acData != null && acData.Turbine != null) {
-      acTurbine = acData.Turbine!.split('|').map((e) {
-        double num = divideUntilTwoDigits(double.tryParse(e) ?? 0);
-        if (num > 0) return num;
-        return num;
-      }).toList();
-      acTurbine[1] = -acTurbine[1];
+      acTurbineTemp = acData.Turbine!
+          .split('|')
+          .map((e) => (double.tryParse(e) ?? 0))
+          .toList();
+      acTurbineTemp[1] = -acTurbineTemp[1];
     }
+    if (acData != null && acData.Upper != null)
+      acUpperTemp = acData.Upper!
+          .split('|')
+          .map((e) => (double.tryParse(e) ?? 0))
+          .toList();
+    if (acData != null && acData.Clutch != null)
+      acClutchTemp = acData.Clutch!
+          .split('|')
+          .map((e) => (double.tryParse(e) ?? 0))
+          .toList();
+    if (acData != null && acData.Turbine != null) {
+      acTurbineTemp = acData.Turbine!
+          .split('|')
+          .map((e) => (double.tryParse(e) ?? 0))
+          .toList();
+      acTurbineTemp[1] = -acTurbineTemp[1];
+    }
+    // log("AC UPPER TEMP : $acUpperTemp");
+    acUpper = [
+      acUpperTemp[0] /*/getDivideBiggestAC()*/,
+      acUpperTemp[1],
+    ];
+    acClutch = [
+      acClutchTemp[0] /*/getDivideBiggestAC()*/,
+      acClutchTemp[1] /*/getDivideBiggestAC()*/,
+    ];
+    acTurbine = [
+      acTurbineTemp[0] /*/getDivideBiggestAC()*/,
+      acTurbineTemp[1],
+    ];
     // BD
     if (bdData != null && bdData.Upper != null)
-      bdUpper = bdData.Upper!
+      bdUpperTemp = bdData.Upper!
           .split('|')
-          .map((e) => divideUntilTwoDigits(double.tryParse(e) ?? 0))
+          .map((e) => (double.tryParse(e) ?? 0))
           .toList();
     if (bdData != null && bdData.Clutch != null)
-      bdClutch = bdData.Clutch!
+      bdClutchTemp = bdData.Clutch!
           .split('|')
-          .map((e) => divideUntilTwoDigits(double.tryParse(e) ?? 0))
+          .map((e) => (double.tryParse(e) ?? 0))
           .toList();
     if (bdData != null && bdData.Turbine != null) {
-      bdTurbine = bdData.Turbine!.split('|').map((e) {
-        double num = divideUntilTwoDigits(double.tryParse(e) ?? 0);
-        if (num > 0) return num;
-        return num;
-      }).toList();
+      bdTurbineTemp = bdData.Turbine!
+          .split('|')
+          .map((e) => (double.tryParse(e) ?? 0))
+          .toList();
 
-      bdTurbine[1] = -bdTurbine[1];
+      bdTurbineTemp[1] = -bdTurbineTemp[1];
     }
+
+    bdUpper = [
+      bdUpperTemp[0] /*/getDivideBiggestBD()*/,
+      bdUpperTemp[1],
+    ];
+    bdClutch = [
+      bdClutchTemp[0] /*/getDivideBiggestBD()*/,
+      bdClutchTemp[1] /*/getDivideBiggestBD()*/,
+    ];
+    bdTurbine = [
+      bdTurbineTemp[0] /*/getDivideBiggestBD()*/,
+      bdTurbineTemp[1],
+    ];
+
     if (upperData != null)
       upper = upperData
           .split('|')
@@ -318,43 +534,85 @@ class DataAddProvider extends BaseController with ChangeNotifier {
     final upperData = turbineLatestModel.Data?.Chart?.Upper;
     final upperCrockness = turbineLatestModel.Data?.TotalCrockedness;
     if (acData != null && acData.Upper != null)
-      acUpper = acData.Upper!
+      acUpperTemp = acData.Upper!
           .split('|')
-          .map((e) => divideUntilTwoDigits(double.tryParse(e) ?? 0))
+          .map((e) => (double.tryParse(e) ?? 0))
           .toList();
     if (acData != null && acData.Clutch != null)
-      acClutch = acData.Clutch!
+      acClutchTemp = acData.Clutch!
           .split('|')
-          .map((e) => divideUntilTwoDigits(double.tryParse(e) ?? 0))
+          .map((e) => (double.tryParse(e) ?? 0))
           .toList();
     if (acData != null && acData.Turbine != null) {
-      acTurbine = acData.Turbine!.split('|').map((e) {
-        double num = divideUntilTwoDigits(double.tryParse(e) ?? 0);
-        if (num > 0) return num;
-        return num;
-      }).toList();
-      acTurbine[1] = -acTurbine[1];
+      acTurbineTemp = acData.Turbine!
+          .split('|')
+          .map((e) => (double.tryParse(e) ?? 0))
+          .toList();
+      acTurbineTemp[1] = -acTurbineTemp[1];
     }
+    if (acData != null && acData.Upper != null)
+      acUpperTemp = acData.Upper!
+          .split('|')
+          .map((e) => (double.tryParse(e) ?? 0))
+          .toList();
+    if (acData != null && acData.Clutch != null)
+      acClutchTemp = acData.Clutch!
+          .split('|')
+          .map((e) => (double.tryParse(e) ?? 0))
+          .toList();
+    if (acData != null && acData.Turbine != null) {
+      acTurbineTemp = acData.Turbine!
+          .split('|')
+          .map((e) => (double.tryParse(e) ?? 0))
+          .toList();
+      acTurbineTemp[1] = -acTurbineTemp[1];
+    }
+    // log("AC UPPER TEMP : $acUpperTemp");
+    acUpper = [
+      acUpperTemp[0] /*/getDivideBiggestAC()*/,
+      acUpperTemp[1],
+    ];
+    acClutch = [
+      acClutchTemp[0] /*/getDivideBiggestAC()*/,
+      acClutchTemp[1] /*/getDivideBiggestAC()*/,
+    ];
+    acTurbine = [
+      acTurbineTemp[0] /*/getDivideBiggestAC()*/,
+      acTurbineTemp[1],
+    ];
     // BD
     if (bdData != null && bdData.Upper != null)
-      bdUpper = bdData.Upper!
+      bdUpperTemp = bdData.Upper!
           .split('|')
-          .map((e) => divideUntilTwoDigits(double.tryParse(e) ?? 0))
+          .map((e) => (double.tryParse(e) ?? 0))
           .toList();
     if (bdData != null && bdData.Clutch != null)
-      bdClutch = bdData.Clutch!
+      bdClutchTemp = bdData.Clutch!
           .split('|')
-          .map((e) => divideUntilTwoDigits(double.tryParse(e) ?? 0))
+          .map((e) => (double.tryParse(e) ?? 0))
           .toList();
     if (bdData != null && bdData.Turbine != null) {
-      bdTurbine = bdData.Turbine!.split('|').map((e) {
-        double num = divideUntilTwoDigits(double.tryParse(e) ?? 0);
-        if (num > 0) return num;
-        return num;
-      }).toList();
+      bdTurbineTemp = bdData.Turbine!
+          .split('|')
+          .map((e) => (double.tryParse(e) ?? 0))
+          .toList();
 
-      bdTurbine[1] = -bdTurbine[1];
+      bdTurbineTemp[1] = -bdTurbineTemp[1];
     }
+
+    bdUpper = [
+      bdUpperTemp[0] /*/getDivideBiggestBD()*/,
+      bdUpperTemp[1],
+    ];
+    bdClutch = [
+      bdClutchTemp[0] /*/getDivideBiggestBD()*/,
+      bdClutchTemp[1] /*/getDivideBiggestBD()*/,
+    ];
+    bdTurbine = [
+      bdTurbineTemp[0] /*/getDivideBiggestBD()*/,
+      bdTurbineTemp[1],
+    ];
+
     if (upperData != null)
       upper = upperData
           .split('|')

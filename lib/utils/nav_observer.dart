@@ -6,7 +6,7 @@ class XNObsever extends NavigatorObserver {
   void didPush(Route route, Route? previousRoute) {
     // TODO: implement didPush
     super.didPush(route, previousRoute);
-    FirebaseAnalytics.instance.logScreenView(screenName: route.settings.name);
+    // FirebaseAnalytics.instance.logScreenView(screenName: route.settings.name);
   }
 
   @override

@@ -27,17 +27,11 @@ class _RiwayatViewState extends BaseState<RiwayatView> {
   void initState() {
     final turbineP = context.read<TurbineProvider>();
     if ((turbineP.pagingController.itemList ?? []).isEmpty) {
-      turbineP.pagingController = PagingController(firstPageKey: 1)
-        ..addPageRequestListener((pageKey) async {
-          turbineP.fetchTurbine(page: pageKey);
-        });
+      turbineP.getTurbine();
     } else {
       turbineP.pagingController.dispose();
       turbineP.next = null;
-      turbineP.pagingController = PagingController(firstPageKey: 1)
-        ..addPageRequestListener((pageKey) async {
-          turbineP.fetchTurbine(page: pageKey);
-        });
+      turbineP.getTurbine();
     }
     // turbineP.fetchTurbine(withLoading: true);
     super.initState();
@@ -240,19 +234,21 @@ class _RiwayatViewState extends BaseState<RiwayatView> {
         color: Constant.primaryColor,
       ),
       body: SafeArea(
-        child: Container(
-          padding:
-              EdgeInsets.fromLTRB(20, 10, 20, kBottomNavigationBarHeight - 42),
-          color: Colors.transparent,
-          child: RefreshIndicator(
-            color: Constant.primaryColor,
-            // onRefresh: () async => await context
-            //     .read<TurbineProvider>()
-            //     .fetchTurbine(withLoading: true),
-            onRefresh: () async {
+        child: RefreshIndicator(
+          color: Constant.primaryColor,
+          onRefresh: () async {
+            turbineP.next = null;
+            if ((turbineP.pagingController.itemList ?? []).isEmpty) {
+              turbineP.pagingController.refresh();
+            } else {
               turbineP.next = null;
-              pagingC.refresh();
-            },
+              turbineP.pagingController.refresh();
+            }
+          },
+          child: Container(
+            padding: EdgeInsets.fromLTRB(
+                20, 10, 20, kBottomNavigationBarHeight - 42),
+            color: Colors.transparent,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
@@ -318,7 +314,7 @@ class _RiwayatViewState extends BaseState<RiwayatView> {
                       ),
                       noItemsFoundIndicatorBuilder: (_) => Padding(
                         padding: const EdgeInsets.only(top: 56),
-                        child: Utils.notFoundImage(),
+                        child: Text("Tidak ada data"),
                       ),
                       itemBuilder: (context, item, indexs) {
                         return InkWell(
@@ -328,11 +324,12 @@ class _RiwayatViewState extends BaseState<RiwayatView> {
                             final f = await Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => ShaftDetailView(
-                                          // id: item.Id ?? ''
-                                          id: '01J1YT2GYVWPNJX777WM9S76DC',
-                                          // id: '01J06H7N5A16M6FGP600A6MH0F',
-                                        )));
+                                    builder: (context) =>
+                                        ShaftDetailView(id: item.Id ?? ''
+                                            // id: '01J1YT2GYVWPNJX777WM9S76DC',
+                                            // id: '01J06H7N5A16M6FGP600A6MH0F',
+                                            // id: '01J20BBZFRKTRDS9JJYDD6GK5P',
+                                            )));
                             if (f != null) {
                               turbineP.next = null;
                               pagingC.refresh();

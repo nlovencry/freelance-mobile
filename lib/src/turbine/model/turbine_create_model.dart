@@ -11,10 +11,10 @@ class TurbineCreateModelDataDetailDataUpperD {
 } 
 */
 
-  int? the1;
-  int? the2;
-  int? the3;
-  int? the4;
+  double? the1;
+  double? the2;
+  double? the3;
+  double? the4;
 
   TurbineCreateModelDataDetailDataUpperD({
     this.the1,
@@ -23,10 +23,10 @@ class TurbineCreateModelDataDetailDataUpperD {
     this.the4,
   });
   TurbineCreateModelDataDetailDataUpperD.fromJson(Map<String, dynamic> json) {
-    the1 = json['1']?.toInt();
-    the2 = json['2']?.toInt();
-    the3 = json['3']?.toInt();
-    the4 = json['4']?.toInt();
+    the1 = json['1']?.toDouble();
+    the2 = json['2']?.toDouble();
+    the3 = json['3']?.toDouble();
+    the4 = json['4']?.toDouble();
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
@@ -48,10 +48,10 @@ class TurbineCreateModelDataDetailDataUpperC {
 } 
 */
 
-  int? the1;
-  int? the2;
-  int? the3;
-  int? the4;
+  double? the1;
+  double? the2;
+  double? the3;
+  double? the4;
 
   TurbineCreateModelDataDetailDataUpperC({
     this.the1,
@@ -60,10 +60,10 @@ class TurbineCreateModelDataDetailDataUpperC {
     this.the4,
   });
   TurbineCreateModelDataDetailDataUpperC.fromJson(Map<String, dynamic> json) {
-    the1 = json['1']?.toInt();
-    the2 = json['2']?.toInt();
-    the3 = json['3']?.toInt();
-    the4 = json['4']?.toInt();
+    the1 = json['1']?.toDouble();
+    the2 = json['2']?.toDouble();
+    the3 = json['3']?.toDouble();
+    the4 = json['4']?.toDouble();
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
@@ -85,10 +85,10 @@ class TurbineCreateModelDataDetailDataUpperB {
 } 
 */
 
-  int? the1;
-  int? the2;
-  int? the3;
-  int? the4;
+  double? the1;
+  double? the2;
+  double? the3;
+  double? the4;
 
   TurbineCreateModelDataDetailDataUpperB({
     this.the1,
@@ -97,10 +97,10 @@ class TurbineCreateModelDataDetailDataUpperB {
     this.the4,
   });
   TurbineCreateModelDataDetailDataUpperB.fromJson(Map<String, dynamic> json) {
-    the1 = json['1']?.toInt();
-    the2 = json['2']?.toInt();
-    the3 = json['3']?.toInt();
-    the4 = json['4']?.toInt();
+    the1 = json['1']?.toDouble();
+    the2 = json['2']?.toDouble();
+    the3 = json['3']?.toDouble();
+    the4 = json['4']?.toDouble();
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
@@ -122,10 +122,10 @@ class TurbineCreateModelDataDetailDataUpperA {
 } 
 */
 
-  int? the1;
-  int? the2;
-  int? the3;
-  int? the4;
+  double? the1;
+  double? the2;
+  double? the3;
+  double? the4;
 
   TurbineCreateModelDataDetailDataUpperA({
     this.the1,
@@ -134,10 +134,10 @@ class TurbineCreateModelDataDetailDataUpperA {
     this.the4,
   });
   TurbineCreateModelDataDetailDataUpperA.fromJson(Map<String, dynamic> json) {
-    the1 = json['1']?.toInt();
-    the2 = json['2']?.toInt();
-    the3 = json['3']?.toInt();
-    the4 = json['4']?.toInt();
+    the1 = json['1']?.toDouble();
+    the2 = json['2']?.toDouble();
+    the3 = json['3']?.toDouble();
+    the4 = json['4']?.toDouble();
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
@@ -232,10 +232,10 @@ class TurbineCreateModelDataDetailDataTurbineD {
 } 
 */
 
-  int? the1;
-  int? the2;
-  int? the3;
-  int? the4;
+  double? the1;
+  double? the2;
+  double? the3;
+  double? the4;
 
   TurbineCreateModelDataDetailDataTurbineD({
     this.the1,
@@ -244,10 +244,10 @@ class TurbineCreateModelDataDetailDataTurbineD {
     this.the4,
   });
   TurbineCreateModelDataDetailDataTurbineD.fromJson(Map<String, dynamic> json) {
-    the1 = json['1']?.toInt();
-    the2 = json['2']?.toInt();
-    the3 = json['3']?.toInt();
-    the4 = json['4']?.toInt();
+    the1 = json['1']?.toDouble();
+    the2 = json['2']?.toDouble();
+    the3 = json['3']?.toDouble();
+    the4 = json['4']?.toDouble();
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
@@ -269,10 +269,10 @@ class TurbineCreateModelDataDetailDataTurbineC {
 } 
 */
 
-  int? the1;
-  int? the2;
-  int? the3;
-  int? the4;
+  double? the1;
+  double? the2;
+  double? the3;
+  double? the4;
 
   TurbineCreateModelDataDetailDataTurbineC({
     this.the1,
@@ -281,10 +281,10 @@ class TurbineCreateModelDataDetailDataTurbineC {
     this.the4,
   });
   TurbineCreateModelDataDetailDataTurbineC.fromJson(Map<String, dynamic> json) {
-    the1 = json['1']?.toInt();
-    the2 = json['2']?.toInt();
-    the3 = json['3']?.toInt();
-    the4 = json['4']?.toInt();
+    the1 = json['1']?.toDouble();
+    the2 = json['2']?.toDouble();
+    the3 = json['3']?.toDouble();
+    the4 = json['4']?.toDouble();
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
@@ -306,10 +306,10 @@ class TurbineCreateModelDataDetailDataTurbineB {
 } 
 */
 
-  int? the1;
-  int? the2;
-  int? the3;
-  int? the4;
+  double? the1;
+  double? the2;
+  double? the3;
+  double? the4;
 
   TurbineCreateModelDataDetailDataTurbineB({
     this.the1,
@@ -318,10 +318,10 @@ class TurbineCreateModelDataDetailDataTurbineB {
     this.the4,
   });
   TurbineCreateModelDataDetailDataTurbineB.fromJson(Map<String, dynamic> json) {
-    the1 = json['1']?.toInt();
-    the2 = json['2']?.toInt();
-    the3 = json['3']?.toInt();
-    the4 = json['4']?.toInt();
+    the1 = json['1']?.toDouble();
+    the2 = json['2']?.toDouble();
+    the3 = json['3']?.toDouble();
+    the4 = json['4']?.toDouble();
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
@@ -343,10 +343,10 @@ class TurbineCreateModelDataDetailDataTurbineA {
 } 
 */
 
-  int? the1;
-  int? the2;
-  int? the3;
-  int? the4;
+  double? the1;
+  double? the2;
+  double? the3;
+  double? the4;
 
   TurbineCreateModelDataDetailDataTurbineA({
     this.the1,
@@ -355,10 +355,10 @@ class TurbineCreateModelDataDetailDataTurbineA {
     this.the4,
   });
   TurbineCreateModelDataDetailDataTurbineA.fromJson(Map<String, dynamic> json) {
-    the1 = json['1']?.toInt();
-    the2 = json['2']?.toInt();
-    the3 = json['3']?.toInt();
-    the4 = json['4']?.toInt();
+    the1 = json['1']?.toDouble();
+    the2 = json['2']?.toDouble();
+    the3 = json['3']?.toDouble();
+    the4 = json['4']?.toDouble();
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
@@ -453,10 +453,10 @@ class TurbineCreateModelDataDetailDataClutchD {
 } 
 */
 
-  int? the1;
-  int? the2;
-  int? the3;
-  int? the4;
+  double? the1;
+  double? the2;
+  double? the3;
+  double? the4;
 
   TurbineCreateModelDataDetailDataClutchD({
     this.the1,
@@ -465,10 +465,10 @@ class TurbineCreateModelDataDetailDataClutchD {
     this.the4,
   });
   TurbineCreateModelDataDetailDataClutchD.fromJson(Map<String, dynamic> json) {
-    the1 = json['1']?.toInt();
-    the2 = json['2']?.toInt();
-    the3 = json['3']?.toInt();
-    the4 = json['4']?.toInt();
+    the1 = json['1']?.toDouble();
+    the2 = json['2']?.toDouble();
+    the3 = json['3']?.toDouble();
+    the4 = json['4']?.toDouble();
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
@@ -490,10 +490,10 @@ class TurbineCreateModelDataDetailDataClutchC {
 } 
 */
 
-  int? the1;
-  int? the2;
-  int? the3;
-  int? the4;
+  double? the1;
+  double? the2;
+  double? the3;
+  double? the4;
 
   TurbineCreateModelDataDetailDataClutchC({
     this.the1,
@@ -502,10 +502,10 @@ class TurbineCreateModelDataDetailDataClutchC {
     this.the4,
   });
   TurbineCreateModelDataDetailDataClutchC.fromJson(Map<String, dynamic> json) {
-    the1 = json['1']?.toInt();
-    the2 = json['2']?.toInt();
-    the3 = json['3']?.toInt();
-    the4 = json['4']?.toInt();
+    the1 = json['1']?.toDouble();
+    the2 = json['2']?.toDouble();
+    the3 = json['3']?.toDouble();
+    the4 = json['4']?.toDouble();
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
@@ -527,10 +527,10 @@ class TurbineCreateModelDataDetailDataClutchB {
 } 
 */
 
-  int? the1;
-  int? the2;
-  int? the3;
-  int? the4;
+  double? the1;
+  double? the2;
+  double? the3;
+  double? the4;
 
   TurbineCreateModelDataDetailDataClutchB({
     this.the1,
@@ -539,10 +539,10 @@ class TurbineCreateModelDataDetailDataClutchB {
     this.the4,
   });
   TurbineCreateModelDataDetailDataClutchB.fromJson(Map<String, dynamic> json) {
-    the1 = json['1']?.toInt();
-    the2 = json['2']?.toInt();
-    the3 = json['3']?.toInt();
-    the4 = json['4']?.toInt();
+    the1 = json['1']?.toDouble();
+    the2 = json['2']?.toDouble();
+    the3 = json['3']?.toDouble();
+    the4 = json['4']?.toDouble();
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
@@ -564,10 +564,10 @@ class TurbineCreateModelDataDetailDataClutchA {
 } 
 */
 
-  int? the1;
-  int? the2;
-  int? the3;
-  int? the4;
+  double? the1;
+  double? the2;
+  double? the3;
+  double? the4;
 
   TurbineCreateModelDataDetailDataClutchA({
     this.the1,
@@ -576,10 +576,10 @@ class TurbineCreateModelDataDetailDataClutchA {
     this.the4,
   });
   TurbineCreateModelDataDetailDataClutchA.fromJson(Map<String, dynamic> json) {
-    the1 = json['1']?.toInt();
-    the2 = json['2']?.toInt();
-    the3 = json['3']?.toInt();
-    the4 = json['4']?.toInt();
+    the1 = json['1']?.toDouble();
+    the2 = json['2']?.toDouble();
+    the3 = json['3']?.toDouble();
+    the4 = json['4']?.toDouble();
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};

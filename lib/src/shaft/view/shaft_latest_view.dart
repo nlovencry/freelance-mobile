@@ -116,9 +116,9 @@ class _ShaftLatestViewState extends State<ShaftLatestView>
             unselectedLabelStyle: TextStyle(fontWeight: FontWeight.w300),
             indicatorColor: Constant.primaryColor,
             tabs: [
+              _buildTab("Upper"),
               _buildTab("Clutch"),
               _buildTab("Turbine"),
-              _buildTab("Resultan")
             ],
           ),
         ),
@@ -599,10 +599,10 @@ class _ShaftLatestViewState extends State<ShaftLatestView>
             Constant.xSizedBox8,
             Text(
               tabController1.index == 2
-                  ? 'Detail data upper yang telah di input'
+                  ? 'Detail data clutch yang telah di input'
                   : tabController1.index == 1
                       ? 'Detail data turbine yang telah di input'
-                      : 'Detail data clutch yang telah di input',
+                      : 'Detail data upper yang telah di input',
               style: TextStyle(fontSize: 12, color: Constant.grayColor),
             ),
             Constant.xSizedBox16,
@@ -610,10 +610,10 @@ class _ShaftLatestViewState extends State<ShaftLatestView>
             Constant.xSizedBox16,
             Container(
               child: tabController1.index == 2
-                  ? upperActive()
+                  ? clutchActive()
                   : tabController1.index == 1
                       ? turbineActive()
-                      : clutchActive(),
+                      : upperActive(),
             ),
             Constant.xSizedBox16,
             acBdActive(),

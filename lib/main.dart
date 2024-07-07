@@ -1,3 +1,4 @@
+import 'package:hy_tutorial/src/admin/provider/user_manage_provider.dart';
 import 'package:hy_tutorial/src/auth/view/login2_view.dart';
 import 'package:hy_tutorial/src/data/provider/data_add_provider.dart';
 import 'package:hy_tutorial/src/tower/provider/tower_provider.dart';
@@ -223,6 +224,8 @@ class MyApp extends StatelessWidget {
           providers: [
             ChangeNotifierProvider<DataAddProvider>(
                 create: (context) => DataAddProvider()),
+            ChangeNotifierProvider<UserManageProvider>(
+                create: (context) => UserManageProvider()),
             ChangeNotifierProvider<TowerProvider>(
                 create: (context) => TowerProvider()),
             ChangeNotifierProvider<TurbineProvider>(

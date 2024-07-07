@@ -625,6 +625,7 @@ class Utils {
       content: Text(
         desc,
         style: Constant.primaryTextStyle.copyWith(fontSize: 14),
+        textAlign: TextAlign.center,
       ),
       actions: actions ??
           [
@@ -632,6 +633,61 @@ class Utils {
               Expanded(child: CustomButton.secondaryButton(noText, noCallback)),
               SizedBox(width: 10),
               Expanded(child: CustomButton.mainButton(yesText, yesCallback)),
+            ]),
+          ],
+    );
+
+    // show the dialog
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
+  static Future showYesNoDialogWithWarning({
+    required BuildContext context,
+    required String title,
+    required String desc,
+    List<Widget>? actions,
+    required VoidCallback yesCallback,
+    required VoidCallback noCallback,
+    String yesText = "Ya",
+    String noText = "Tidak",
+  }) {
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      actionsPadding: EdgeInsets.fromLTRB(20, 4, 20, 20),
+      contentPadding: EdgeInsets.all(20),
+      title: Column(
+        children: [
+          Icon(
+            Icons.error_outlined,
+            color: Colors.red,
+            size: 24,
+          ),
+          Constant.xSizedBox8,
+          Center(
+            child: Text(
+              title,
+              textAlign: TextAlign.center,
+              style: Constant.primaryTextStyle.copyWith(fontWeight: Constant.bold),
+            ),
+          ),
+        ],
+      ),
+      content: Text(
+        desc,
+        style: Constant.primaryTextStyle.copyWith(fontSize: 14),
+        textAlign: TextAlign.center,
+      ),
+      actions: actions ??
+          [
+            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+              Expanded(child: CustomButton.secondaryButton(noText, noCallback)),
+              SizedBox(width: 10),
+              Expanded(child: CustomButton.mainButton(yesText, yesCallback, color: Colors.red)),
             ]),
           ],
     );

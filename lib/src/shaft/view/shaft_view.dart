@@ -71,7 +71,7 @@ class _ShaftViewState extends State<ShaftView> with TickerProviderStateMixin {
         .turbineCreateModel
         .Data
         ?.DetailData
-        ?.Clutch;
+        ?.Turbine;
     Widget _buildTab(String tag) {
       return Tab(child: Text(tag, style: TextStyle(fontSize: 18)));
     }
@@ -596,7 +596,7 @@ class _ShaftViewState extends State<ShaftView> with TickerProviderStateMixin {
                         Constant.xSizedBox16,
                         Expanded(
                           child: Text(
-                            'Total Run Out : ${(totalCrockedness ?? 0) >= 3 ? '3' : '${(totalCrockedness ?? 0)}'}',
+                            'Total Run Out : ${totalCrockedness ?? 0}',
                             textAlign: TextAlign.left,
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
@@ -633,9 +633,9 @@ class _ShaftViewState extends State<ShaftView> with TickerProviderStateMixin {
             Constant.xSizedBox16,
             Container(
               child: tabController1.index == 2
-                  ? clutchActive()
+                  ? turbineActive()
                   : tabController1.index == 1
-                      ? turbineActive()
+                      ? clutchActive()
                       : upperActive(),
             ),
             Constant.xSizedBox16,

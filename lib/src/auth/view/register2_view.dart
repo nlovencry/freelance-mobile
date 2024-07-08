@@ -31,6 +31,7 @@ class _Register2ViewState extends State<Register2View> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              Image.asset("assets/icons/ic-register.png"),
               Container(
                 height: 25,
                 width: 150,

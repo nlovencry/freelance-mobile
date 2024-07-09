@@ -167,18 +167,32 @@ class DataAddProvider extends BaseController with ChangeNotifier {
   List<double> upper = [];
   double upperCrockedLine = 0.0;
 
+  // double divideUntilTwoDigits(double val) {
+  //   double num = val;
+  //   double realVal = val;
+  //   if (val < 1) num = val * (-1);
+  //   if (num > 10 && num < 100) return num / 10;
+  //   if (num > 100 && num < 1000) return num / 100;
+  //   if (num > 1000 && num < 10000) return num / 1000;
+  //   if (num > 10000 && num < 100000) return num / 10000;
+  //   if (num > 100000 && num < 1000000) return num / 100000;
+  //   if (realVal < 1) return -num;
+  //   return num;
+  // }
+
   double divideUntilTwoDigits(double val) {
-    double num = val;
-    double realVal = val;
-    if (val < 1) num = val * (-1);
-    if (num > 10 && num < 100) return num / 10;
-    if (num > 100 && num < 1000) return num / 100;
-    if (num > 1000 && num < 10000) return num / 1000;
-    if (num > 10000 && num < 100000) return num / 10000;
-    if (num > 100000 && num < 1000000) return num / 100000;
-    if (realVal < 1) return -num;
-    return num;
-  }
+  double num = val.abs(); // Use abs() to work with positive value
+  
+  // Dividing the number until it becomes a two-digit number
+  if (num >= 10 && num < 100) return val < 0 ? -(num / 10) : (num / 10);
+  if (num >= 100 && num < 1000) return val < 0 ? -(num / 100) : (num / 100);
+  if (num >= 1000 && num < 10000) return val < 0 ? -(num / 1000) : (num / 1000);
+  if (num >= 10000 && num < 100000) return val < 0 ? -(num / 10000) : (num / 10000);
+  if (num >= 100000 && num < 1000000) return val < 0 ? -(num / 100000) : (num / 100000);
+  
+  // Return the number itself if it's already within the range of two digits
+  return val;
+}
 
   num getDivideBiggestAC() {
     List<double> list = [];

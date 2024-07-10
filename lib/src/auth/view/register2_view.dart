@@ -31,25 +31,7 @@ class _Register2ViewState extends State<Register2View> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Container(
-                height: 25,
-                width: 150,
-                decoration: BoxDecoration(
-                  color: Constant.primaryColor,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
-              SizedBox(
-                height: 2,
-              ),
-              Container(
-                height: 25,
-                width: 150,
-                decoration: BoxDecoration(
-                  color: Color(0xFFFABA01),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
+              Image.asset('assets/icons/ic-register.png', scale: 4,),
               // CircleAvatar(
               //   backgroundColor: Colors.grey.shade300,
               //   radius: 50,
@@ -60,9 +42,9 @@ class _Register2ViewState extends State<Register2View> {
               Text(
                 "Register",
                 style: TextStyle(
-                  color: Colors.black,
+                  color: Constant.primaryColor,
                   fontSize: 20,
-                  fontWeight: FontWeight.w500,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
               SizedBox(
@@ -74,7 +56,7 @@ class _Register2ViewState extends State<Register2View> {
                   style: TextStyle(
                       color: Colors.black54,
                       fontSize: 14,
-                      fontWeight: FontWeight.w300)),
+                      fontWeight: FontWeight.w400)),
               SizedBox(
                 height: 20,
               ),

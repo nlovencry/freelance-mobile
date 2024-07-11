@@ -12,14 +12,14 @@ import '../../../utils/utils.dart';
 import '../../auth/provider/auth_provider.dart';
 import '../../shaft/view/shaft_latest_view.dart';
 
-class Home1View extends StatefulWidget {
-  const Home1View({super.key});
+class AdminHomeView extends StatefulWidget {
+  const AdminHomeView({super.key});
 
   @override
-  State<Home1View> createState() => _Home1ViewState();
+  State<AdminHomeView> createState() => _AdminHomeViewState();
 }
 
-class _Home1ViewState extends BaseState<Home1View> {
+class _AdminHomeViewState extends BaseState<AdminHomeView> {
   String? name;
   String? division;
   static const List<String> staticArray = [
@@ -243,7 +243,7 @@ class _Home1ViewState extends BaseState<Home1View> {
                     return Column(
                       children: List.generate(
                         staticArray.length,
-                        (indexx) => InkWell(
+                            (indexx) => InkWell(
                           onTap: () {
                             CusNav.nPush(
                                 context,
@@ -251,8 +251,8 @@ class _Home1ViewState extends BaseState<Home1View> {
                                     index: indexx == 1
                                         ? 2
                                         : indexx == 3
-                                            ? 1
-                                            : 0));
+                                        ? 1
+                                        : 0));
                           },
                           child: Column(
                             children: [
@@ -267,7 +267,7 @@ class _Home1ViewState extends BaseState<Home1View> {
                                         width: 50,
                                         decoration: BoxDecoration(
                                             borderRadius:
-                                                BorderRadius.circular(40),
+                                            BorderRadius.circular(40),
                                             color: Colors
                                                 .lightBlueAccent.shade200
                                                 .withOpacity(0.3),
@@ -284,7 +284,7 @@ class _Home1ViewState extends BaseState<Home1View> {
                                       flex: 8,
                                       child: Column(
                                         crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                        CrossAxisAlignment.start,
                                         children: [
                                           Text(
                                             staticArray[indexx],

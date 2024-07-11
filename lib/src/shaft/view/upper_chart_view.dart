@@ -208,8 +208,8 @@ class _Chart extends StatelessWidget {
       double upper0 = upper[0];
       double upper1 = upper[1];
       double result = 0;
-      if (upper0 < 1) upper0 * (-1);
-      if (upper1 < 1) upper1 * (-1);
+      if (upper0 < 0) upper0 * (-1);
+      if (upper1 < 0) upper1 * (-1);
       if (upper0 <= upper1)
         result = upper1;
       else
